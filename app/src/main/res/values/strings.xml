@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">올뺌쓰</string>
+    <string name="owl_honey_tip">올빼미 꿀팁</string>
+    <string name="comm_honey_tip">올뺌쓰 꿀팁</string>
+    <string name="comm_stocks_overseas">해외주식</string>
+    <string name="comm_soccor_games">해외 축구</string>
+    <string name="comm_job_talks">이직/job담</string>
+    <string name="comm_write_article_title">글 작성 ㄱㄱ</string>
+    <string name="comm_study_hard">빡공합시다</string>
+    <string name="action_back">뒤로가기</string>
+    <string name="action_write">작성하기</string>
+    <string name="opacity_value_et">0.65</string>
+    <string name="write_et_maxlines">5</string>
+    <string name="comm_latenight_food">야식</string>
+    <string name="hungry_bingbong">배고픈 빙봉</string>
+    <string name="article_timestamp_tv_dummy">5분 전</string>
+    <string name="article_content_tv">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔...</string>
+    <string name="bookmark_it">저장하기</string>
+    <string name="comment_section_hoonsoo_str">커뮤니티 가이드 준수를 통해 따듯한 올빼미 환경을 조성해주세요!</string>
+    <string name="create_article_title_tv_str">글 작성하기</string>
+    <string name="comment_sort_by_time_btn_text">등록순</string>
+    <string name="comment_sort_by_popularity_btn_text">공감순</string>
+    <string name="cmt_uname">앉아있는 케이크</string>
+    <string name="cmt_timepassed">3년 전</string>
+    <string name="random_cmt">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔...</string>
+    <string name="comment_fav_btn_text">공감하기</string>
+    <string name="comment_reply_btn_text">답글쓰기</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="float_submit">플로팅</string>
+    <string name="tb_mpg_saved">저장한 글 보기</string>
+</resources>

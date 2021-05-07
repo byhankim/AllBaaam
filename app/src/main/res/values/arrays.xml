@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mypage_board">
+        <item>공지사항</item>
+        <item>건의사항</item>
+        <item>개인정보 처리 방침</item>
+    </string-array>
+
+
+</resources>

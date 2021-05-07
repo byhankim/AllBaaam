@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/notice_btn"
+        android:title="공지사항"/>
+    <item
+        android:id="@+id/recomm_btn"
+        android:title="건의하기" />
+    <item
+        android:id="@+id/personal_policy_btn"
+        android:title="개인정보 처리 방침"/>
+
+</menu>

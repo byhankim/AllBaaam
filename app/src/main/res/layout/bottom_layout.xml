@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@drawable/background_transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:drawableTop="@drawable/ic_alarm"
+            android:textColor="@color/style1_1"
+            android:textSize="18px"
+            android:text="알림"
+            android:layout_centerInParent="true"></Button>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:switchMinWidth="64dp"
+
+            app:track="@drawable/switch_track_selector"
+            android:thumb="@drawable/switch_thumb_selector"
+            >
+
+        </androidx.appcompat.widget.SwitchCompat>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_transparent"
+            android:drawableTop="@drawable/ic_mypage"
+            android:textColor="@color/style1_1"
+            android:textSize="18px"
+            android:text="마이 페이지"
+            android:layout_centerInParent="true"></Button>
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

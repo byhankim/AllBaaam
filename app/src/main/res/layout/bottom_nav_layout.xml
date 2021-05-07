@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brand2">
+
+    <FrameLayout
+        android:id="@+id/fragments_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/brand3"></FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true">
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/background_transparent"
+            app:menu="@menu/menu_bottom">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/bottom_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:enabled="true"
+            android:elevation="10dp"
+            android:layout_centerHorizontal="true"
+            android:thumb="@drawable/switch_thumb_selector"
+            app:switchMinWidth="64dp"
+            app:track="@drawable/switch_track_selector">
+
+
+        </androidx.appcompat.widget.SwitchCompat>
+
+
+
+
+    </RelativeLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true">-->
+
+
+
+
+<!--     @drawable/background_transparent   </RelativeLayout>-->
+
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- OWL custom color preset -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!-- Owl Colors -->
+    <color name="brand1">#874FE1</color>
+    <color name="brand2">#9F43D1</color>
+    <color name="brand3">#BB86FC</color>
+
+    <color name="gray8">#262626</color>
+    <color name="gray7">#121212</color>
+    <color name="gray6">#525252</color>
+    <color name="gray5">#6F6F6F</color>
+    <color name="gray4">#8D8D8D</color>
+    <color name="gray3">#A8A8A8</color>
+    <color name="gray2">#C6C6C6</color>
+    <color name="gray1">#E0E0E0</color>
+
+    <color name="ui1">#FFFFFF</color>
+    <color name="ui2">#F9FAFB</color>
+    <color name="ui3">#F2F4F7</color>
+
+    <color name="error1_1">#FEEA58</color>
+    <color name="error1_2">#FDA837</color>
+    <color name="error1_3">#ABDA52</color>
+    <color name="error2_1">#DD4D5F</color>
+    <color name="error2_2">#FF4D42</color>
+
+    <color name="style1_1">#FDA837</color>
+    <color name="style1_2">#FF8D00</color>
+    <color name="style1_3">#EA6F9B</color>
+    <color name="style1_4">#FEEA58</color>
+    <color name="style1_5">#43BAC5</color>
+    <color name="style1_6">#ABDA52</color>
+    <color name="style1_7">#4F77F9</color>
+    <color name="style1_8">#AF3FF9</color>
+
+    <color name="style2_1">#FDDC9C</color>
+    <color name="style2_2">#FFBAA7</color>
+    <color name="style2_3">#FFC6DA</color>
+    <color name="style2_4">#FFF7BE</color>
+    <color name="style2_5">#C0F9FE</color>
+    <color name="style2_6">#DEFF9E</color>
+    <color name="style2_7">#C8D5FF</color>
+    <color name="style2_8">#E4BAFF</color>
+</resources>
