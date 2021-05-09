@@ -19,26 +19,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="배고픈 빙봉"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"
-            android:layout_above="@+id/profile_imageview"></TextView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/mypage_listView_layout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="배고픈 빙봉"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_above="@+id/profile_imageview"></TextView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_imageview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:paddingTop="17dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/zzang">
-        </de.hdodenhof.circleimageview.CircleImageView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_imageview"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:paddingTop="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/zzang">
+            </de.hdodenhof.circleimageview.CircleImageView>
+        </RelativeLayout>
+
 
 
         <LinearLayout
+            android:id="@+id/mypage_listView_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -57,7 +64,7 @@
                 android:id="@+id/my_saved_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="저장한 글 보기"
+                android:text="@string/tb_mpg_saved"
                 android:layout_marginLeft="10dp"
                 android:padding="10dp"
 

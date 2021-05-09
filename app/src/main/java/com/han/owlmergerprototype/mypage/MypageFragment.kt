@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.han.owlmergerprototype.Mypg004Activity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.SettingActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
@@ -69,7 +70,7 @@ class MypageFragment : Fragment() {
 
         mysavedBTN=view.findViewById(R.id.my_saved_btn)
         mysavedBTN.setOnClickListener {
-            inte = Intent(context,MySavedContentsActivity::class.java)
+            inte = Intent(context,Mypg004Activity::class.java)
             startActivity(inte)
         }
 

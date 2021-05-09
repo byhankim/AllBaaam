@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class AlarmFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -42,7 +43,9 @@ class AlarmFragment : Fragment() {
         val view1 = inflater.inflate(R.layout.fragment_alarm,container,false)
         val adap1 = RecyclerAdapter()
         recyclerView = view1.findViewById(R.id.alarm_rcyView)
-
+        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
+        val deco = SpaceDecoration(size)
+        recyclerView.addItemDecoration(deco)
         recyclerView.adapter = adap1
         recyclerView.layoutManager = LinearLayoutManager(context)
 

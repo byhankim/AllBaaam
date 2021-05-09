@@ -9,7 +9,7 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/owll" />
+            <item android:drawable="@drawable/owl" />
 
         </layer-list>
     </item>

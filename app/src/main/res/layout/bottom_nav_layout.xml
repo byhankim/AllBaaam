@@ -29,28 +29,28 @@
             app:menu="@menu/menu_bottom">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/bottom_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentBottom="true"
-            android:enabled="true"
-            android:elevation="10dp"
-            android:layout_centerHorizontal="true"
-            android:thumb="@drawable/switch_thumb_selector"
-            app:switchMinWidth="64dp"
-            app:track="@drawable/switch_track_selector">
-
-
-        </androidx.appcompat.widget.SwitchCompat>
 
 
 
 
     </RelativeLayout>
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/bottom_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:enabled="true"
+        android:elevation="5dp"
+        android:thumb="@drawable/switch_thumb_selector"
+        app:track="@drawable/switch_track_selector">
 
-<!--    <RelativeLayout-->
+
+    </androidx.appcompat.widget.SwitchCompat>
+
+
+    <!--    <RelativeLayout-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_alignParentBottom="true"-->

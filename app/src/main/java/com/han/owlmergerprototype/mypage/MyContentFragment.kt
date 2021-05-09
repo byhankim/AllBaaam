@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.databinding.MyContentsBoxLayoutBinding.inflate
+import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class MyContentFragment:Fragment() {
 
@@ -47,6 +48,9 @@ class MyContentFragment:Fragment() {
         val view = inflater.inflate(R.layout.fragment_mycontents,container,false)
         val adap2 = RecyclerAdapter()
         recyclerView = view.findViewById(R.id.mycontens_rcyView)
+        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
+        val deco = SpaceDecoration(size)
+        recyclerView.addItemDecoration(deco)
         recyclerView.adapter = adap2
         recyclerView.layoutManager = LinearLayoutManager(context)
         return view
