@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".community.CreateArticleActivity"
     android:background="@drawable/bfbfbf">
     <androidx.appcompat.widget.Toolbar
@@ -25,6 +26,8 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
+
     <HorizontalScrollView
         android:id="@+id/horizontal_sv"
         android:layout_width="wrap_content"
@@ -114,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/horizontal_sv"
-        android:background="@color/black">
+        >
 <!--        android:alpha="@string/opacity_value_et">-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/comment_section_sort_indicating_circle"
@@ -144,4 +147,22 @@
             android:layout_marginTop="@dimen/comment_rv_margintop"
             android:nestedScrollingEnabled="false"/>
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/float_btn_bottom_margin"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_pen"
+        app:backgroundTint="@color/brand1"
+        android:elevation="10dp"
+        app:borderWidth="0dp"
+        android:contentDescription="@string/float_submit" />
+
+
+
 </RelativeLayout>

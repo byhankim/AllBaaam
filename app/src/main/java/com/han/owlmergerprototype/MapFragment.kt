@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MapFragment : Fragment() {
+    private lateinit var btm_nav:BottomNavigationView
     companion object{
         const val TAG : String = "looooog"
 
@@ -34,6 +36,7 @@ class MapFragment : Fragment() {
     ): View? {
         Log.d(TAG,"MapFragment - onCreateView() called")
         val view = inflater.inflate(R.layout.fragment_map,container,false)
+
 
         return view
     }

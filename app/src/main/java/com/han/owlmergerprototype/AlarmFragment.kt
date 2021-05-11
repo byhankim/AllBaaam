@@ -14,6 +14,7 @@ import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class AlarmFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var backBTN:TextView
     val timeArray = arrayListOf(
             "10 분전","1 일전","1 일전","5 일전","6 일전"
     )
@@ -40,6 +41,7 @@ class AlarmFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view1 = inflater.inflate(R.layout.fragment_alarm,container,false)
         val adap1 = RecyclerAdapter()
         recyclerView = view1.findViewById(R.id.alarm_rcyView)
@@ -48,6 +50,17 @@ class AlarmFragment : Fragment() {
         recyclerView.addItemDecoration(deco)
         recyclerView.adapter = adap1
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        backBTN = view1.findViewById(R.id.alarm_back_btn)
+
+        backBTN.setOnClickListener {
+
+            val fragmentManager = getActivity()!!.getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+            fragmentManager.popBackStack()
+
+        }
+
 
         return view1
 

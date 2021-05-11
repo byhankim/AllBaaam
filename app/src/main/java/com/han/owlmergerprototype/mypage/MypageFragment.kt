@@ -23,6 +23,7 @@ class MypageFragment : Fragment() {
     private lateinit var mypageLV:ListView
     private lateinit var settingBTN:TextView
     private lateinit var inte:Intent
+    private lateinit var backBTN:TextView
     companion object{
         const val TAG : String = "looooog"
 
@@ -72,6 +73,15 @@ class MypageFragment : Fragment() {
         mysavedBTN.setOnClickListener {
             inte = Intent(context,Mypg004Activity::class.java)
             startActivity(inte)
+        }
+
+        backBTN = view.findViewById(R.id.back_btn)
+        backBTN.setOnClickListener {
+
+            val fragmentManager = getActivity()!!.getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+            fragmentManager.popBackStack()
+
         }
 
 

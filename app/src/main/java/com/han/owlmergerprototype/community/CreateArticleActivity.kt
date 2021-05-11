@@ -15,6 +15,7 @@ class CreateArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityCreateArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.commMainToolbar)
@@ -105,7 +106,7 @@ class CreateArticleActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Toast.makeText(this, "응~ 뒤로 안갈거야~", Toast.LENGTH_SHORT).show()
+                finish()
             }
 
             /*

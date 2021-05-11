@@ -1,6 +1,7 @@
 package com.han.owlmergerprototype
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +11,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.han.owlmergerprototype.community.CreateArticleActivity
+import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class CommFragment: Fragment() {
+    private lateinit var floatBTN: FloatingActionButton
+    private lateinit var inte: Intent
 
     private lateinit var recyclerView: RecyclerView
     val nickname = arrayListOf(
@@ -46,6 +52,14 @@ class CommFragment: Fragment() {
         recyclerView = view1.findViewById(R.id.article_rv)
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
+        floatBTN = view1.findViewById(R.id.fab)
+
+        floatBTN.setOnClickListener {
+            inte = Intent(context, CreateArticleActivity::class.java)
+            startActivity(inte)
+        }
+
+
         recyclerView.addItemDecoration(deco)
 
         recyclerView.adapter = adap1

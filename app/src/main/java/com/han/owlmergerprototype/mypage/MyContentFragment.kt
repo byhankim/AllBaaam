@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.databinding.MyContentsBoxLayoutBinding.inflate
 import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class MyContentFragment:Fragment() {

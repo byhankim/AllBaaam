@@ -11,7 +11,6 @@ class MyContentsAdapter(fa:FragmentManager) : FragmentPagerAdapter(fa, BEHAVIOR_
     private val fragments = arrayListOf<Fragment>()
 
     fun appendFragment(fragment: Fragment){
-        Log.d("LOOOG!!","프레그먼트 추가 완료쨩")
         fragments.add(fragment)
     }
 
@@ -20,7 +19,6 @@ class MyContentsAdapter(fa:FragmentManager) : FragmentPagerAdapter(fa, BEHAVIOR_
     }
 
     override fun getItem(position: Int): Fragment {
-        Log.d("LOOOG!!","프레그먼트 추가 완료해야하는뎅")
         return fragments[position]
     }
 

@@ -47,4 +47,5 @@
     <dimen name="comment_content_margintop">7dp</dimen>
     <dimen name="comment_fav_btn_margintop">17dp</dimen>
     <dimen name="comment_marginbottom">16dp</dimen>
+    <dimen name="float_btn_bottom_margin">68dp</dimen>
 </resources>
