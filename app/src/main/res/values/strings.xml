@@ -3,10 +3,10 @@
     <string name="owl_honey_tip">올빼미 꿀팁</string>
     <string name="comm_honey_tip">올뺌쓰 꿀팁</string>
     <string name="comm_stocks_overseas">해외주식</string>
-    <string name="comm_soccor_games">해외 축구</string>
-    <string name="comm_job_talks">이직/job담</string>
+    <string name="comm_sports_overseas">해외 스포츠</string>
+    <string name="comm_food">야식</string>
     <string name="comm_write_article_title">글 작성 ㄱㄱ</string>
-    <string name="comm_study_hard">빡공합시다</string>
+    <string name="comm_study_hard">빡공</string>
     <string name="action_back">뒤로가기</string>
     <string name="action_write">작성하기</string>
     <string name="opacity_value_et">0.65</string>
@@ -28,4 +28,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="float_submit">플로팅</string>
     <string name="tb_mpg_saved">저장한 글 보기</string>
+    <string name="test_bottom_nav_alarm">알림</string>
+    <string name="test_bottom_nav_notice">알림</string>
+    <string name="test_bottom_nav_owl">올뺌</string>
+    <string name="test_bottom_nav_mypage">마이페이지</string>
 </resources>

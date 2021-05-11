@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/theme_selector_item_cv"
+    android:layout_width="@dimen/comm_theme_tv_width"
+    android:layout_height="@dimen/comm_theme_tv_height"
+    app:cardCornerRadius="@dimen/theme_selector_round_radius"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/purple_200"
+    android:layout_marginEnd="@dimen/comm_theme_margin_right">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/theme_selector_item_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/comm_theme_selector_outer_padding"
+            android:paddingBottom="@dimen/comm_theme_selector_outer_padding"
+            android:text="@string/comm_honey_tip"
+            android:textColor="@color/black"
+            android:layout_alignParentBottom="true"
+            android:elevation="1dp"/>
+        <TextView
+            android:id="@+id/theme_selector_item_icon"
+            android:layout_width="@dimen/comm_theme_selector_icon_size"
+            android:layout_height="@dimen/comm_theme_selector_icon_size"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/arrow_back"
+            android:elevation="1dp"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
