@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OwlPrototype">
-
+        <activity android:name=".widgetstest.BottomNavTestActivity">
+        </activity>
         <activity android:name=".community.ArticleActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.SplashActivity">
-
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
-        <activity android:name=".RetrofitActivity"/>
+        <activity android:name=".RetrofitActivity" />
         <activity android:name=".Mypg004Activity" />
         <activity android:name=".mypage.MySavedContentsActivity" />
         <activity android:name=".mypage.boardActivity.PolicyActivity" />
@@ -31,14 +31,20 @@
         <activity android:name=".mypage.boardActivity.NoticeActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".mypage.MyContentsActivity" />
-        <activity android:name=".BottonNavActivity"
+        <activity
+            android:name=".BottonNavActivity"
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".CommunityMainActivity"
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".community.CreateArticleActivity"
-            android:theme="@style/Theme.OwlPrototype" />
+            android:theme="@style/Theme.OwlPrototype" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

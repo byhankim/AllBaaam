@@ -41,7 +41,7 @@ class CommentRecyclerAdapter (
             timePassed.text = commentEntity.timePassed
             content.text = commentEntity.content
 
-            if (commentEntity.isStandaloneComment == false) {
+            if (!commentEntity.isStandaloneComment) {
                 hiddenSpace.visibility = TextView.VISIBLE
             }
         }

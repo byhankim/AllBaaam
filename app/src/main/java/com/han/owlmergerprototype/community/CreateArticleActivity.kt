@@ -6,7 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
 
 
@@ -22,6 +25,25 @@ class CreateArticleActivity : AppCompatActivity() {
 
         // set maxlinesx
         binding.commWriteArticleContentEt.maxLines = 5
+
+        // theme selector rv
+        val manager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        with (binding.themeSelectorRecyclerview) {
+            layoutManager = manager
+            DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
+
+            val testList = mutableListOf<ThemeEntity>()
+            testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.owl2, R.color.style1_5, R.color.black, 1, false))
+            testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.like_btn, R.color.style1_4, R.color.black, 2, false))
+            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.owl2, R.color.style1_3, R.color.black, 3, false))
+            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.back_icon_24, R.color.style1_2, R.color.black, 4, false))
+            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.owl2, R.color.style1_1, R.color.black, 5, false))
+            adapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity) /*{
+                setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
+            }*/
+        }
+
 
         /*
         // left side button
@@ -88,7 +110,8 @@ class CreateArticleActivity : AppCompatActivity() {
         }
 
         // TODO TODO TODO
-        binding.commListLr.setOnClickListener {
+        // theme
+        /*binding.commListLr.setOnClickListener {
             var category = "none"
             category = when (it.id) {
                 R.id.cate_honey_tips -> "꿀팁"
@@ -99,7 +122,8 @@ class CreateArticleActivity : AppCompatActivity() {
                 else -> "none"
             }
             Toast.makeText(this, category, Toast.LENGTH_SHORT).show()
-        }
+        }*/
+
         return true
     }
 
