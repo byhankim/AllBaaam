@@ -14,14 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.ArticleEntity
+import com.han.owlmergerprototype.sharedTest.MyContentsRecyclerAdapter
+import com.han.owlmergerprototype.sharedTest.SharedPrefManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class MyContentFragment:Fragment() {
 
+    private lateinit var myContentRecyclerAdapter: MyContentsRecyclerAdapter
     private lateinit var recyclerView: RecyclerView
     val dateArray = arrayListOf(
         "21/04/28","21/10/08","21/06/22","21/03/24","21/03/14"
     )
+    var articleList =ArrayList<ArticleEntity>()
     companion object{
         const val TAG : String = "looooog"
 
@@ -45,14 +50,39 @@ class MyContentFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_mycontents,container,false)
-        val adap2 = RecyclerAdapter()
+        recyclerView = view.findViewById(R.id.mycontens_rcyView)
+
+        this.articleList = SharedPrefManager.getUserContentsList() as ArrayList<ArticleEntity>
+
+        this.MyContentsRecyblerViewSetting(this.articleList)
+
+
+
+
+
+        /*val adap2 = RecyclerAdapter()
         recyclerView = view.findViewById(R.id.mycontens_rcyView)
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
         recyclerView.addItemDecoration(deco)
         recyclerView.adapter = adap2
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)*/
         return view
+
+    }
+
+    private fun MyContentsRecyblerViewSetting(articleList: ArrayList<ArticleEntity>){
+        this.myContentRecyclerAdapter = MyContentsRecyclerAdapter()
+        this.myContentRecyclerAdapter.submitList(this.articleList)
+        val myLinearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
+        myLinearLayoutManager.stackFromEnd = true
+
+        recyclerView.apply{
+            layoutManager = myLinearLayoutManager
+            adapter = myContentRecyclerAdapter
+        }
+
+
 
     }
 
