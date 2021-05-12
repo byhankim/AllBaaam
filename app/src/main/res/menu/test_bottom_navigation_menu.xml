@@ -5,7 +5,7 @@
         android:title="@string/test_bottom_nav_notice" />
 
     <item android:id="@+id/owl_menu_item"
-        android:icon="@drawable/owll"
+        android:icon="@drawable/owl2"
         android:title="@string/test_bottom_nav_owl" />
 
     <item android:id="@+id/mypage_menu_item"
