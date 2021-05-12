@@ -25,13 +25,16 @@
         android:orientation="vertical"
         android:layout_weight="1">
         <EditText
+            android:id="@+id/login_name_ev"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="로그인"/>
         <Button
+            android:id="@+id/no_login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비로그인"/>

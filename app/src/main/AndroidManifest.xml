@@ -14,6 +14,7 @@
         android:theme="@style/Theme.OwlPrototype">
         <activity android:name=".sharedTest.LoginActivity"></activity>
         <activity android:name=".widgetstest.BottomNavTestActivity"></activity>
+        <activity android:name=".noLoginTest.NoLoginBottonNavActivity"/>
         <activity android:name=".community.ArticleActivity" />
         <activity
             android:name=".SplashActivity"

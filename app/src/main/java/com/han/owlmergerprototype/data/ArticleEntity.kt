@@ -7,5 +7,5 @@ data class ArticleEntity (
     var fixedDatetime: String = "",
     var uname: String = "",
     var content: String = "",
-    var images: MutableList<Int>
+    var images: MutableList<Int>?
 )

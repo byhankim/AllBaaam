@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.Mypg004Activity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.SettingActivity
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.mypage.boardActivity.PolicyActivity
 import com.han.owlmergerprototype.mypage.boardActivity.SuggestionActivity
@@ -24,6 +25,7 @@ class MypageFragment : Fragment() {
     private lateinit var settingBTN:TextView
     private lateinit var inte:Intent
     private lateinit var backBTN:TextView
+    private lateinit var nameTV:TextView
     companion object{
         const val TAG : String = "looooog"
 
@@ -53,6 +55,8 @@ class MypageFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_mypage,container,false)
         my_contents_btn = view.findViewById(R.id.my_contents_btn)
         mypageLV = view.findViewById(R.id.mypage_listView)
+        nameTV = view.findViewById(R.id.user_name_tv)
+        nameTV.text = TestUser.userName
         val array = getResources().getStringArray(R.array.mypage_board)
 
         val adap1 = ArrayAdapter(context!!,R.layout.list_textview_layout,R.id.mypage_list_row,array)

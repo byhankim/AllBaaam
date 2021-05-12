@@ -9,12 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.ArticleEntity
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
+import com.han.owlmergerprototype.sharedTest.SharedPrefManager
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CreateArticleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateArticleBinding
+    private lateinit var newArticleList : ArrayList<ArticleEntity>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -143,17 +149,40 @@ class CreateArticleActivity : AppCompatActivity() {
         var images: MutableList<Int>
             * */
             R.id.action_write_article -> {
+
+                newArticleList = SharedPrefManager.getUserContentsList() as ArrayList<ArticleEntity>
+
+                val newArticle = ArticleEntity(
+                    category = "해외 스포츠",
+                    uIcon = R.drawable.crazy_human,
+                    datetime = Date().toString(),
+                    fixedDatetime = Date().toString(),
+                    uname = "배고픈 수현",
+                    content = binding.commWriteArticleContentEt.text.toString(),
+                    images = null
+                )
+                newArticleList.add(newArticle)
+                SharedPrefManager.storeUserContents(newArticleList)
+
                 val intent = Intent(this, ArticleActivity::class.java).apply {
 //                    putExtra("article_title", binding.commWriteArticleTitleEt.text.toString())
-                    putExtra("uIcon",
-                        R.drawable.crazy_human
-                    )
-                    putExtra("datetime", "")
-                    putExtra("article_content", binding.commWriteArticleContentEt.text.toString())
+//                    putExtra("uIcon",
+//                        R.drawable.crazy_human
+//                    )
+//                    putExtra("datetime", "")
+//                    putExtra("article_content", binding.commWriteArticleContentEt.text.toString())
                 }
                 startActivity(intent)
+                finish()
             }
         }
         return true
+    }
+
+    fun Date.toString():String{
+
+        val format = SimpleDateFormat("YY/MM/DD")
+        return format.format(this)
+
     }
 }
