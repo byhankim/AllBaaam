@@ -63,10 +63,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/article_uname"
                 android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                android:text="@string/article_content_tv"/>
+                android:drawablePadding="@dimen/comm_inline_drawable_padding"
+                android:text="@string/article_content_tv"
+                 />
 
             <!-- 하수런(menu ㄴㄴ) -->
-            <TextView
+            <TextVi
                 android:id="@+id/article_favorite_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

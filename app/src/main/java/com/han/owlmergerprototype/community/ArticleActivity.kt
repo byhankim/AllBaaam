@@ -1,6 +1,7 @@
 package com.han.owlmergerprototype.community
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -57,6 +58,7 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         binding.articleContentTv.text = intent.getStringExtra("article_content")
+        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
         /*
     val uIcon: Int = -1,
     val datetime: String = "",

@@ -52,4 +52,5 @@
     <dimen name="comm_theme_selector_icon_size">30dp</dimen>
     <dimen name="comm_theme_selector_outer_padding">8dp</dimen>
     <dimen name="theme_selector_round_radius">8dp</dimen>
+    <dimen name="comm_inline_drawable_padding">15dp</dimen>
 </resources>

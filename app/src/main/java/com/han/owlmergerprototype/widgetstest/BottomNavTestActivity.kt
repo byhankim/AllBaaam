@@ -30,7 +30,7 @@ class BottomNavTestActivity : AppCompatActivity() {
                     ft.replace(R.id.fragment_container, AlarmFragment.newInstance())
                 }
                 R.id.owl_menu_item -> {
-                    ft.replace(R.id.fragment_container, CommFragment.newInstance())
+                    ft.replace(R.id.fragment_container, CommFragment.newInstance(this))
                 }
                 R.id.mypage_menu_item -> {
                     ft.replace(R.id.fragment_container, MypageFragment.newInstance())

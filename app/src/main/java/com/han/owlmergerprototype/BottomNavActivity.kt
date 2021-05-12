@@ -17,7 +17,7 @@ import com.han.owlmergerprototype.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.mypage.MypageFragment
 
-class BottonNavActivity : AppCompatActivity() {
+class BottomNavActivity : AppCompatActivity() {
 
     private lateinit var mapFragment: MapFragment
     private lateinit var alarmFragment: AlarmFragment
@@ -47,7 +47,7 @@ class BottonNavActivity : AppCompatActivity() {
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
-        commFragment = CommFragment.newInstance()
+        commFragment = CommFragment.newInstance(this)
         supportFragmentManager.beginTransaction().add(R.id.fragments_frame, commFragment).commit()
 
 
@@ -67,7 +67,7 @@ class BottonNavActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
                 } else {
                    
-                    commFragment = CommFragment.newInstance()
+                    commFragment = CommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
 
                 }

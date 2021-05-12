@@ -17,11 +17,11 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.SplashActivity">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".RetrofitActivity" />
         <activity android:name=".Mypg004Activity" />
@@ -32,7 +32,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".mypage.MyContentsActivity" />
         <activity
-            android:name=".BottonNavActivity"
+            android:name=".BottomNavActivity"
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".CommunityMainActivity"
@@ -40,10 +40,6 @@
         <activity
             android:name=".community.CreateArticleActivity"
             android:theme="@style/Theme.OwlPrototype" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

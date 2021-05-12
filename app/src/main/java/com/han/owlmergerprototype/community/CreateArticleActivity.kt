@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
@@ -143,7 +144,7 @@ class CreateArticleActivity : AppCompatActivity() {
         var images: MutableList<Int>
             * */
             R.id.action_write_article -> {
-                val intent = Intent(this, ArticleActivity::class.java).apply {
+                val intent = Intent(this, BottomNavActivity::class.java).apply {
 //                    putExtra("article_title", binding.commWriteArticleTitleEt.text.toString())
                     putExtra("uIcon",
                         R.drawable.crazy_human
