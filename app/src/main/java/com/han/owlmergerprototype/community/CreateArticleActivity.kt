@@ -1,24 +1,37 @@
 package com.han.owlmergerprototype.community
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.icu.text.MessageFormat.format
 import android.os.Bundle
+import android.text.format.DateFormat.format
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.internal.bind.util.ISO8601Utils.format
+import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
+import java.lang.String.format
+import java.text.MessageFormat.format
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class CreateArticleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateArticleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         binding = ActivityCreateArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -133,26 +146,30 @@ class CreateArticleActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
-
-            /*
-            *
-        val uIcon: Int = -1,
-        val datetime: String = "",
-        var fixedDatetime: String = "",
-        var uname: String = "",
-        var content: String = "",
-        var images: MutableList<Int>
-            * */
             R.id.action_write_article -> {
-                val intent = Intent(this, BottomNavActivity::class.java).apply {
-//                    putExtra("article_title", binding.commWriteArticleTitleEt.text.toString())
-                    putExtra("uIcon",
-                        R.drawable.crazy_human
-                    )
-                    putExtra("datetime", "")
-                    putExtra("article_content", binding.commWriteArticleContentEt.text.toString())
+                // TO DO("Store them in SharedPreferences")
+                val sharedPrefName = getString(R.string.owl_shared_preferences_name)
+                val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+
+                val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
+
+                val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
+                val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
+                dummyDataSetFromSharedPreferences.add(Post(
+                    createdAt = DateTimeFormatManager.getCurrentDatetime(),
+                    contents = binding.commWriteArticleContentEt.text.toString(),
+                    category = R.string.comm_latenight_food
+                ))
+
+                with (myShared.edit()) {
+                    putString(sharedKey, Gson().toJson(dummyDataSetFromSharedPreferences))
+                    commit()
                 }
-                startActivity(intent)
+
+                // Back to community main fragment
+//                val createPostIntent: Intent = Intent(this, BottomNavActivity::class.java)
+//                createPostIntent.putExtra("postWritten", 200)
+                startActivity(Intent(this, BottomNavActivity::class.java))
             }
         }
         return true

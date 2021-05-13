@@ -68,7 +68,7 @@
                  />
 
             <!-- 하수런(menu ㄴㄴ) -->
-            <TextVi
+            <TextView
                 android:id="@+id/article_favorite_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

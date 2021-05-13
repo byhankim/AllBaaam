@@ -32,4 +32,11 @@
     <string name="test_bottom_nav_notice">알림</string>
     <string name="test_bottom_nav_owl">올뺌</string>
     <string name="test_bottom_nav_mypage">마이페이지</string>
+
+    <!-- shared pref 관련 -->
+    <string name="owl_shared_preferences_name">owltest</string>
+    <string name="owl_shared_preferences_dummy_comm_posts">dummyPosts</string>
+    <string name="comm_games">게임</string>
+    <string name="comm_theme_not_found">응 없어~</string>
+    <string name="dummy_post_id">post id</string>
 </resources>

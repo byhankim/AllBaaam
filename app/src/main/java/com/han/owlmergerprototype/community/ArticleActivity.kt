@@ -32,6 +32,9 @@ class ArticleActivity : AppCompatActivity() {
         setSupportActionBar(binding.articleToolbar)
 
 
+        // post article
+
+
 
         // RV
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -57,6 +60,7 @@ class ArticleActivity : AppCompatActivity() {
             }
         }
 
+        // article post body
         binding.articleContentTv.text = intent.getStringExtra("article_content")
         binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
         /*

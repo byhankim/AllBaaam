@@ -38,58 +38,65 @@
         android:paddingBottom="@dimen/comm_theme_selector_outer_padding"
         />
 
-
-    <RelativeLayout
-        android:id="@+id/text_write_area_rl"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/comm_post_section_nestedscrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comm_theme_selector_recyclerview"
-        >
-<!--        android:alpha="@string/opacity_value_et">-->
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/comment_section_sort_indicating_circle"
-            android:background="@color/purple_200"
-            android:layout_width="@dimen/comment_section_sort_indicating_circle_size"
-            android:layout_height="@dimen/comment_section_sort_indicating_circle_size"
-            android:layout_marginTop="@dimen/comment_sort_indicating_circle_martintop"
-            android:layout_marginStart="@dimen/comment_sort_indicating_circle_marginstart"/>
-        <TextView
-            android:id="@+id/comment_sort_by_time_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/comment_sort_btn_marginstart"
-            android:text="@string/comment_sort_by_time_btn_text"
-            android:textSize="@dimen/comment_sort_btn_text_size"/>
-        <TextView
-            android:id="@+id/comment_sort_by_popularity_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/comment_sort_pop_btn_marginstart"
-            android:text="@string/comment_sort_by_popularity_btn_text"
-            android:textSize="@dimen/comment_sort_btn_text_size"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/article_rv"
+        android:layout_height="match_parent"
+        android:layout_below="@id/comm_theme_selector_recyclerview">
+
+        <RelativeLayout
+            android:id="@+id/comm_post_section_nsv_inner_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/comment_rv_margintop"
-            android:nestedScrollingEnabled="false"/>
-    </RelativeLayout>
+            android:layout_marginBottom="@dimen/bottom_navigation_bar_height">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/comment_section_sort_indicating_circle"
+                android:background="@color/purple_200"
+                android:layout_width="@dimen/comment_section_sort_indicating_circle_size"
+                android:layout_height="@dimen/comment_section_sort_indicating_circle_size"
+                android:layout_marginTop="@dimen/comment_sort_indicating_circle_martintop"
+                android:layout_marginStart="@dimen/comment_sort_indicating_circle_marginstart"/>
+            <TextView
+                android:id="@+id/comment_sort_by_time_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/comment_sort_btn_marginstart"
+                android:text="@string/comment_sort_by_time_btn_text"
+                android:textSize="@dimen/comment_sort_btn_text_size"/>
+            <TextView
+                android:id="@+id/comment_sort_by_popularity_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/comment_sort_pop_btn_marginstart"
+                android:text="@string/comment_sort_by_popularity_btn_text"
+                android:textSize="@dimen/comment_sort_btn_text_size"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/article_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/comment_rv_margintop"
+                android:paddingTop="@dimen/comm_posts_list_paddingtop"
+                android:paddingStart="@dimen/comm_posts_list_padding_horizontal"
+                android:paddingEnd="@dimen/comm_posts_list_padding_horizontal"
+                android:nestedScrollingEnabled="false"/>
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/float_btn_bottom_margin"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="@dimen/float_btn_end_margin"
+        app:elevation="3dp"
         android:src="@drawable/ic_pen"
         app:backgroundTint="@color/brand1"
         android:elevation="10dp"
         app:borderWidth="0dp"
         android:contentDescription="@string/float_submit" />
-
-
-
 </RelativeLayout>
