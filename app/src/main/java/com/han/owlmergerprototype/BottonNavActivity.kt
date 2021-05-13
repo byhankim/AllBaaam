@@ -46,6 +46,7 @@ class BottonNavActivity : AppCompatActivity() {
 
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
+        fragmentManager = supportFragmentManager
 
         commFragment = CommFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragments_frame, commFragment).commit()

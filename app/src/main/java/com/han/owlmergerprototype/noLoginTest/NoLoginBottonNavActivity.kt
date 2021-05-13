@@ -18,6 +18,7 @@ import com.han.owlmergerprototype.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.mypage.MypageFragment
+import android.widget.Button
 
 class NoLoginBottonNavActivity : AppCompatActivity() {
 
@@ -40,6 +41,7 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
         setContentView(R.layout.bottom_nav_layout)
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)
+        fragmentManager = supportFragmentManager
        
 
         nav.menu.getItem(0).isCheckable = false
@@ -56,14 +58,15 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
 
 
         switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.d(TAG, "onCreate: ${fragmentManager.backStackEntryCount}")
 
             if(fragmentManager.backStackEntryCount !=0) {
+                Log.d(TAG, "BottomActivity - run if")
                 fragmentManager.popBackStack()
             }
 
 
                 if (isChecked) {
+                    Log.d(TAG, "BottomActivity - switch map")
 
                     mapFragment = MapFragment.newInstance()
                    
@@ -87,7 +90,7 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private val onBottomNavigationSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{
 
-        fragmentManager = supportFragmentManager
+
        
 
 

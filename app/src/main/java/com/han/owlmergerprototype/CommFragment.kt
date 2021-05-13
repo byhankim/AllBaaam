@@ -79,6 +79,7 @@ class CommFragment: Fragment() {
         //데이터 셋팅
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
             holder.rowTextView.text = nickname[position]
+
         }
 
         //리사이클러뷰의 항목갯수 반환

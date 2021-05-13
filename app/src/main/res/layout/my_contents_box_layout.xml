@@ -4,6 +4,7 @@
     android:background="@drawable/my_contents_box"
     android:id="@+id/my_contents_row"
     android:padding="16dp">
+
     <TextView
         android:id="@+id/category_tv"
         android:layout_width="wrap_content"

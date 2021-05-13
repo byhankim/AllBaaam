@@ -1,25 +1,36 @@
 package com.han.owlmergerprototype.noLoginTest
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.BlurMaskFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mmin18.widget.RealtimeBlurView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.han.owlmergerprototype.BottonNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.utils.SpaceDecoration
+import org.w3c.dom.Text
 
+@Suppress("DEPRECATION")
 class NoLoginCommFragment: Fragment() {
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
+
 
     private lateinit var recyclerView: RecyclerView
     val nickname = arrayListOf(
@@ -71,6 +82,7 @@ class NoLoginCommFragment: Fragment() {
     }
 
     inner class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
+        lateinit var cancelBTN:Button
         //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
             val itemView = layoutInflater.inflate(R.layout.layout_recycler_item,null)
@@ -80,21 +92,49 @@ class NoLoginCommFragment: Fragment() {
 
         //데이터 셋팅
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-            //if(position<3){
+
                 holder.rowTextView.text = nickname[position]
-            //}
+            if(position==3){
+                holder.lastItemBlur.isVisible = true
+                holder.loginView.isVisible = true
+                holder.loginBTN.setOnClickListener {
+                    val dialog = Dialog(context!!)
+                    dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+                    dialog.setContentView(R.layout.activity_login)
+                    val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
+                    cancelBTN.setOnClickListener(View.OnClickListener {
+                        dialog.dismiss()
+                    })
+                    val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
+                    kakaoLoginBTN.setOnClickListener(View.OnClickListener {
+                        dialog.dismiss()
+                        inte = Intent(context,BottonNavActivity::class.java)
+                        startActivity(inte)
+                        activity!!.finish()
+
+                    })
+                    dialog.show()
+
+
+
+
+                }
+            }
 
         }
 
         //리사이클러뷰의 항목갯수 반환
         override fun getItemCount(): Int {
-            return 3
+            return 4
         }
 
 
         inner class ViewHolderClass(itemView:View) : RecyclerView.ViewHolder(itemView){
             //항목View 내부의 View 상속
             val rowTextView: TextView = itemView.findViewById(R.id.tv_nicname)
+            val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
+            val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
+            val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)
         }
 
 
