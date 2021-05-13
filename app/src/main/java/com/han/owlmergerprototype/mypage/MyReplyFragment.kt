@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.utils.SpaceDecoration
 
-class MyRippleFragment:Fragment() {
+class MyReplyFragment:Fragment() {
     private lateinit var recyclerView: RecyclerView
     val dateArray = arrayListOf(
         "21/04/18","21/10/08","21/06/22","21/03/24","21/03/14"
     )
     companion object{
 
-        fun newInstance() : MyRippleFragment {
+        fun newInstance() : MyReplyFragment {
 
 
-            return MyRippleFragment()
+            return MyReplyFragment()
         }
     }
 

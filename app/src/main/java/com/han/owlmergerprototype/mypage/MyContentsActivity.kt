@@ -21,7 +21,7 @@ class MyContentsActivity:AppCompatActivity() {
         with(myAdapter){
 
             appendFragment(MyContentFragment.newInstance())
-            appendFragment(MyRippleFragment.newInstance())
+            appendFragment(MyReplyFragment.newInstance())
             Log.d("LOOOG!!","프레그먼트 추가 완료")
         }
 
