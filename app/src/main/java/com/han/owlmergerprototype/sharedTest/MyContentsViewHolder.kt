@@ -25,7 +25,7 @@ class MyContentsViewHolder(itemView: View)
 
     fun bind(articleEntity:ArticleEntity){
         Log.d(TAG, "MyContentsViewHolder: bind{} called")
-        categoryTV.text = articleEntity.category
+        categoryTV.text = articleEntity.category.toString()
         dateTV.text = articleEntity.datetime
         contentTV.text = articleEntity.content
 

@@ -3,9 +3,10 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="320dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/comm_main_article_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="20dp"
     app:cardCornerRadius="30dp"
     android:backgroundTint="@color/gray8"

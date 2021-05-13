@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mmin18.widget.RealtimeBlurView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.han.owlmergerprototype.BottonNavActivity
+import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.utils.SpaceDecoration
@@ -108,7 +108,7 @@ class NoLoginCommFragment: Fragment() {
                     val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
                     kakaoLoginBTN.setOnClickListener(View.OnClickListener {
                         dialog.dismiss()
-                        inte = Intent(context,BottonNavActivity::class.java)
+                        inte = Intent(context, BottomNavActivity::class.java)
                         startActivity(inte)
                         activity!!.finish()
 

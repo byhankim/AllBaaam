@@ -1,5 +1,6 @@
 package com.han.owlmergerprototype.community
 
+import android.app.Activity
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -21,7 +22,7 @@ import com.han.owlmergerprototype.data.ThemeEntity
 
 class ThemeSelectorRecyclerAdapter(
     private val themesList: MutableList<ThemeEntity>,
-    private val owner: CreateArticleActivity
+    private val owner: Activity
 ): RecyclerView.Adapter<ThemeSelectorRecyclerAdapter.ThemeHolder>() {
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>

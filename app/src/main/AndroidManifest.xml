@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OwlPrototype">
-        <activity android:name=".noLoginTest.LoginActivity"></activity>
         <activity android:name=".widgetstest.BottomNavTestActivity" />
         <activity android:name=".noLoginTest.NoLoginBottonNavActivity" />
         <activity android:name=".community.ArticleActivity" />
@@ -34,14 +33,14 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".mypage.MyContentsActivity" />
         <activity
-            android:name=".BottonNavActivity"
+            android:name=".BottomNavActivity"
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".CommunityMainActivity"
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".community.CreateArticleActivity"
-            android:theme="@style/Theme.OwlPrototype">
+            android:theme="@style/Theme.OwlPrototype" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

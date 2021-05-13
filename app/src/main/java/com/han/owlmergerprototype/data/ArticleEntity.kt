@@ -1,7 +1,7 @@
 package com.han.owlmergerprototype.data
 
 data class ArticleEntity (
-    val category:String = "해외 스포츠",
+    var category: Int = -1,
     var uIcon: Int = -1,
     val datetime: String = "",
     var fixedDatetime: String = "",

@@ -73,7 +73,7 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
                 } else {
                    
-                    commFragment = CommFragment.newInstance()
+                    commFragment = CommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
 
                 }

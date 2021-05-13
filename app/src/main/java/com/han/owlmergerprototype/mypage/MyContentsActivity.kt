@@ -2,17 +2,7 @@ package com.han.owlmergerprototype.mypage
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Adapter
-import android.widget.ArrayAdapter
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import com.han.owlmergerprototype.AlarmFragment
-import com.han.owlmergerprototype.BottonNavActivity
-import com.han.owlmergerprototype.CommFragment
-import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.databinding.MyContentsLayoutBinding
 
 class MyContentsActivity:AppCompatActivity() {
