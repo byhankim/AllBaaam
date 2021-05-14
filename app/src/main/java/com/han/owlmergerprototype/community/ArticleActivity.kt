@@ -4,18 +4,25 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
+import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
+import kotlin.properties.Delegates
 
 class ArticleActivity : AppCompatActivity() {
 
     private lateinit var binding: ArticleLayoutBinding
+    private var dummyPostId by Delegates.notNull<Int>()
 
     // icon toggle
     var isBookMarked = false
@@ -27,12 +34,35 @@ class ArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // shared pref
+        val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
+
+
+    // post id
+        dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
+        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
+
         binding = ArticleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.articleToolbar)
 
 
-        // post article
+        // get Article Post Body from intent post_id
+        val myPost: Post = when (dummyPostId) {
+            -1 -> Post(contents=getString(R.string.article_content_for_dummy_post_id_retrive_error))
+            else -> {
+                val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
+
+                val dummyPostType = object: TypeToken<MutableList<Post>>() {}.type
+                val dummyDataSetFromSharedPreferences: MutableList<Post> =
+                    Gson().fromJson(myShared.getString(sharedKey, ""), dummyPostType)
+
+                dummyDataSetFromSharedPreferences.filter { it.id == dummyPostId }[0]
+            }
+        }
+        binding.articleContentTv.text = myPost.contents
+
+//        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
 
 
 
@@ -43,34 +73,26 @@ class ArticleActivity : AppCompatActivity() {
             layoutManager = manager
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-            val tempList = mutableListOf<CommentEntity>()
-            for (i in 1..20) {
-                tempList.add(CommentEntity())
-            }
+            // get comment data from shared preferences
+            // (opt) where article id == current post id
+            val sharedCommentsKey = getString(R.string.dummy_comments_key)
 
-            val temp = CommentEntity()
-            temp.isStandaloneComment = false
-            tempList.add(temp)
+            val dummyCommentsType = object: TypeToken<MutableList<Comment>>() {}.type
+
+            // filter by postID!!
+            val dummyCommentsDataSet: MutableList<Comment> =
+                Gson().fromJson(myShared.getString(sharedCommentsKey, ""), dummyCommentsType)/*.filter{  }*/
 
             adapter = CommentRecyclerAdapter(
-                tempList,
+                dummyCommentsDataSet,
                 this@ArticleActivity
             ) {
 //                 setOnClickListener {}
             }
+
+            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
         }
 
-        // article post body
-        binding.articleContentTv.text = intent.getStringExtra("article_content")
-        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
-        /*
-    val uIcon: Int = -1,
-    val datetime: String = "",
-    var fixedDatetime: String = "",
-    var uname: String = "",
-    var content: String = "",
-    var images: MutableList<Int>
-        */
         with (binding.articleFavoriteBtn) {
             setOnClickListener {
                 isLikePressed = !isLikePressed

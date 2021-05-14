@@ -39,4 +39,9 @@
     <string name="comm_games">게임</string>
     <string name="comm_theme_not_found">응 없어~</string>
     <string name="dummy_post_id">post id</string>
+    <string name="dummy_comments_key">dummyCommentsKey</string>
+    <string name="dummy_post_body_notfound">글 id를 제대로 불러오지 못하여 아무것도 보여줄 게 없소!</string>
+    <string name="article_content_for_dummy_post_id_retrive_error"><![CDATA[커뮤니티 -> 글 간에 id 값 전달하기 실패! 보여줄 본문이 없슈!]]></string>
+    <string name="dummy_username_retrieve_error">콩순이</string>
+    <string name="dummy_username_1">배고픈 빙봉</string>
 </resources>

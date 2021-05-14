@@ -26,6 +26,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
@@ -92,7 +93,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             layoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, true)
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-            adapter = RecyclerAdapter(owner, dummyCommunityPostsList)
+            val size = dummyCommunityPostsList.size
+            val postList: List<Post> = dummyCommunityPostsList.subList(size - 4, size)
+            adapter = RecyclerAdapter(owner, postList as MutableList<Post>)
         }
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
@@ -238,12 +241,22 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 }
             }
 
+            holder.itemView.setOnClickListener {
+//                val intent = Intent(owner, BottomNavActivity::class.java).apply {
+////                    putExtra("article_title", binding.commWriteArticleTitleEt.text.toString())
+//                    putExtra("article_content", binding.commWriteArticleContentEt.text.toString())
+//                }
+//                startActivity(intent)
+                Log.e("[CommFrag_itemview]", "clicked post id: ${postEntity.id}")
+                val intent = Intent(owner, ArticleActivity::class.java).apply {
+                    putExtra(getString(R.string.dummy_post_id), postEntity.id)
+                }
+                owner.startActivity(intent)
+            }
         }
 
         //리사이클러뷰의 항목갯수 반환
-        override fun getItemCount(): Int {
-            return 4
-        }
+        override fun getItemCount() = dummyPostsList.size
 
 
         inner class ViewHolderClass(itemView:View) : RecyclerView.ViewHolder(itemView){

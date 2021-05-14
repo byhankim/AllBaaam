@@ -21,8 +21,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_img"
-            android:layout_width="44dp"
-            android:layout_height="38dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:background="@drawable/outline_bookmark_border_24"
             android:backgroundTint="@color/gray1"
@@ -33,11 +33,12 @@
 
         <TextView
             android:id="@+id/tv_badge"
-            android:layout_width="82dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_badge_orange"
             android:gravity="center"
             android:text="야식"
+            android:textSize="12sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="97dp"
@@ -78,7 +79,7 @@
             android:layout_alignParentEnd="true"
             android:text="3분전"
             android:textColor="@color/gray1"
-            android:textSize="20dp"
+            android:textSize="12sp"
 
             />
 
