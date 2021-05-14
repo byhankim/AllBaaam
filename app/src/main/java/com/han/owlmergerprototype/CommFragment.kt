@@ -243,10 +243,11 @@ class CommFragment(var owner: Activity): Fragment() {
 //                    putExtra("article_content", binding.commWriteArticleContentEt.text.toString())
 //                }
 //                startActivity(intent)
+                Log.e("[CommFrag_itemview]", "clicked post id: ${postEntity.id}")
                 val intent = Intent(owner, ArticleActivity::class.java).apply {
                     putExtra(getString(R.string.dummy_post_id), postEntity.id)
-                    startActivity(Intent(owner, ArticleActivity::class.java))
                 }
+                owner.startActivity(intent)
             }
         }
 

@@ -158,6 +158,7 @@ class CreateArticleActivity : AppCompatActivity() {
                 val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
                 val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
                 dummyDataSetFromSharedPreferences.add(Post(
+                    id = dummyDataSetFromSharedPreferences.size + 1,
                     createdAt = DateTimeFormatManager.getCurrentDatetime(),
                     contents = binding.commWriteArticleContentEt.text.toString(),
                     category = R.string.comm_latenight_food

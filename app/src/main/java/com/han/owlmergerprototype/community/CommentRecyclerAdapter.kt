@@ -1,6 +1,7 @@
 package com.han.owlmergerprototype.community
 
 import android.app.Activity
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
 
 class CommentRecyclerAdapter (
-    private val commentsList: MutableList<CommentEntity>,
-    private val owner: Activity,
-    private val itemListener: (CommentEntity) -> Unit
+    private val commentsList: MutableList<Comment>,
+    private val owner: ArticleActivity,
+    private val itemListener: (Comment) -> Unit
 ): RecyclerView.Adapter<CommentRecyclerAdapter.CommentHolder>() {
-    inner class CommentHolder(itemView: View, itemListenr: (CommentEntity) -> Unit): RecyclerView.ViewHolder(itemView){
+    inner class CommentHolder(itemView: View, itemListenr: (Comment) -> Unit): RecyclerView.ViewHolder(itemView){
         val userName: TextView = itemView.findViewById(R.id.comment_username)
         val timePassed: TextView = itemView.findViewById(R.id.comment_time_passed)
         val content: TextView = itemView.findViewById(R.id.comment_content)
@@ -24,7 +26,7 @@ class CommentRecyclerAdapter (
 
         var hiddenSpace: TextView = itemView.findViewById(R.id.comment_depth_dummy_tv)
 
-        fun bindListener(item: CommentEntity) {
+        fun bindListener(item: Comment) {
             itemView.setOnClickListener { itemListener(item) }
         }
     }
@@ -37,11 +39,14 @@ class CommentRecyclerAdapter (
     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
         val commentEntity = commentsList[position]
         with (holder) {
-            userName.text = commentEntity.uName
-            timePassed.text = commentEntity.timePassed
-            content.text = commentEntity.content
+            userName.text = when (commentEntity.userID) {
+                1 -> owner.getString(R.string.dummy_username_1)
+                else -> owner.getString(R.string.dummy_username_retrieve_error)
+            }
+            timePassed.text = commentEntity.createdAt
+            content.text = commentEntity.contents
 
-            if (!commentEntity.isStandaloneComment) {
+            if (!commentEntity.isParent) {
                 hiddenSpace.visibility = TextView.VISIBLE
             }
         }

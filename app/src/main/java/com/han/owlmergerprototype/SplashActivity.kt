@@ -10,6 +10,7 @@ import com.han.owlmergerprototype.noLoginTest.NoLoginBottonNavActivity
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.Post
 
 class SplashActivity : AppCompatActivity() {
@@ -32,14 +33,9 @@ class SplashActivity : AppCompatActivity() {
 
         Log.e("헤헿", "ㅎㅎㅎㅎ")
 
-        // fakes
-//        var id: Int = -1,
-//        var createdAt: String = "",
-//        var updatedAt: String = "",
-//        var contents: String = "",
-//        var category: Int = -1,
-//        var cmntID: Int = -1,
-//        var userID: Int = -1
+        // ----------------------------------------------------------------
+        //      커뮤니티 메인 프래그먼트 dp용 더미데이터
+        // ----------------------------------------------------------------
         val dummyDataSet = mutableListOf<Post>()
         dummyDataSet.add(Post(1, "20210511", "20210512", "아무도 나랑 마포 떡볶이 맛집에 가주지 않았다", 1, -1, 1))
         dummyDataSet.add(Post(2, "20210512", "20210513", "니하오?", 2, -1, 2))
@@ -58,10 +54,44 @@ class SplashActivity : AppCompatActivity() {
 //            apply()
 //        }
 
-        // when fetching
+
+        // ----------------------------------------------------------------
+        //      comment 테이블 더미데이터
+        // ----------------------------------------------------------------
+        val commentsDummyDataSet = mutableListOf<Comment>()
+        /*
+        * var id: Int,
+          var createdAt: String,
+          var updatedAt: String?,
+          var contents: String,
+          var postID: Int,
+          var isParent: Boolean,
+          var recomment: Int?,
+          var userID: Int
+        * */
+        commentsDummyDataSet.add(Comment(11, "20210514092500", null, "야임마 똑바로해", 7, true, null, 1))
+        commentsDummyDataSet.add(Comment(12, "20210514092626", null, "ㅇㅋ", 7, false, 11, 2))
+        commentsDummyDataSet.add(Comment(13, "20210514092500", null, "ㅈㅅ", 7, false, 11, 3))
+        commentsDummyDataSet.add(Comment(14, "20210514110024", null, "응 너나잘해~", 7, false, 11, 4))
+        commentsDummyDataSet.add(Comment(15, "20210514123456", null, "hi", 7, true, 11, 1))
+        commentsDummyDataSet.add(Comment(16, "20210514134543", null, "칼국수특) 백세칼국수 미만 반박 안받음", 7, true, null, 1))
+        commentsDummyDataSet.add(Comment(17, "20210515000101", null, "111111111111111111111111111111111111111111111111111111111111", 7, true, null, 3))
+        commentsDummyDataSet.add(Comment(18, "20210516161616", null, "날씨좋다", 7, true, null, 2))
+        commentsDummyDataSet.add(Comment(19, "20210517080808", null, "집가고 싶어요", 7, true, null, 1))
+        commentsDummyDataSet.add(Comment(20, "20210518233223", null, "me2", 7, false, 19, 2))
+        commentsDummyDataSet.add(Comment(21, "20210520111111", null, "ㅇㅋ", 7, false, 11, 1))
+
+//        with (myShared.edit()) {
+//            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
+//            apply()
+//        }
+
+        // ----------------------------------------------------------------
+        //      when fetching from shared preferences
+        // ----------------------------------------------------------------
         val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
         val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
-        Log.e("[SPlash]", dummyDataSetFromSharedPreferences[0].contents)
+        Log.e("[Splash]", dummyDataSetFromSharedPreferences[0].contents)
 
     }
 }
