@@ -41,9 +41,6 @@ class CommFragment(var owner: Activity): Fragment() {
     // dummy post dataset
     private lateinit var dummyCommPostDatasets: MutableList<Post>
 
-    val nickname = arrayListOf(
-        "배고픈 수현이","야근하는 다미","피곤한 한울이","고민하는 현진이","화가난 성현이"
-    )
 
 
     companion object{
@@ -127,9 +124,10 @@ class CommFragment(var owner: Activity): Fragment() {
             testList.add(
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_honey_tip),
-                    com.han.owlmergerprototype.R.drawable.owl2,
+                    com.han.owlmergerprototype.R.drawable.ic_idea,
+                    com.han.owlmergerprototype.R.color.style1_5_20,
+                    com.han.owlmergerprototype.R.color.style2_5,
                     com.han.owlmergerprototype.R.color.style1_5,
-                    com.han.owlmergerprototype.R.color.black,
                     1,
                     false
                 )
@@ -137,9 +135,10 @@ class CommFragment(var owner: Activity): Fragment() {
             testList.add(
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_stocks_overseas),
-                    com.han.owlmergerprototype.R.drawable.like_btn,
+                    com.han.owlmergerprototype.R.drawable.ic_graph,
+                    com.han.owlmergerprototype.R.color.style1_4_20,
+                    com.han.owlmergerprototype.R.color.style2_4,
                     com.han.owlmergerprototype.R.color.style1_4,
-                    com.han.owlmergerprototype.R.color.black,
                     2,
                     false
                 )
@@ -147,9 +146,10 @@ class CommFragment(var owner: Activity): Fragment() {
             testList.add(
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_sports_overseas),
-                    com.han.owlmergerprototype.R.drawable.owl2,
+                    com.han.owlmergerprototype.R.drawable.ic_sport,
+                    com.han.owlmergerprototype.R.color.style1_3_20,
+                    com.han.owlmergerprototype.R.color.style2_3,
                     com.han.owlmergerprototype.R.color.style1_3,
-                    com.han.owlmergerprototype.R.color.black,
                     3,
                     false
                 )
@@ -157,9 +157,10 @@ class CommFragment(var owner: Activity): Fragment() {
             testList.add(
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_latenight_food),
-                    com.han.owlmergerprototype.R.drawable.back_icon_24,
+                    com.han.owlmergerprototype.R.drawable.ic_chicken,
+                    com.han.owlmergerprototype.R.color.style1_2_20,
+                    com.han.owlmergerprototype.R.color.style2_2,
                     com.han.owlmergerprototype.R.color.style1_2,
-                    com.han.owlmergerprototype.R.color.black,
                     4,
                     false
                 )
@@ -167,13 +168,25 @@ class CommFragment(var owner: Activity): Fragment() {
             testList.add(
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_study_hard),
-                    com.han.owlmergerprototype.R.drawable.owl2,
-                    com.han.owlmergerprototype.R.color.style1_1,
-                    com.han.owlmergerprototype.R.color.black,
+                    com.han.owlmergerprototype.R.drawable.ic_book,
+                    com.han.owlmergerprototype.R.color.style1_6_20,
+                    com.han.owlmergerprototype.R.color.style2_6,
+                    com.han.owlmergerprototype.R.color.style1_6,
                     5,
                     false
                 )
             )
+            testList.add(
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_games),
+                            com.han.owlmergerprototype.R.drawable.ic_game,
+                            com.han.owlmergerprototype.R.color.style1_7_20,
+                            com.han.owlmergerprototype.R.color.style2_7,
+                            com.han.owlmergerprototype.R.color.style1_7,
+                            6,
+                            false
+                    )
+                    )
             adapter = com.han.owlmergerprototype.community.ThemeSelectorRecyclerAdapter(
                 testList,
                 owner

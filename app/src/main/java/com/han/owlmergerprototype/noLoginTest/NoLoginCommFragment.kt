@@ -116,54 +116,70 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             android.util.Log.e("[THEME_SELECTOR]", "aasaaaaaaaaaaahhh!!!")
             val testList = kotlin.collections.mutableListOf<ThemeEntity>()
             testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_honey_tip),
-                    com.han.owlmergerprototype.R.drawable.owl2,
-                    com.han.owlmergerprototype.R.color.style1_5,
-                    com.han.owlmergerprototype.R.color.black,
-                    1,
-                    false
-                )
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_honey_tip),
+                            com.han.owlmergerprototype.R.drawable.ic_idea,
+                            com.han.owlmergerprototype.R.color.style1_5_20,
+                            com.han.owlmergerprototype.R.color.style2_5,
+                            com.han.owlmergerprototype.R.color.style1_5,
+                            1,
+                            false
+                    )
             )
             testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_stocks_overseas),
-                    com.han.owlmergerprototype.R.drawable.like_btn,
-                    com.han.owlmergerprototype.R.color.style1_4,
-                    com.han.owlmergerprototype.R.color.black,
-                    2,
-                    false
-                )
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_stocks_overseas),
+                            com.han.owlmergerprototype.R.drawable.ic_graph,
+                            com.han.owlmergerprototype.R.color.style1_4_20,
+                            com.han.owlmergerprototype.R.color.style2_4,
+                            com.han.owlmergerprototype.R.color.style1_4,
+                            2,
+                            false
+                    )
             )
             testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_sports_overseas),
-                    com.han.owlmergerprototype.R.drawable.owl2,
-                    com.han.owlmergerprototype.R.color.style1_3,
-                    com.han.owlmergerprototype.R.color.black,
-                    3,
-                    false
-                )
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_sports_overseas),
+                            com.han.owlmergerprototype.R.drawable.ic_sport,
+                            com.han.owlmergerprototype.R.color.style1_3_20,
+                            com.han.owlmergerprototype.R.color.style2_3,
+                            com.han.owlmergerprototype.R.color.style1_3,
+                            3,
+                            false
+                    )
             )
             testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_latenight_food),
-                    com.han.owlmergerprototype.R.drawable.back_icon_24,
-                    com.han.owlmergerprototype.R.color.style1_2,
-                    com.han.owlmergerprototype.R.color.black,
-                    4,
-                    false
-                )
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_latenight_food),
+                            com.han.owlmergerprototype.R.drawable.ic_chicken,
+                            com.han.owlmergerprototype.R.color.style1_2_20,
+                            com.han.owlmergerprototype.R.color.style2_2,
+                            com.han.owlmergerprototype.R.color.style1_2,
+                            4,
+                            false
+                    )
             )
             testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_study_hard),
-                    com.han.owlmergerprototype.R.drawable.owl2,
-                    com.han.owlmergerprototype.R.color.style1_1,
-                    com.han.owlmergerprototype.R.color.black,
-                    5,
-                    false
-                )
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_study_hard),
+                            com.han.owlmergerprototype.R.drawable.ic_book,
+                            com.han.owlmergerprototype.R.color.style1_6_20,
+                            com.han.owlmergerprototype.R.color.style2_6,
+                            com.han.owlmergerprototype.R.color.style1_6,
+                            5,
+                            false
+                    )
+            )
+            testList.add(
+                    com.han.owlmergerprototype.data.ThemeEntity(
+                            getString(com.han.owlmergerprototype.R.string.comm_games),
+                            com.han.owlmergerprototype.R.drawable.ic_game,
+                            com.han.owlmergerprototype.R.color.style1_7_20,
+                            com.han.owlmergerprototype.R.color.style2_7,
+                            com.han.owlmergerprototype.R.color.style1_7,
+                            6,
+                            false
+                    )
             )
             adapter = com.han.owlmergerprototype.community.ThemeSelectorRecyclerAdapter(
                 testList,

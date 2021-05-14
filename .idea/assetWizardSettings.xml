@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_pen" />
-                            <entry key="sourceFile" value="C:\icon\pen.svg" />
+                            <entry key="outputName" value="ic_book" />
+                            <entry key="sourceFile" value="C:\icon\book.svg" />
                           </map>
                         </option>
                       </PersistentState>

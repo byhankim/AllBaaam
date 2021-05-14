@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">올뺌쓰</string>
     <string name="owl_honey_tip">올빼미 꿀팁</string>
-    <string name="comm_honey_tip">올뺌쓰 꿀팁</string>
+    <string name="comm_honey_tip">꿀팁</string>
     <string name="comm_stocks_overseas">해외주식</string>
     <string name="comm_sports_overseas">해외 스포츠</string>
     <string name="comm_food">야식</string>

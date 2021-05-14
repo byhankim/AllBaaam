@@ -77,4 +77,5 @@ dependencies {
 
     // http image network - glide
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.12.0'
+    implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.1'
 }

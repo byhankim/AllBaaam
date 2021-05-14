@@ -54,4 +54,14 @@
     <color name="style2_6">#DEFF9E</color>
     <color name="style2_7">#C8D5FF</color>
     <color name="style2_8">#E4BAFF</color>
+
+
+    <color name="style1_1_20">#33FFB861</color>
+    <color name="style1_2_20">#33FF8D00</color>
+    <color name="style1_3_20">#33ED89AD</color>
+    <color name="style1_4_20">#33FFDB6E</color>
+    <color name="style1_5_20">#3397DFE5</color>
+    <color name="style1_6_20">#33ABDA52</color>
+    <color name="style1_7_20">#336384EF</color>
+    <color name="style1_8_20">#33AF3FF9</color>
 </resources>

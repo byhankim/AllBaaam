@@ -1,5 +1,6 @@
 package com.han.owlmergerprototype.community
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.Resources
 import android.graphics.Color
@@ -15,6 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.alpha
+import androidx.core.view.isVisible
 import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
@@ -32,6 +34,7 @@ class ThemeSelectorRecyclerAdapter(
         val themeSelectorCv: CardView = itemView.findViewById(R.id.theme_selector_item_cv)
         val themeSelectorItemTv: TextView = itemView.findViewById(R.id.theme_selector_item_tv)
         val themeSelectorItemIcon: TextView = itemView.findViewById(R.id.theme_selector_item_icon)
+        val layout: RelativeLayout = itemView.findViewById(R.id.clicked_card_layout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeHolder {
@@ -39,12 +42,15 @@ class ThemeSelectorRecyclerAdapter(
         return ThemeHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ThemeHolder, position: Int) {
         val themeEntity = themesList[position]
         with (holder) {
             themeSelectorItemTv.text = themeEntity.themeText
+            themeSelectorItemTv.setTextColor(owner.resources.getColor(themeEntity.themeColorOnClick))
+            themeSelectorCv.setCardBackgroundColor(owner.resources.getColor(themeEntity.themeColor))
             themeSelectorItemIcon.background = getDrawable(owner, themeEntity.themeIcon)
-            themeSelectorCv.setCardBackgroundColor(Color.parseColor("#FF0800"))
+
 //            themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, R.color.error2_1))//themeEntity.themeColor))
 //            themeSelectorCv.setBackgroundColor(ContextCompat.getColor(owner, themeEntity.themeColor))
             themeSelectorCv.setOnClickListener {
@@ -66,14 +72,21 @@ class ThemeSelectorRecyclerAdapter(
             }
             if (selectedPos == position) {
 //                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themeEntity.themeColorOnClick))
-                themeSelectorCv.alpha = 0.6f
-                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position].themeColor))
+//                themeSelectorCv.alpha = 0.3f
+//                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position].themeColor))
 //                Toast.makeText(owner, "original color: ${themeEntity.themeColor}", Toast.LENGTH_SHORT).show()
+                themeSelectorCv.setCardBackgroundColor(owner.resources.getColor(themeEntity.themeColorOnClick))
+                layout.setBackgroundColor(owner.resources.getColor(themeEntity.themeColor))
+                themeSelectorItemTv.setTextColor(owner.resources.getColor(themeEntity.themeTextColorOnClick))
+                layout.isVisible = true
             } else {
                 // reset color for each theme selector
-                themeSelectorCv.alpha = 1f
-                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position].themeColor))
+//                themeSelectorCv.alpha = 1f
+//                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position].themeColor))
 //                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position % themesList.size].themeColor))
+                themeSelectorCv.setCardBackgroundColor(owner.resources.getColor(themeEntity.themeColor))
+                themeSelectorItemTv.setTextColor(owner.resources.getColor(themeEntity.themeColorOnClick))
+                layout.isVisible = false
             }
         }
     }

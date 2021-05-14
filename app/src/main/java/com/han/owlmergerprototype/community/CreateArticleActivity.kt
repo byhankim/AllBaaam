@@ -51,11 +51,11 @@ class CreateArticleActivity : AppCompatActivity() {
             DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
 
             val testList = mutableListOf<ThemeEntity>()
-            testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.owl2, R.color.style1_5, R.color.black, 1, false))
-            testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.like_btn, R.color.style1_4, R.color.black, 2, false))
-            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.owl2, R.color.style1_3, R.color.black, 3, false))
-            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.back_icon_24, R.color.style1_2, R.color.black, 4, false))
-            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.owl2, R.color.style1_1, R.color.black, 5, false))
+            testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.owl2, R.color.style1_5,R.color.style1_4, R.color.black, 1, false))
+            testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.like_btn, R.color.style1_4,R.color.style1_4,R.color.black, 2, false))
+            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.owl2, R.color.style1_3,R.color.style1_4, R.color.black, 3, false))
+            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.back_icon_24, R.color.style1_2,R.color.style1_4, R.color.black, 4, false))
+            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.owl2, R.color.style1_1,R.color.style1_4, R.color.black, 5, false))
             adapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
             }*/
