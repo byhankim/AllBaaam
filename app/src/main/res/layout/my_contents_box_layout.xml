@@ -28,7 +28,7 @@
         android:textSize="14sp"
         android:paddingTop="2dp"
         android:text="마포구청 근처에 늦게까지 영업하는 맛있는\n반다이크 언제 나오냐 ~"
-        android:textColor="@color/ui1"/>
+        android:textColor="@color/ui3"/>
 
     <Button
         android:layout_width="wrap_content"

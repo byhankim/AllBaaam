@@ -1,4 +1,4 @@
-package com.han.owlmergerprototype.mypage
+package com.han.owlmergerprototype.noLoginTest
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -13,15 +13,13 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.BottomNavActivity
-import com.han.owlmergerprototype.Mypg004Activity
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.mypage.boardActivity.PolicyActivity
 import com.han.owlmergerprototype.mypage.boardActivity.SuggestionActivity
 
-class MypageFragment : Fragment() {
+class NoLoginMypageFragment : Fragment() {
     private lateinit var my_contents_btn:Button
     private lateinit var mysavedBTN:Button
     private lateinit var mypageLV:ListView
@@ -29,11 +27,12 @@ class MypageFragment : Fragment() {
     private lateinit var inte:Intent
     private lateinit var backBTN:TextView
     private lateinit var nameTV:TextView
+
     companion object{
         const val TAG : String = "looooog"
 
-        fun newInstance() : MypageFragment {
-            return MypageFragment()
+        fun newInstance() : NoLoginMypageFragment {
+            return NoLoginMypageFragment()
         }
     }
 
@@ -66,20 +65,17 @@ class MypageFragment : Fragment() {
         mypageLV.adapter=adap1
 
         my_contents_btn.setOnClickListener {
-            inte = Intent(context,MyContentsActivity::class.java)
-            startActivity(inte)
+            setDialog()
         }
 
         settingBTN=view.findViewById(R.id.setting_btn)
         settingBTN.setOnClickListener {
-            inte = Intent(context,SettingActivity::class.java)
-            startActivity(inte)
+            setDialog()
         }
 
         mysavedBTN=view.findViewById(R.id.my_saved_btn)
         mysavedBTN.setOnClickListener {
-            inte = Intent(context,Mypg004Activity::class.java)
-            startActivity(inte)
+            setDialog()
         }
 
         backBTN = view.findViewById(R.id.back_btn)
@@ -117,5 +113,27 @@ class MypageFragment : Fragment() {
         return view
     }
 
+    fun setDialog(){
+        val dialog = Dialog(context!!)
+        dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+        dialog.setContentView(R.layout.activity_login)
+        val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
+        cancelBTN.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+        val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
+        kakaoLoginBTN.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+            TestUser.userName ="롤에 미친 콩순이"
+            TestUser.userID = 1
+            inte = Intent(context, BottomNavActivity::class.java)
+            startActivity(inte)
+            val fragmentManager = getActivity()!!.getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+            fragmentManager.popBackStack()
+            activity!!.finish()
 
+        })
+        dialog.show()
+    }
 }

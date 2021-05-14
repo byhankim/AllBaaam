@@ -54,7 +54,7 @@
             android:paddingBottom="10dp"
             android:text="배고픈 빙봉"
             android:textColor="@color/gray1"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
 
@@ -68,7 +68,7 @@
             android:text="이상 맺어, 그들의 같이, 사막이다. 뜨거운지라, 때에, 것은 우는 새가 때문이다. 수 얼마나 이상의 것이다. 청춘에서만 유소년에게서 위하여, 자신과 시들어 생생하며, 창공에 날카로우나 것이다.
 "
             android:textColor="@color/gray1"
-            android:textSize="20dp" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/textView"

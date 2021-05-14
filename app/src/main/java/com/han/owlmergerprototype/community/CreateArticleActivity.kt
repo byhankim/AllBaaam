@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import com.han.owlmergerprototype.data.Post
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 
 
@@ -160,7 +161,8 @@ class CreateArticleActivity : AppCompatActivity() {
                 dummyDataSetFromSharedPreferences.add(Post(
                     createdAt = DateTimeFormatManager.getCurrentDatetime(),
                     contents = binding.commWriteArticleContentEt.text.toString(),
-                    category = R.string.comm_latenight_food
+                    category = R.string.comm_latenight_food,
+                    userID = TestUser.userID
                 ))
 
                 with (myShared.edit()) {
@@ -172,6 +174,7 @@ class CreateArticleActivity : AppCompatActivity() {
 //                val createPostIntent: Intent = Intent(this, BottomNavActivity::class.java)
 //                createPostIntent.putExtra("postWritten", 200)
                 startActivity(Intent(this, BottomNavActivity::class.java))
+
                 finish()
             }
         }

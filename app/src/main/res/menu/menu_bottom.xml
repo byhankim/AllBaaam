@@ -3,7 +3,7 @@
     <item
         android:id="@+id/alarm_btn"
         android:icon="@drawable/ic_alarm"
-        android:title="알림"/>
+        android:title=""/>
     <item
         android:id="@+id/toggle_btn"
         android:enabled="false"
@@ -11,6 +11,6 @@
     <item
         android:id="@+id/mypage_btn"
         android:icon="@drawable/ic_mypage"
-        android:title="마이 페이지"/>
+        android:title=""/>
 
 </menu>

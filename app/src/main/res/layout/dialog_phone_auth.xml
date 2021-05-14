@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="424dp"
+    android:padding="15dp"
+    android:background="@color/gray6">
+    <TextView
+        android:id="@+id/auth_cancel_btn"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/ic_deletex"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/auth_message_tv"
+        android:layout_below="@+id/login_dialog_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:text="핸드폰 인증을 하시면\n주변 올빼미들과 소통할 수 있어요!"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/auth_Button"
+        android:layout_below="@+id/auth_message_tv"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@color/ui1"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                />
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="36dp"
+                android:textSize="10dp"
+                android:text="인증번호\n전송"
+                android:background="@color/brand1"></Button>
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/ui1"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:layout_gravity="center"
+            android:text="번호는 안전하게 보관되며 어디에도 공개되지 않아요"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/auth_Button"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="인증하기"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ui1"/>
+
+
+</RelativeLayout>

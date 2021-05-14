@@ -4,27 +4,21 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.mypage.MypageFragment
-import android.widget.Button
 
 class NoLoginBottonNavActivity : AppCompatActivity() {
 
     private lateinit var mapFragment: MapFragment
     private lateinit var alarmFragment: AlarmFragment
-    private lateinit var mypageFragment: MypageFragment
+    private lateinit var nologinMypageFragment:NoLoginMypageFragment
     private lateinit var commFragment: CommFragment
     private lateinit var noLoginCommFragment: NoLoginCommFragment
     private lateinit var nav:BottomNavigationView
@@ -52,7 +46,7 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
-        noLoginCommFragment = NoLoginCommFragment.newInstance()
+        noLoginCommFragment = NoLoginCommFragment.newInstance(this)
         supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
 
 
@@ -72,8 +66,8 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
                    
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
                 } else {
-                   
-                    commFragment = CommFragment.newInstance(this)
+
+                    noLoginCommFragment = NoLoginCommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
 
                 }
@@ -114,12 +108,12 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
 
             R.id.mypage_btn -> {
                 Log.d(TAG, "BottomActivity - 마페 클릭")
-                mypageFragment = MypageFragment.newInstance()
+                nologinMypageFragment = NoLoginMypageFragment.newInstance()
                 if(fragmentManager.backStackEntryCount !=0){
                     fragmentManager.popBackStack()
                 }
                 supportFragmentManager.beginTransaction()
-                        .add(R.id.fragments_frame,mypageFragment)
+                        .add(R.id.fragments_frame,nologinMypageFragment)
                         .addToBackStack(null)
                         .commit()
 
@@ -147,4 +141,5 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
 //
 //        return true
 //    }
+
 }

@@ -2,6 +2,7 @@ package com.han.owlmergerprototype
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -24,6 +26,7 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.utils.SpaceDecoration
@@ -102,6 +105,9 @@ class CommFragment(var owner: Activity): Fragment() {
 
             adapter = RecyclerAdapter(owner, dummyCommunityPostsList)
         }
+        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
+        val deco = SpaceDecoration(size)
+        recyclerView.addItemDecoration(deco)
 
 
         // ---------------------------------------------------------------------
@@ -179,8 +185,27 @@ class CommFragment(var owner: Activity): Fragment() {
         floatBTN = view1.findViewById(R.id.fab)
 
         floatBTN.setOnClickListener {
-            inte = Intent(context, CreateArticleActivity::class.java)
-            startActivity(inte)
+            if(TestUser.phoneCheck==true){
+                inte = Intent(context, CreateArticleActivity::class.java)
+                startActivity(inte)
+            }else{
+                val dialog = Dialog(context!!)
+                dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+                dialog.setContentView(R.layout.dialog_phone_auth)
+                val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.auth_cancel_btn)
+                cancelBTN.setOnClickListener(View.OnClickListener {
+                    dialog.dismiss()
+                })
+                val authBTN:TextView = dialog.findViewById<TextView>(R.id.auth_Button)
+                authBTN.setOnClickListener(View.OnClickListener {
+                    TestUser.phoneCheck = true
+                    dialog.dismiss()
+                })
+
+                dialog.show()
+
+            }
+
         }
 
 

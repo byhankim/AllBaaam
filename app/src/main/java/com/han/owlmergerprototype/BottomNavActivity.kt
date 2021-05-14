@@ -26,6 +26,7 @@ class BottomNavActivity : AppCompatActivity() {
     private lateinit var nav:BottomNavigationView
     private lateinit var switch:SwitchCompat
     private lateinit var fragmentManager : FragmentManager
+    private
 
 
     companion object{
@@ -34,6 +35,7 @@ class BottomNavActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.bottom_nav_layout)
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)

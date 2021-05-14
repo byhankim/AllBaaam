@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.han.owlmergerprototype.App
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.ArticleEntity
+import com.han.owlmergerprototype.data.Post
 
 class MyContentsViewHolder(itemView: View)
                         : RecyclerView.ViewHolder(itemView),
@@ -23,11 +24,12 @@ class MyContentsViewHolder(itemView: View)
         Log.d(TAG, "MyContentsViewHolder: init{} called")
     }
 
-    fun bind(articleEntity:ArticleEntity){
+    fun bind(articleEntity: Post){
         Log.d(TAG, "MyContentsViewHolder: bind{} called")
-        categoryTV.text = articleEntity.category.toString()
-        dateTV.text = articleEntity.datetime
-        contentTV.text = articleEntity.content
+        categoryTV.text = "해외 스포츠"
+        dateTV.text = articleEntity.createdAt
+        contentTV.text = articleEntity.contents
+        Log.d(TAG, "bind: ${contentTV.text}")
 
     }
 
