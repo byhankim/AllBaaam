@@ -189,7 +189,8 @@ class CommFragment(var owner: Activity): Fragment() {
                     )
             adapter = com.han.owlmergerprototype.community.ThemeSelectorRecyclerAdapter(
                 testList,
-                owner
+                owner,
+                true
             )
         }
 

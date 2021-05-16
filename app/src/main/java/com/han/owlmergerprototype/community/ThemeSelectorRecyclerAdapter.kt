@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,8 @@ import com.han.owlmergerprototype.data.ThemeEntity
 
 class ThemeSelectorRecyclerAdapter(
     private val themesList: MutableList<ThemeEntity>,
-    private val owner: Activity
+    private val owner: Activity,
+    private val which : Boolean //true면 메인, false 글작성
 ): RecyclerView.Adapter<ThemeSelectorRecyclerAdapter.ThemeHolder>() {
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>
@@ -38,7 +40,13 @@ class ThemeSelectorRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeHolder {
-        val view = LayoutInflater.from(owner).inflate(R.layout.comm_theme_item, parent, false)
+        lateinit var view:View
+        if(which){
+            view = LayoutInflater.from(owner).inflate(R.layout.comm_theme_item, parent, false)
+        }else{
+            view = LayoutInflater.from(owner).inflate(R.layout.select_theme_item, parent, false)
+        }
+
         return ThemeHolder(view)
     }
 

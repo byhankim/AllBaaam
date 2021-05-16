@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/theme_selector_item_cv"
+        android:layout_width="@dimen/comm_theme_tv_width"
+        android:layout_height="@dimen/select_theme_tv_height"
+        app:cardCornerRadius="@dimen/theme_selector_round_radius"
+        app:cardElevation="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/ui1"
+
+        android:layout_marginEnd="@dimen/comm_theme_margin_right">
+        <!--app:strokeWidth="1dp"
+        app:strokeColor="#DD97DFE5"-->
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/cardview_style2">
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/clicked_card_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/style1_5_20"></RelativeLayout>
+
+
+
+
+            <TextView
+                android:textSize="14dp"
+                android:id="@+id/theme_selector_item_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comm_honey_tip"
+                android:textColor="@color/style1_5"
+                android:layout_marginLeft="@dimen/select_theme_selector_outer_margin"
+                android:elevation="1dp"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/theme_selector_item_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/select_theme_selector_outer_margin"
+                android:background="@drawable/ic_idea2"
+                android:layout_centerVertical="true"
+                android:elevation="1dp" />
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+

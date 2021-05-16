@@ -51,12 +51,13 @@ class CreateArticleActivity : AppCompatActivity() {
             DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
 
             val testList = mutableListOf<ThemeEntity>()
-            testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.owl2, R.color.style1_5,R.color.style1_4, R.color.black, 1, false))
-            testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.like_btn, R.color.style1_4,R.color.style1_4,R.color.black, 2, false))
-            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.owl2, R.color.style1_3,R.color.style1_4, R.color.black, 3, false))
-            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.back_icon_24, R.color.style1_2,R.color.style1_4, R.color.black, 4, false))
-            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.owl2, R.color.style1_1,R.color.style1_4, R.color.black, 5, false))
-            adapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity) /*{
+            testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.ic_idea2, R.color.style1_5_20,R.color.style2_5,R.color.style1_5, 1, false))
+            testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.ic_graph2, R.color.style1_4_20,R.color.style2_4,R.color.style1_4, 2, false))
+            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.ic_sport2, R.color.style1_3_20,R.color.style2_3, R.color.style1_3, 3, false))
+            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.ic_chicken2, R.color.style1_2_20,R.color.style2_2, R.color.style1_2, 4, false))
+            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.ic_book2, R.color.style1_6_20,R.color.style2_6, R.color.style1_6, 5, false))
+            testList.add(ThemeEntity(getString(R.string.comm_games), R.drawable.ic_game2, R.color.style1_7_20,R.color.style2_7, R.color.style1_7, 5, false))
+            adapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
             }*/
         }

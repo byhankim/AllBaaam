@@ -49,6 +49,8 @@
     <dimen name="comment_marginbottom">16dp</dimen>
     <dimen name="float_btn_bottom_margin">72dp</dimen>
     <dimen name="comm_theme_tv_height">64dp</dimen>
+    <dimen name="select_theme_tv_height">40dp</dimen>
+    <dimen name="select_theme_selector_outer_margin">4dp</dimen>
     <dimen name="comm_theme_selector_icon_size">30dp</dimen>
     <dimen name="comm_theme_selector_outer_padding">8dp</dimen>
     <dimen name="theme_selector_round_radius">8dp</dimen>

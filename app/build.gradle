@@ -34,6 +34,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -77,5 +85,8 @@ dependencies {
 
     // http image network - glide
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.12.0'
+
+    //shadow
+    api 'tk.zielony:carbon:0.16.0.1'
     implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.1'
 }
