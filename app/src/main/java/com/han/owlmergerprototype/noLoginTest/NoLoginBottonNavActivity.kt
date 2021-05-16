@@ -9,10 +9,9 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.han.owlmergerprototype.AlarmFragment
-import com.han.owlmergerprototype.CommFragment
+import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.mypage.MypageFragment
 
 class NoLoginBottonNavActivity : AppCompatActivity() {
 

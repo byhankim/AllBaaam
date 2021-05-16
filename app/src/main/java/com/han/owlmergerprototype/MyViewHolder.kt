@@ -23,7 +23,7 @@ class MyViewHolder(itemView: View,
     val TAG = "로그"
 
     private val usernameTextView: TextView = itemView.findViewById(R.id.tv_nicname)
-    private val profileImageView: ImageView = itemView.findViewById(R.id.profile_img)
+    private val profileImageView: ImageView = itemView.findViewById(R.id.comm_post_item_save_btn)
 
     private var myRecyclerviewInterface: MyRecyclerviewInterface? = null
 //    private val usernameTextView = itemView.user_name_text

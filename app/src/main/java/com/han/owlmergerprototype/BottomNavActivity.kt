@@ -4,17 +4,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.han.owlmergerprototype.CommFragment
-import com.han.owlmergerprototype.MapFragment
+import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.mypage.MypageFragment
 
 class BottomNavActivity : AppCompatActivity() {

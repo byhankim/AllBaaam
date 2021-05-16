@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">올뺌쓰</string>
+    <string name="app_name">올뺌쓰V0514</string>
     <string name="owl_honey_tip">올빼미 꿀팁</string>
     <string name="comm_honey_tip">올뺌쓰 꿀팁</string>
     <string name="comm_stocks_overseas">해외주식</string>
@@ -44,4 +44,9 @@
     <string name="article_content_for_dummy_post_id_retrive_error"><![CDATA[커뮤니티 -> 글 간에 id 값 전달하기 실패! 보여줄 본문이 없슈!]]></string>
     <string name="dummy_username_retrieve_error">콩순이</string>
     <string name="dummy_username_1">배고픈 빙봉</string>
+    <string name="comm_post_date_created_tv_text">3분 전</string>
+    <string name="reply_add_btn_text">입력</string>
+    <string name="create_article_current_text_count_dummy_count">0</string>
+    <string name="text_limit_indicator_dummy_text">/180</string>
+    <string name="create_article_photo_upload_hint_text">이미지는 어떤 내용인지 설명해 주세요!</string>
 </resources>
