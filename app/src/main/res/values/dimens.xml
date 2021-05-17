@@ -22,7 +22,7 @@
     <dimen name="article_uname_margintop">7dp</dimen>
     <dimen name="article_cate_tv_margintop">5dp</dimen>
     <dimen name="article_timestamp_tv_size">12sp</dimen>
-    <dimen name="article_content_padding_horizontal">30dp</dimen>
+    <dimen name="article_content_padding_horizontal">52dp</dimen>
     <dimen name="article_content_tv_paddingtop">20dp</dimen>
     <dimen name="hoonsoo_text_size">12sp</dimen>
     <dimen name="hoonsoo_padding_vertical">8dp</dimen>
@@ -75,4 +75,8 @@
     <dimen name="create_article_current_text_counter_margin_vertical">12dp</dimen>
     <dimen name="create_article_img_margin_vertical">20dp</dimen>
     <dimen name="image_upload_compress_quality">100</dimen>
+    <dimen name="create_article_et_text_maxlength">18</dimen>
+    <dimen name="article_content_body_margin_end">10dp</dimen>
+    <dimen name="article_favorite_count_tv_margin_vertical">2dp</dimen>
+    <dimen name="create_article_count_tv_margin_horizontal">8dp</dimen>
 </resources>

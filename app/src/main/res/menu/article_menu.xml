@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/bookmark_btn"
-        android:icon="@drawable/outline_bookmark_border_24"
-        android:title="@string/bookmark_it"
+        android:id="@+id/report_btn"
+        android:icon="@drawable/outline_more_vert_24"
+        android:title="@string/article_menu_report"
         app:showAsAction="always" />
 </menu>

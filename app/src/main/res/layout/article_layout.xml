@@ -53,13 +53,19 @@
                     android:layout_alignStart="@id/article_cate_tv"
                     android:layout_marginTop="@dimen/article_uname_margintop"
                     android:text="@string/hungry_bingbong" />
+                <TextView
+                    android:id="@+id/article_bookmark_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/outline_bookmark_border_24"/>
 
                 <TextView
                     android:id="@+id/article_timestamp_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/article_cate_tv_margintop"
+                    android:layout_below="@id/article_bookmark_btn"
                     android:text="@string/article_timestamp_tv_dummy"
                     android:textSize="@dimen/article_timestamp_tv_size" />
 
@@ -69,6 +75,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/article_uname"
                     android:layout_marginTop="@dimen/article_content_tv_paddingtop"
+                    android:layout_marginEnd="@dimen/article_content_body_margin_end"
+                    android:layout_toStartOf="@id/article_share_btn"
                     android:drawablePadding="@dimen/comm_inline_drawable_padding"
                     android:text="@string/article_content_tv" />
 
@@ -80,6 +88,15 @@
                     android:layout_below="@id/article_content_tv"
                     android:layout_marginTop="@dimen/article_content_tv_paddingtop"
                     android:background="@drawable/outline_favorite_border_24" />
+                <TextView
+                    android:id="@+id/article_favorite_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/article_favorite_btn"
+                    android:layout_alignTop="@id/article_favorite_btn"
+                    android:layout_marginTop="@dimen/article_favorite_count_tv_margin_vertical"
+                    android:layout_marginStart="@dimen/create_article_count_tv_margin_horizontal"
+                    android:text="@string/article_favorite_count_text"/>
 
                 <TextView
                     android:id="@+id/article_comment_btn"
@@ -90,8 +107,18 @@
                     android:layout_marginTop="@dimen/article_content_tv_paddingtop"
                     android:layout_toEndOf="@id/article_favorite_btn"
                     android:background="@drawable/outline_chat_bubble_outline_24" />
+                <TextView
+                    android:id="@+id/article_comment_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/article_comment_btn"
+                    android:layout_alignTop="@id/article_favorite_btn"
+                    android:layout_marginTop="@dimen/article_favorite_count_tv_margin_vertical"
+                    android:layout_marginStart="@dimen/create_article_count_tv_margin_horizontal"
+                    android:text="@string/article_comment_count_text"/>
 
                 <TextView
+                    android:id="@+id/article_share_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/article_content_tv"

@@ -131,7 +131,8 @@
             android:id="@+id/comm_write_article_content_et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/comm_write_article_et_height"
-            android:maxLines="@string/write_et_maxlines"/>
+            android:maxLines="@string/write_et_maxlines"
+            android:maxLength="@string/comm_write_article_et_max_text_length"/>
         <TextView
             android:id="@+id/comm_write_article_add_img_btn"
             android:layout_width="@dimen/comm_write_article_img_icon_size"

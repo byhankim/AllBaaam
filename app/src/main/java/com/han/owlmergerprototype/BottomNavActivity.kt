@@ -84,7 +84,6 @@ class BottomNavActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
        
 
-
         when(it.itemId){
             R.id.alarm_btn -> {
                 Log.d(TAG, "BottomActivity - 알람 클릭")
@@ -98,9 +97,6 @@ class BottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,alarmFragment)
                         .addToBackStack(null)
                         .commit()
-
-
-
             }
 
             R.id.mypage_btn -> {
@@ -113,9 +109,6 @@ class BottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,mypageFragment)
                         .addToBackStack(null)
                         .commit()
-
-
-
             }
         }
         true

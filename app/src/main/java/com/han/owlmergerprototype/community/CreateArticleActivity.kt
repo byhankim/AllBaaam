@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.format.DateFormat.format
 import android.util.Log
@@ -77,6 +78,8 @@ class CreateArticleActivity : AppCompatActivity() {
 
         // set maxlines
         binding.commWriteArticleContentEt.maxLines = 5
+        // android:maxLength="@dimen/create_article_et_text_maxlength"
+//        binding.commWriteArticleContentEt.filters = arrayOf(InputFilter.LengthFilter(R.dimen.create_article_et_text_maxlength))
 
         // theme selector rv
         val manager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
