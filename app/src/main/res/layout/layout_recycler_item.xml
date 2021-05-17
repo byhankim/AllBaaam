@@ -31,26 +31,36 @@
             tools:layout_editor_absoluteX="7dp"
             tools:layout_editor_absoluteY="7dp" />
 
-        <TextView
-            android:id="@+id/tv_badge"
+        <RelativeLayout
+            android:id="@+id/category_in_article_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_badge_orange"
-            android:gravity="center"
-            android:text="야식"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="97dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:padding="2px"
+            android:background="@drawable/category_style_in_article"
+            android:backgroundTint="@color/style1_5">
+            <TextView
+                android:backgroundTint="@color/ui1"
+                android:background="@drawable/category_style_in_article"
+                android:id="@+id/tv_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/style1_5"
+                android:textSize="10sp"
+                android:text="#해외 축구"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:padding="3dp"
+                android:gravity="center" />
+
+        </RelativeLayout>
 
 
         <TextView
             android:id="@+id/tv_nicname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_badge"
-            android:layout_alignStart="@+id/tv_badge"
+            android:layout_below="@+id/category_in_article_layout"
+            android:layout_alignStart="@+id/category_in_article_layout"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="배고픈 빙봉"

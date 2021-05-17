@@ -204,6 +204,10 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val holder = ViewHolderClass(itemView)
             return holder
         }
+        fun getCategoryNameInArticle(category: String):String{
+            val cateInArt :String = "#"+category
+            return cateInArt
+        }
 
         //데이터 셋팅
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
@@ -211,13 +215,13 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
             with (holder) {
                 category.text = when (postEntity.category) {
-                    1 -> getString(R.string.comm_honey_tip)
-                    2 -> getString(R.string.comm_stocks_overseas)
-                    3 -> getString(R.string.comm_study_hard)
-                    4 -> getString(R.string.comm_sports_overseas)
-                    5 -> getString(R.string.comm_latenight_food)
-                    6 -> getString(R.string.comm_games)
-                    else -> getString(R.string.comm_theme_not_found)
+                    1 -> getCategoryNameInArticle(getString(R.string.comm_honey_tip))
+                    2 -> getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+                    3 -> getCategoryNameInArticle(getString(R.string.comm_study_hard))
+                    4 -> getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+                    5 -> getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+                    6 -> getCategoryNameInArticle(getString(R.string.comm_games))
+                    else -> getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = when (postEntity.userID) {
                     1 -> "떡볶이가 좋은 빙봉"

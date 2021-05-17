@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -234,6 +235,7 @@ class CommFragment(var owner: Activity): Fragment() {
         inner class PostHolder(itemView: View/*, itemListener: (Post) -> Unit*/): RecyclerView.ViewHolder(itemView) {
 
             val category: TextView = itemView.findViewById(R.id.tv_badge)
+            val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
             val content: TextView = itemView.findViewById(R.id.user_name_txt)
             val datetime: TextView = itemView.findViewById(R.id.textView)
@@ -251,19 +253,49 @@ class CommFragment(var owner: Activity): Fragment() {
             return PostHolder(itemView)
         }
 
+        fun getCategoryNameInArticle(category: String):String{
+            val cateInArt :String = "#"+category
+            return cateInArt
+        }
+
         //데이터 셋팅
+        @SuppressLint("ResourceAsColor")
         override fun onBindViewHolder(holder: PostHolder, position: Int) {
             val postEntity = dummyPostsList[position]
 
             with (holder) {
-                category.text = when (postEntity.category) {
-                    1 -> getString(R.string.comm_honey_tip)
-                    2 -> getString(R.string.comm_stocks_overseas)
-                    3 -> getString(R.string.comm_study_hard)
-                    4 -> getString(R.string.comm_sports_overseas)
-                    5 -> getString(R.string.comm_latenight_food)
-                    6 -> getString(R.string.comm_games)
-                    else -> getString(R.string.comm_theme_not_found)
+                when (postEntity.category) {
+                    1 -> {
+                        category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_5))
+                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_5))
+                    }
+                    2 -> {
+                        getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_4))
+                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_4))
+                    }
+                    3 -> {
+                        getCategoryNameInArticle(getString(R.string.comm_study_hard))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_6))
+                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_6))
+                    }
+                    4 -> {
+                        getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_3))
+                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_3))
+                    }
+                    5 -> {
+                        getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_2))
+                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_2))!!
+                    }
+                    6 -> {
+                        getCategoryNameInArticle(getString(R.string.comm_games))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_7))
+                        categoryColor.setBackgroundColor(R.color.style1_7)
+                    }
+                    else -> getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = when (postEntity.userID) {
                     1 -> "떡볶이가 좋은 빙봉"

@@ -14,12 +14,10 @@
         app:cardBackgroundColor="@color/ui1"
         app:carbon_elevation="8dp"
         app:carbon_elevationShadowColor="@color/style1_5"
-
+        android:background="@color/style1_5_20"
         android:layout_marginEnd="@dimen/comm_theme_margin_right">
         <!--app:strokeWidth="1dp"
         app:strokeColor="#DD97DFE5"-->
-
-
 
 
         <RelativeLayout
