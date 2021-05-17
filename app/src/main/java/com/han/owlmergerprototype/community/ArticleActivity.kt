@@ -1,21 +1,28 @@
 package com.han.owlmergerprototype.community
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
 import kotlin.properties.Delegates
 
@@ -23,6 +30,7 @@ class ArticleActivity : AppCompatActivity() {
 
     private lateinit var binding: ArticleLayoutBinding
     private var dummyPostId by Delegates.notNull<Int>()
+    private lateinit var myPost: Post
 
     // icon toggle
     var isBookMarked = false
@@ -47,8 +55,9 @@ class ArticleActivity : AppCompatActivity() {
         setSupportActionBar(binding.articleToolbar)
 
 
-        // get Article Post Body from intent post_id
-        val myPost: Post = when (dummyPostId) {
+
+    // get Article Post Body from intent post_id
+        myPost = when (dummyPostId) {
             -1 -> Post(contents=getString(R.string.article_content_for_dummy_post_id_retrive_error))
             else -> {
                 val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
@@ -106,11 +115,17 @@ class ArticleActivity : AppCompatActivity() {
 
 
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        binding.articleToolbar.inflateMenu(R.menu.article_menu)
-        binding.articleToolbar.title = "" // 앱제목 없어지게 처리
 
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.outline_more_vert_24)
+    @SuppressLint("ResourceType")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if(TestUser.userName!=""){
+            binding.articleToolbar.inflateMenu(R.menu.article_menu)
+            if(TestUser.userID !=myPost.userID ){
+                binding.articleToolbar.menu.removeItem(R.id.delete_article_btn)
+            }
+
+        }
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return true
@@ -119,18 +134,47 @@ class ArticleActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                Toast.makeText(this, "신고들어갑니다잉~", Toast.LENGTH_SHORT).show()
+                finish()
             }
-            R.id.bookmark_btn -> {
-                isBookMarked = !isBookMarked
-                Toast.makeText(this, "북마크 눌럿성", Toast.LENGTH_SHORT).show()
-                if (isBookMarked) {
-                    item.setIcon(R.drawable.outline_bookmark_24)
-                } else {
-                    item.setIcon(R.drawable.outline_bookmark_border_24)
-                }
+            R.id.delete_article_btn -> {
+                Toast.makeText(this, "삭제", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            R.id.declaration_btn ->{
+                val dialog = Dialog(this)
+                dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+                dialog.setContentView(R.layout.dialog_declaration)
+                val cancelBTN: TextView = dialog.findViewById<TextView>(R.id.exit_dialog_declaration)
+                cancelBTN.setOnClickListener(View.OnClickListener {
+                    Toast.makeText(this, getString(R.string.reason_of_declaration1), Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                })
+                val reason1BTN: TextView = dialog.findViewById<TextView>(R.id.declare_reason1_btn)
+                reason1BTN.setOnClickListener(View.OnClickListener {
+                    Toast.makeText(this, getString(R.string.reason_of_declaration1), Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+
+                })
+                val reason2BTN: TextView = dialog.findViewById<TextView>(R.id.declare_reason2_btn)
+                reason2BTN.setOnClickListener(View.OnClickListener {
+                    Toast.makeText(this, getString(R.string.reason_of_declaration2), Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+
+                })
+                val reason3BTN: TextView = dialog.findViewById<TextView>(R.id.declare_reason3_btn)
+                reason3BTN.setOnClickListener(View.OnClickListener {
+                    Toast.makeText(this, getString(R.string.reason_of_declaration3), Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+
+                })
+                dialog.show()
+
+
             }
         }
         return true
     }
+
+
+
 }

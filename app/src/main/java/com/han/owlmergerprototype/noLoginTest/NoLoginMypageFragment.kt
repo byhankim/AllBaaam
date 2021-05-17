@@ -11,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.mypage.boardActivity.PolicyActivity
@@ -23,10 +25,9 @@ class NoLoginMypageFragment : Fragment() {
     private lateinit var my_contents_btn:Button
     private lateinit var mysavedBTN:Button
     private lateinit var mypageLV:ListView
-    private lateinit var settingBTN:TextView
     private lateinit var inte:Intent
-    private lateinit var backBTN:TextView
     private lateinit var nameTV:TextView
+    private lateinit var toolbar: Toolbar
 
     companion object{
         const val TAG : String = "looooog"
@@ -68,24 +69,36 @@ class NoLoginMypageFragment : Fragment() {
             setDialog()
         }
 
-        settingBTN=view.findViewById(R.id.setting_btn)
-        settingBTN.setOnClickListener {
-            setDialog()
+        toolbar = view.findViewById(R.id.mypage_toolbar)
+
+        toolbar.setNavigationIcon(R.drawable.ic_back) // need to set the icon here to have a navigation icon. You can simple create an vector image by "Vector Asset" and using here
+        toolbar.setNavigationOnClickListener {
+            val fragmentManager = getActivity()!!.getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+            fragmentManager.popBackStack()
         }
+
+        toolbar.inflateMenu(R.menu.mypage_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.setting_btn -> {
+                    inte = Intent(context, SettingActivity::class.java)
+                    startActivity(inte)
+                    true
+                }else->{
+                true
+            }
+
+            }
+        }
+
+
 
         mysavedBTN=view.findViewById(R.id.my_saved_btn)
         mysavedBTN.setOnClickListener {
             setDialog()
         }
 
-        backBTN = view.findViewById(R.id.back_btn)
-        backBTN.setOnClickListener {
-
-            val fragmentManager = getActivity()!!.getSupportFragmentManager();
-            fragmentManager.beginTransaction().remove(this).commit();
-            fragmentManager.popBackStack()
-
-        }
 
 
 

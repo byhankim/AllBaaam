@@ -3,40 +3,51 @@
     <string name="owl_honey_tip">올빼미 꿀팁</string>
     <string name="comm_honey_tip">꿀팁</string>
     <string name="comm_stocks_overseas">해외주식</string>
-    <string name="comm_sports_overseas">해외 스포츠</string>
+    <string name="comm_sports_overseas">해외스포츠</string>
     <string name="comm_food">야식</string>
-    <string name="comm_write_article_title">글 작성 ㄱㄱ</string>
     <string name="comm_study_hard">빡공</string>
+    <string name="comm_latenight_food">야식</string>
+    <string name="comm_games">게임</string>
+
+    <string name="comm_write_article_title">글 작성 ㄱㄱ</string>
     <string name="action_back">뒤로가기</string>
     <string name="action_write">작성하기</string>
+    <string name="bookmark_it">저장하기</string>
+    <string name="delete_it">삭제하기</string>
+    <string name="declare_it">신고하기</string>
+
     <string name="opacity_value_et">0.65</string>
     <string name="write_et_maxlines">5</string>
-    <string name="comm_latenight_food">야식</string>
+    <string name="test_bottom_nav_owl">올뺌</string>
+
     <string name="hungry_bingbong">배고픈 빙봉</string>
+    <string name="cmt_uname">앉아있는 케이크</string>
     <string name="article_timestamp_tv_dummy">5분 전</string>
     <string name="article_content_tv">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔...</string>
-    <string name="bookmark_it">저장하기</string>
+
     <string name="comment_section_hoonsoo_str">커뮤니티 가이드 준수를 통해 따듯한 올빼미 환경을 조성해주세요!</string>
     <string name="create_article_title_tv_str">글 작성하기</string>
     <string name="comment_sort_by_time_btn_text">등록순</string>
     <string name="comment_sort_by_popularity_btn_text">공감순</string>
-    <string name="cmt_uname">앉아있는 케이크</string>
+
     <string name="cmt_timepassed">3년 전</string>
     <string name="random_cmt">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔...</string>
     <string name="comment_fav_btn_text">공감하기</string>
     <string name="comment_reply_btn_text">답글쓰기</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="float_submit">플로팅</string>
+
     <string name="tb_mpg_saved">저장한 글 보기</string>
+    <string name="tb_mpg_mycontents">내가 쓴 글 보기</string>
     <string name="test_bottom_nav_alarm">알림</string>
     <string name="test_bottom_nav_notice">알림</string>
-    <string name="test_bottom_nav_owl">올뺌</string>
     <string name="test_bottom_nav_mypage">마이페이지</string>
+    <string name="go_to_setting">설정</string>
 
     <!-- shared pref 관련 -->
     <string name="owl_shared_preferences_name">owltest</string>
     <string name="owl_shared_preferences_dummy_comm_posts">dummyPosts</string>
-    <string name="comm_games">게임</string>
+
     <string name="comm_theme_not_found">응 없어~</string>
     <string name="dummy_post_id">post id</string>
     <string name="dummy_comments_key">dummyCommentsKey</string>
@@ -44,5 +55,26 @@
     <string name="article_content_for_dummy_post_id_retrive_error"><![CDATA[커뮤니티 -> 글 간에 id 값 전달하기 실패! 보여줄 본문이 없슈!]]></string>
     <string name="dummy_username_retrieve_error">콩순이</string>
     <string name="dummy_username_1">배고픈 빙봉</string>
+
+    <!-- 신고 버튼 -->
+    <string name="declaraion_msg">신고하시는 이유를 선택해주세요</string>
+    <string name="reason_of_declaration1">부적절한 게시글</string>
+    <string name="reason_of_declaration2">다른 올빼미를 비방하는 글이에요</string>
+    <string name="reason_of_declaration3">신고 항목 개선 제안</string>
+
+    <string name="hint_for_phone_number">핸드폰 번호</string>
+    <string name="hint_for_auth_number">인증번호 입력</string>
+    <string name="send_auth_number_btn">인증번호\n보내기</string>
+    <string name="complete_auth_btn">인증하기</string>
+
+    <string name="agree_all_policy">전체 동의 (필수)</string>
+    <string name="agree_for_service">서비스 이용약관 동의</string>
+    <string name="agree_for_gps_info">위치정보 활용 동의</string>
+    <string name="agree_for_marketing">마케팅 정보 활용 동의(선택)</string>
+
+    <string name="dialog_auth_msg">핸드폰 인증을 하시면\n주변 올빼미들과 소통할 수 있어요!</string>
+    <string name="dialog_notice_msg">번호는 안전하게 보관되며 어디에도 공개되지 않아요</string>
+
+
 
 </resources>

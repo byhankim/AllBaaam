@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="@dimen/dialog_declaration_width"
+    android:layout_height="@dimen/dialog_declaration_height"
+    android:background="@color/gray7"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="24dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#21ffffff"
+        android:padding="@dimen/dialog_padding">
+        <TextView
+            android:id="@+id/exit_dialog_declaration"
+            android:layout_width="@dimen/delete_x_size"
+            android:layout_height="@dimen/delete_x_size"
+            android:background="@drawable/ic_deletex"
+            android:layout_alignParentEnd="true"></TextView>
+
+    </RelativeLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/dialog_declaration_btn_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="신고하시는 이유를 선택해주세요"
+            android:textSize="@dimen/dialog_declaration_msg_size"
+            android:layout_marginBottom="2dp"></TextView>
+        <TextView
+            android:id="@+id/declare_reason1_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_declaration_btn_height"
+            android:text="@string/reason_of_declaration1"
+            android:background="@drawable/round_corner"
+            android:textSize="@dimen/dialog_declaration_text_size"
+            android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
+            android:gravity="center" ></TextView>
+        <TextView
+            android:id="@+id/declare_reason2_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_declaration_btn_height"
+            android:text="@string/reason_of_declaration2"
+            android:background="@drawable/round_corner"
+            android:textSize="@dimen/dialog_declaration_text_size"
+            android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
+            android:gravity="center" ></TextView>
+        <TextView
+            android:id="@+id/declare_reason3_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_declaration_btn_height"
+            android:text="@string/reason_of_declaration3"
+            android:textSize="@dimen/dialog_declaration_text_size"
+            android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
+            android:background="@drawable/round_corner"
+            android:gravity="center" ></TextView>
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

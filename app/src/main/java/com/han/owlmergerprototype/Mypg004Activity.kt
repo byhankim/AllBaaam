@@ -35,10 +35,15 @@ class Mypg004Activity : AppCompatActivity(), MyRecyclerviewInterface {
             //binding = binding
             setContentView(binding.root)
 
+            binding.mysavedToolbar.setNavigationIcon(R.drawable.ic_back) // need to set the icon here to have a navigation icon. You can simple create an vector image by "Vector Asset" and using here
+            binding.mysavedToolbar.setNavigationOnClickListener {
+                finish()
+            }
+
             Log.d(TAG, "Mypg004Activity - 반복문 돌리기 전 this.modelList.size : ${this.modelList.size}")
 
             for (i in 1..10) {
-                val myModel = MyModel(name = "쩡대리 $i", profileImage = "https://img1.daumcdn.net/thumb/C100x100.mplusfriend/?fname=http%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIxxPp%2FbtqC9MkM3oH%2FPpvHOkfOiOpKUwvvWcxhJ0%2Fimg_s.jpg")
+                val myModel = MyModel(name = "쩡대리 $i")
                 this.modelList.add(myModel)
             }
             Log.d(TAG, "Mypg004Activity - 반복문 돌린 후 this.modelList.size : ${this.modelList.size}")

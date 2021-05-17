@@ -111,7 +111,7 @@ class CreateArticleActivity : AppCompatActivity() {
         binding.commMainToolbar.inflateMenu(R.menu.comm_create_article_menu)
 
         // buttons
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24) // set drawable icon
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back) // set drawable icon
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 //        binding.commMainToolbar.title = "글 작성 ㄱ"

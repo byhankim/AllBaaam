@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.BlurMaskFilter
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -212,16 +213,47 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         //데이터 셋팅
         override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
             val postEntity = dummyPostsList[position]
+            lateinit var drawable : GradientDrawable
 
             with (holder) {
-                category.text = when (postEntity.category) {
-                    1 -> getCategoryNameInArticle(getString(R.string.comm_honey_tip))
-                    2 -> getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
-                    3 -> getCategoryNameInArticle(getString(R.string.comm_study_hard))
-                    4 -> getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
-                    5 -> getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-                    6 -> getCategoryNameInArticle(getString(R.string.comm_games))
-                    else -> getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
+                when (postEntity.category) {
+                    1 -> {
+                        category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_5))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5))
+                    }
+                    2 -> {
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_4))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4))
+                    }
+                    3 -> {
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_study_hard))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_6))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6))
+                    }
+                    4 -> {
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_3))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3))
+                    }
+                    5 -> {
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_2))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
+                    }
+                    6 -> {
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_games))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_7))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7))
+                    }
+                    else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = when (postEntity.userID) {
                     1 -> "떡볶이가 좋은 빙봉"
@@ -286,7 +318,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
             val content: TextView = itemView.findViewById(R.id.user_name_txt)
             val datetime: TextView = itemView.findViewById(R.id.textView)
-
+            val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
             val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)

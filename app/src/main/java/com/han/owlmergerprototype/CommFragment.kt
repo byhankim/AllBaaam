@@ -6,16 +6,20 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -211,7 +215,71 @@ class CommFragment(var owner: Activity): Fragment() {
                 cancelBTN.setOnClickListener(View.OnClickListener {
                     dialog.dismiss()
                 })
-                val authBTN:TextView = dialog.findViewById<TextView>(R.id.auth_Button)
+                val phoneET:EditText = dialog.findViewById<EditText>(R.id.phone_number_et)
+                val sendBTN: Button = dialog.findViewById<Button>(R.id.send_auth_msg_btn)
+                val authLayout:RelativeLayout = dialog.findViewById(R.id.put_auth_number_layout)
+                val comBtnLayout:RelativeLayout = dialog.findViewById(R.id.complete_auth_btn_tint_layout)
+                val authET:EditText = dialog.findViewById(R.id.put_auth_number_et)
+                val authBTN:TextView = dialog.findViewById<TextView>(R.id.complete_auth_btn)
+
+                phoneET.addTextChangedListener(object: TextWatcher{
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+
+                        }
+
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                            if(it.toString().length>=10){
+                                sendBTN.isClickable=true
+                            }
+                        }
+
+                        override fun afterTextChanged(s: Editable?) {
+
+                        }
+
+                    })
+
+                sendBTN.setOnClickListener {
+                    authLayout.isVisible = true
+                }
+
+                authET.addTextChangedListener(object: TextWatcher{
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        if(it.toString().length>=4){
+                            authBTN.isClickable=true
+                            comBtnLayout.isVisible = true
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+
+                    }
+
+                })
                 authBTN.setOnClickListener(View.OnClickListener {
                     TestUser.phoneCheck = true
                     dialog.dismiss()
@@ -262,40 +330,47 @@ class CommFragment(var owner: Activity): Fragment() {
         @SuppressLint("ResourceAsColor")
         override fun onBindViewHolder(holder: PostHolder, position: Int) {
             val postEntity = dummyPostsList[position]
+            lateinit var drawable : GradientDrawable
 
             with (holder) {
                 when (postEntity.category) {
                     1 -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
                         category.setTextColor(owner.resources.getColor(R.color.style1_5))
-                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_5))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5))
                     }
                     2 -> {
-                        getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
                         category.setTextColor(owner.resources.getColor(R.color.style1_4))
-                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_4))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4))
                     }
                     3 -> {
-                        getCategoryNameInArticle(getString(R.string.comm_study_hard))
+                        category.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
                         category.setTextColor(owner.resources.getColor(R.color.style1_6))
-                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_6))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6))
                     }
                     4 -> {
-                        getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
                         category.setTextColor(owner.resources.getColor(R.color.style1_3))
-                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_3))
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3))
                     }
                     5 -> {
-                        getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
                         category.setTextColor(owner.resources.getColor(R.color.style1_2))
-                        categoryColor.setBackgroundColor(owner.resources.getColor(R.color.style1_2))!!
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
                     }
                     6 -> {
-                        getCategoryNameInArticle(getString(R.string.comm_games))
+                        category.text =getCategoryNameInArticle(getString(R.string.comm_games))
                         category.setTextColor(owner.resources.getColor(R.color.style1_7))
-                        categoryColor.setBackgroundColor(R.color.style1_7)
+                        drawable = categoryColor.background as GradientDrawable
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7))
                     }
-                    else -> getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
+                    else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = when (postEntity.userID) {
                     1 -> "떡볶이가 좋은 빙봉"

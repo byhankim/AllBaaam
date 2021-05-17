@@ -47,14 +47,14 @@ class MyViewHolder(itemView: View,
         // 이미지뷰와 실제 이미지 데이터를 묶는다.
 
 
-        Glide
-            .with(App.instance)
-            .load(myModel.profileImage)
-//            .centerCrop()
-            .placeholder(R.mipmap.ic_launcher)
-            .into(profileImageView);
+//        Glide
+//            .with(App.instance)
+//            .load(myModel.profileImage)
+////            .centerCrop()
+//            .placeholder(R.mipmap.ic_launcher)
+//            .into(profileImageView);
+//
     }
-
     override fun onClick(v: View?) {
         Log.d(TAG, "MyViewHolder - onClick() called")
 

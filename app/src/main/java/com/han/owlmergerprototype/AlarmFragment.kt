@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.han.owlmergerprototype.utils.SpaceDecoration
 class AlarmFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var backBTN:TextView
+    private lateinit var toolbar: Toolbar
     val timeArray = arrayListOf(
             "10 분전","1 일전","1 일전","5 일전","6 일전"
     )
@@ -51,16 +53,14 @@ class AlarmFragment : Fragment() {
         recyclerView.adapter = adap1
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        backBTN = view1.findViewById(R.id.alarm_back_btn)
+        toolbar = view1.findViewById(R.id.alarm_toolbar)
 
-        backBTN.setOnClickListener {
-
+        toolbar.setNavigationIcon(R.drawable.ic_back) // need to set the icon here to have a navigation icon. You can simple create an vector image by "Vector Asset" and using here
+        toolbar.setNavigationOnClickListener {
             val fragmentManager = getActivity()!!.getSupportFragmentManager();
             fragmentManager.beginTransaction().remove(this).commit();
             fragmentManager.popBackStack()
-
         }
-
 
         return view1
 

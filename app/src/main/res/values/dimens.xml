@@ -59,4 +59,16 @@
     <dimen name="comm_posts_list_padding_horizontal">16dp</dimen>
     <dimen name="bottom_navigation_bar_height">40dp</dimen>
     <dimen name="float_btn_end_margin">32dp</dimen>
+
+
+    <dimen name="dialog_declaration_height">262dp</dimen>
+    <dimen name="dialog_declaration_width">280dp</dimen>
+    <dimen name="dialog_declaration_btn_width">236dp</dimen>
+    <dimen name="dialog_declaration_btn_height">32dp</dimen>
+    <dimen name="delete_x_size">14dp</dimen>
+    <dimen name="dialog_declaration_msg_size">14sp</dimen>
+    <dimen name="dialog_declaration_text_size">12sp</dimen>
+    <dimen name="dialog_declaration_margin_between_btn">16dp</dimen>
+    <dimen name="dialog_padding">20dp</dimen>
+
 </resources>

@@ -6,12 +6,32 @@
     android:layout_height="match_parent"
     android:background="@color/gray7">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mycontents_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/toolbar_elevation_size"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/cerate_article_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tb_mpg_mycontents"
+            android:textSize="@dimen/create_article_title_tv_size"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/my_contentsd_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray7"
         app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/brand3"
         app:tabSelectedTextColor="@color/brand3">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

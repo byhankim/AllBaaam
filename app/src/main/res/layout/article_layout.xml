@@ -31,22 +31,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/article_padding_lr" >
-            <TextView
-                android:id="@+id/article_cate_tv"
-                android:layout_height="@dimen/article_cate_tv_height"
-                android:layout_width="@dimen/article_cate_tv_width"
-                android:background="@drawable/rounded_corners"
-                android:backgroundTint="@color/style1_2"
-                android:gravity="center"
-                android:textSize="@dimen/article_cate_tv_size"
-                android:layout_marginTop="@dimen/article_cate_tv_margintop"
-                android:text="@string/comm_latenight_food"/>
+                <RelativeLayout
+                    android:id="@+id/clicked_article_topic_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2px"
+                    android:background="@drawable/category_style_in_article"
+                    >
+                    <TextView
+                        android:backgroundTint="@color/ui1"
+                        android:id="@+id/tv_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/style1_5"
+                        android:textSize="10sp"
+                        android:text="#해외 축구"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:padding="3dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
             <TextView
                 android:id="@+id/article_uname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/article_cate_tv"
-                android:layout_alignStart="@id/article_cate_tv"
+                android:layout_below="@id/clicked_article_topic_layout"
+                android:layout_alignStart="@id/clicked_article_topic_layout"
                 android:layout_marginTop="@dimen/article_uname_margintop"
                 android:text="@string/hungry_bingbong"/>
             <TextView

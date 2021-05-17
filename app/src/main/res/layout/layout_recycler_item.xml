@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    app:cardCornerRadius="30dp"
+    app:cardCornerRadius="4dp"
     android:backgroundTint="@color/gray8"
     >
 
@@ -37,18 +37,17 @@
             android:layout_height="wrap_content"
             android:padding="2px"
             android:background="@drawable/category_style_in_article"
-            android:backgroundTint="@color/style1_5">
+            >
             <TextView
                 android:backgroundTint="@color/ui1"
-                android:background="@drawable/category_style_in_article"
                 android:id="@+id/tv_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/style1_5"
                 android:textSize="10sp"
                 android:text="#해외 축구"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:padding="3dp"
                 android:gravity="center" />
 
