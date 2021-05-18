@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -12,7 +13,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/article_toolbar">
+        android:layout_below="@id/article_toolbar"
+        android:layout_above="@id/reply_add_section_rl">
         <RelativeLayout
             android:id="@+id/article_inner_rl"
             android:layout_width="match_parent"
@@ -66,44 +68,78 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/article_cate_tv_margintop"
+                android:layout_below="@id/article_bookmark_btn"
                 android:textSize="@dimen/article_timestamp_tv_size"
                 android:text="@string/article_timestamp_tv_dummy"/>
-            <TextView
-                android:id="@+id/article_content_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/article_uname"
-                android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                android:drawablePadding="@dimen/comm_inline_drawable_padding"
-                android:text="@string/article_content_tv"
-                 />
 
-            <!-- 하수런(menu ㄴㄴ) -->
-            <TextView
-                android:id="@+id/article_favorite_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/article_content_tv"
-                android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                android:background="@drawable/outline_favorite_border_24"/>
-            <TextView
-                android:id="@+id/article_comment_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/article_content_tv"
-                android:layout_toEndOf="@id/article_favorite_btn"
-                android:layout_marginStart="@dimen/article_content_padding_horizontal"
-                android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                android:background="@drawable/outline_chat_bubble_outline_24"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/article_content_tv"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                android:background="@drawable/outline_share_24"/>
+                <TextView
+                    android:id="@+id/article_content_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/article_uname"
+                    android:layout_marginTop="@dimen/article_content_tv_paddingtop"
+                    android:layout_marginEnd="@dimen/article_content_body_margin_end"
+                    android:layout_toStartOf="@id/article_share_btn"
+                    android:drawablePadding="@dimen/comm_inline_drawable_padding"
+                    android:text="@string/article_content_tv" />
+
+
+                <TextView
+                    android:id="@+id/article_bookmark_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/outline_bookmark_border_24"/>
+
+
+                <!-- 하수런(menu ㄴㄴ) -->
+                <TextView
+                    android:id="@+id/article_favorite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/article_content_tv"
+                    android:layout_marginTop="@dimen/article_content_tv_paddingtop"
+                    android:background="@drawable/outline_favorite_border_24" />
+                <TextView
+                    android:id="@+id/article_favorite_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/article_favorite_btn"
+                    android:layout_alignTop="@id/article_favorite_btn"
+                    android:layout_marginTop="@dimen/article_favorite_count_tv_margin_vertical"
+                    android:layout_marginStart="@dimen/create_article_count_tv_margin_horizontal"
+                    android:text="@string/article_favorite_count_text"/>
+
+                <TextView
+                    android:id="@+id/article_comment_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/article_content_tv"
+                    android:layout_marginStart="@dimen/article_content_padding_horizontal"
+                    android:layout_marginTop="@dimen/article_content_tv_paddingtop"
+                    android:layout_toEndOf="@id/article_favorite_btn"
+                    android:background="@drawable/outline_chat_bubble_outline_24" />
+                <TextView
+                    android:id="@+id/article_comment_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/article_comment_btn"
+                    android:layout_alignTop="@id/article_favorite_btn"
+                    android:layout_marginTop="@dimen/article_favorite_count_tv_margin_vertical"
+                    android:layout_marginStart="@dimen/create_article_count_tv_margin_horizontal"
+                    android:text="@string/article_comment_count_text"/>
+
+                <TextView
+                    android:id="@+id/article_share_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/article_content_tv"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/article_content_tv_paddingtop"
+                    android:background="@drawable/outline_share_24" />
 
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/comment_section_hoonsoo_tv"
                 android:layout_width="match_parent"
@@ -155,5 +191,37 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:id="@+id/reply_add_section_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/reply_add_section_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/top_rounded_corners"
+        android:backgroundTint="@color/gray8"
+        android:visibility="visible">
+        <EditText
+            android:id="@+id/reply_content_et"
+            android:layout_width="@dimen/reply_add_section_et_width"
+            android:layout_height="@dimen/reply_add_section_et_height"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/reply_add_section_et_margin_horizontal"
+            android:paddingStart="@dimen/reply_content_et_padding_horizontal"
+            android:paddingEnd="@dimen/reply_content_et_padding_horizontal"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/gray5"/>
+        <TextView
+            android:id="@+id/reply_add_btn"
+            android:layout_width="@dimen/reply_add_section_btn_width"
+            android:layout_height="@dimen/reply_add_section_btn_height"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/reply_add_section_et_margin_horizontal"
+            android:text="@string/reply_add_btn_text"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/purple_200"
+            tools:ignore="RtlCompat" />
+    </RelativeLayout>
 
 </RelativeLayout>

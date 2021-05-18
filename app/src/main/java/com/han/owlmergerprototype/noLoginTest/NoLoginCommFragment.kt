@@ -317,7 +317,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val category: TextView = itemView.findViewById(R.id.tv_badge)
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
             val content: TextView = itemView.findViewById(R.id.user_name_txt)
-            val datetime: TextView = itemView.findViewById(R.id.textView)
+            val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
             val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)

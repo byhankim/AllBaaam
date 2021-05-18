@@ -3,6 +3,8 @@
     package="com.han.owlmergerprototype">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".App"
@@ -12,9 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OwlPrototype">
+        <activity android:name=".noLoginTest.NoLoginArticleActivity"></activity>
         <activity android:name=".widgetstest.BottomNavTestActivity" />
         <activity android:name=".noLoginTest.NoLoginBottonNavActivity" />
-        <activity android:name=".community.ArticleActivity" />
+        <activity
+            android:name=".community.ArticleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.SplashActivity">
@@ -40,9 +45,7 @@
             android:theme="@style/Theme.OwlPrototype" />
         <activity
             android:name=".community.CreateArticleActivity"
-            android:theme="@style/Theme.OwlPrototype" >
-
-        </activity>
+            android:theme="@style/Theme.OwlPrototype"></activity>
     </application>
 
 </manifest>

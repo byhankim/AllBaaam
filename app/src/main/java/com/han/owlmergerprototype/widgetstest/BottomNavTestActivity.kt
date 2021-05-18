@@ -3,7 +3,7 @@ package com.han.owlmergerprototype.widgetstest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.han.owlmergerprototype.AlarmFragment
-import com.han.owlmergerprototype.CommFragment
+import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.databinding.ActivityBottomNavTestBinding
 import com.han.owlmergerprototype.mypage.MypageFragment

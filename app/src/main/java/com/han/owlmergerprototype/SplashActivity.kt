@@ -2,7 +2,6 @@ package com.han.owlmergerprototype
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +9,9 @@ import com.han.owlmergerprototype.noLoginTest.NoLoginBottonNavActivity
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.han.owlmergerprototype.data.Bookmark
 import com.han.owlmergerprototype.data.Comment
+import com.han.owlmergerprototype.data.Like
 import com.han.owlmergerprototype.data.Post
 
 class SplashActivity : AppCompatActivity() {
@@ -85,6 +86,54 @@ class SplashActivity : AppCompatActivity() {
             putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
             apply()
         }
+
+
+
+        // ----------------------------------------------------------------
+        //      Like table dummy data
+        // ----------------------------------------------------------------
+        val likeDatasets = mutableListOf<Like>()
+
+        likeDatasets.add(Like(1, "20210517", null, R.string.dummy_uid_1, 1, -1))
+        likeDatasets.add(Like(2, "20210517", null, R.string.dummy_uid_2, 1, -1))
+        likeDatasets.add(Like(3, "20210517", null, R.string.dummy_uid_3, 1, -1))
+        likeDatasets.add(Like(4, "20210517", null, R.string.dummy_uid_4, 1, -1))
+        likeDatasets.add(Like(5, "20210517", null, R.string.dummy_uid_5, 1, -1))
+
+        likeDatasets.add(Like(6, "20210517", null, R.string.dummy_uid_2, 2, -1))
+        likeDatasets.add(Like(7, "20210517", null, R.string.dummy_uid_3, 2, -1))
+        likeDatasets.add(Like(8, "20210517", null, R.string.dummy_uid_4, 3, -1))
+
+
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_likes_key), Gson().toJson(likeDatasets))
+            apply()
+        }
+
+
+
+        // ----------------------------------------------------------------
+        //      Bookmark dummy table
+        // ----------------------------------------------------------------
+        val bookmarkDatasets = mutableListOf<Bookmark>()
+
+        bookmarkDatasets.add(Bookmark(1, "20210517151733", null, true, 1, 1))
+        bookmarkDatasets.add(Bookmark(2, "20210517151833", null, true, 1, 2))
+        bookmarkDatasets.add(Bookmark(3, "20210517151933", null, true, 1, 3))
+        bookmarkDatasets.add(Bookmark(4, "20210517152033", null, true, 1, 4))
+        bookmarkDatasets.add(Bookmark(5, "20210517152133", null, true, 1, 5))
+        bookmarkDatasets.add(Bookmark(6, "20210517152233", null, true, 1, 6))
+        bookmarkDatasets.add(Bookmark(7, "20210517152333", null, true, 1, 7))
+//        bookmarkDatasets.add(Bookmark(8, "20210517152433", null, true, 1, 8))
+
+        bookmarkDatasets.add(Bookmark(9, "20210517152533", null, true, 2, 3))
+        bookmarkDatasets.add(Bookmark(10, "20210517152633", null, true, 2, 5))
+
+//        with (myShared.edit()) {
+//            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
+//            commit()
+//        }
+
 
         // ----------------------------------------------------------------
         //      when fetching from shared preferences

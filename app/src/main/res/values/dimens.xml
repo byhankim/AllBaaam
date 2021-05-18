@@ -22,7 +22,7 @@
     <dimen name="article_uname_margintop">7dp</dimen>
     <dimen name="article_cate_tv_margintop">5dp</dimen>
     <dimen name="article_timestamp_tv_size">12sp</dimen>
-    <dimen name="article_content_padding_horizontal">30dp</dimen>
+    <dimen name="article_content_padding_horizontal">52dp</dimen>
     <dimen name="article_content_tv_paddingtop">20dp</dimen>
     <dimen name="hoonsoo_text_size">12sp</dimen>
     <dimen name="hoonsoo_padding_vertical">8dp</dimen>
@@ -59,8 +59,6 @@
     <dimen name="comm_posts_list_padding_horizontal">16dp</dimen>
     <dimen name="bottom_navigation_bar_height">40dp</dimen>
     <dimen name="float_btn_end_margin">32dp</dimen>
-
-
     <dimen name="dialog_declaration_height">262dp</dimen>
     <dimen name="dialog_declaration_width">280dp</dimen>
     <dimen name="dialog_declaration_btn_width">236dp</dimen>
@@ -70,5 +68,26 @@
     <dimen name="dialog_declaration_text_size">12sp</dimen>
     <dimen name="dialog_declaration_margin_between_btn">16dp</dimen>
     <dimen name="dialog_padding">20dp</dimen>
-
+    <dimen name="comm_post_item_save_btn_width">16dp</dimen>
+    <dimen name="comm_post_item_save_btn_height">24dp</dimen>
+    <dimen name="comm_post_date_created_tv_text_size">12sp</dimen>
+    <dimen name="reply_section_height">74dp</dimen>
+    <dimen name="reply_add_section_height">74dp</dimen>
+    <dimen name="reply_add_section_et_width">260dp</dimen>
+    <dimen name="reply_add_section_et_height">36dp</dimen>
+    <dimen name="reply_add_section_btn_width">48dp</dimen>
+    <dimen name="reply_add_section_btn_height">36dp</dimen>
+    <dimen name="reply_add_section_et_margin_horizontal">16dp</dimen>
+    <dimen name="article_reply_section_top_horizontal_radius">20dp</dimen>
+    <dimen name="reply_content_et_padding_horizontal">3dp</dimen>
+    <dimen name="create_article_text_limit_indicator_tv_height">20dp</dimen>
+    <dimen name="create_article_text_limit_indicator_tv_text_size">14sp</dimen>
+    <dimen name="create_article_text_limit_tv_text_size">14sp</dimen>
+    <dimen name="create_article_current_text_counter_margin_vertical">12dp</dimen>
+    <dimen name="create_article_img_margin_vertical">20dp</dimen>
+    <dimen name="image_upload_compress_quality">100</dimen>
+    <dimen name="create_article_et_text_maxlength">18</dimen>
+    <dimen name="article_content_body_margin_end">10dp</dimen>
+    <dimen name="article_favorite_count_tv_margin_vertical">2dp</dimen>
+    <dimen name="create_article_count_tv_margin_horizontal">8dp</dimen>
 </resources>

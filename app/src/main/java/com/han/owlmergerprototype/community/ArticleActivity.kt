@@ -3,6 +3,7 @@ package com.han.owlmergerprototype.community
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +25,9 @@ import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
+import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import kotlin.properties.Delegates
 
 class ArticleActivity : AppCompatActivity() {
@@ -36,6 +40,16 @@ class ArticleActivity : AppCompatActivity() {
     var isBookMarked = false
     var isLikePressed = false
 
+    // comments
+    private lateinit var dummyCommentsDataSet: MutableList<Comment>
+    private var commentCount = -1
+
+    // likes
+    private lateinit var dummyLikesDataSet: MutableList<Like>
+
+    // bookmarks
+    private lateinit var dummyBookmarksDataSet: MutableList<Bookmark>
+
 
 //    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -46,9 +60,9 @@ class ArticleActivity : AppCompatActivity() {
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
 
 
-    // post id
+        // post id
         dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
-        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
+//        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
 
         binding = ArticleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -73,8 +87,6 @@ class ArticleActivity : AppCompatActivity() {
 
 //        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
 
-
-
         // RV
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -89,7 +101,7 @@ class ArticleActivity : AppCompatActivity() {
             val dummyCommentsType = object: TypeToken<MutableList<Comment>>() {}.type
 
             // filter by postID!!
-            val dummyCommentsDataSet: MutableList<Comment> =
+            dummyCommentsDataSet =
                 Gson().fromJson(myShared.getString(sharedCommentsKey, ""), dummyCommentsType)/*.filter{  }*/
 
             adapter = CommentRecyclerAdapter(
@@ -99,21 +111,204 @@ class ArticleActivity : AppCompatActivity() {
 //                 setOnClickListener {}
             }
 
-            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
+//            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
+            commentCount = dummyCommentsDataSet.size
         }
 
+        // comment count
+        binding.articleCommentCountTv.text = dummyCommentsDataSet.size.toString()
+
+
+        // fav btn
+        with (binding.articleBookmarkBtn) {
+            val dummyBookmarkType = object: TypeToken<MutableList<Bookmark>>() {}.type
+            dummyBookmarksDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_bookmarks_key), ""), dummyBookmarkType)
+
+            // default
+            val currentBookmark = dummyBookmarksDataSet.filter {
+                (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+            }
+            Log.e("[crntBkmrk(single)]", "currentBookmark is empty: ${currentBookmark.isEmpty()}")
+            binding.articleBookmarkBtn.background = if (currentBookmark.isNotEmpty()) {
+                isBookMarked = true
+                getDrawable(R.drawable.outline_bookmark_24)
+            } else {
+                isBookMarked = false
+                getDrawable(R.drawable.outline_bookmark_border_24)
+            }
+
+            // click listener
+            setOnClickListener {
+                isBookMarked = !isBookMarked
+                var index = -1
+
+                // 기존 데이터셋에 중복되어있는지 여부 확인
+                val isBookmarkDuplicate = dummyBookmarksDataSet.filter {
+                    (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                }
+
+                // 북마크 데이터 중복이 아니면 dataset 리스트에 더해주고
+                // index도 바꿔줌
+                if (isBookMarked) {
+                    if (isBookmarkDuplicate.isEmpty()) {
+                        dummyBookmarksDataSet.add(
+                            Bookmark(
+                                dummyBookmarksDataSet.size + 1,
+                                DateTimeFormatManager.getCurrentDatetime(),
+                                null,
+                                false,
+                                R.string.dummy_uid_1,
+                                dummyPostId
+                            )
+                        )
+                        index = dummyBookmarksDataSet.size // 이미 하나 늘어났으므로
+                    }
+                } else {
+                    // 리스트에서 제거
+                    dummyBookmarksDataSet = dummyBookmarksDataSet.filterNot {
+                        (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                    } as MutableList<Bookmark>
+                }
+
+                // 배경 바꾸기
+                background = if (isBookMarked) {
+                    getDrawable(R.drawable.outline_bookmark_24)
+                } else {
+                    getDrawable(R.drawable.outline_bookmark_border_24)
+                }
+                Log.e("[Article_BookmarakBTN]", "length: " + dummyBookmarksDataSet.size.toString())
+
+                // sharedpref에 저장
+                with (myShared.edit()) {
+                    putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(dummyBookmarksDataSet))
+                    commit()
+                }
+
+            }
+        }
+
+        // like btn
         with (binding.articleFavoriteBtn) {
+            val dummyLikesType = object: TypeToken<MutableList<Like>>() {}.type
+            dummyLikesDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_likes_key),""), dummyLikesType)
+
+            // default
+            val currentLike = dummyLikesDataSet.filter {
+                (it.postID == dummyPostId)
+            }
+
+            // current like count
+            binding.articleFavoriteCountTv.text = if (currentLike.isNotEmpty()) {
+                currentLike.size.toString()
+            } else {
+                "0"
+            }
+            Log.e("[currentLikes]", currentLike.size.toString())
+
+            // did the user press like?
+            val userLike = currentLike.filter {
+                it.userID == R.string.dummy_uid_1
+            }
+            isLikePressed = userLike.isNotEmpty()
+            Log.e("[userLikesToThisPost]", "${userLike.isNotEmpty()}")
+
+            // default Liked state
+            background = if (isLikePressed) {
+                getDrawable(R.drawable.outline_favorite_24)
+            } else {
+                getDrawable(R.drawable.outline_favorite_border_24)
+            }
+
+            // click listener
             setOnClickListener {
                 isLikePressed = !isLikePressed
+
+                val isLikeDuplicate = dummyLikesDataSet.filter {
+                    (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                }
+                if (isLikeDuplicate.isNotEmpty())
+                    Log.e("[like_duplicate:]", isLikeDuplicate.toString())
+
+                // 중복 없다면 더하기
                 if (isLikePressed) {
-                    background = getDrawable(R.drawable.outline_favorite_24)
+                    if (isLikeDuplicate.isEmpty()) {
+                        dummyLikesDataSet.add(Like(
+                            dummyLikesDataSet.size+1,
+                            DateTimeFormatManager.getCurrentDatetime(),
+                            null,
+                            R.string.dummy_uid_1,
+                            dummyPostId
+                        ))
+                    }
                 } else {
-                    background = getDrawable(R.drawable.outline_favorite_border_24)
+                    // 좋아요 취소
+                    dummyLikesDataSet = dummyLikesDataSet.filterNot{
+                        // 이 유저가 / 이 글에서 누른 좋아요만 빼기
+                        ((it.userID == R.string.dummy_uid_1) && (it.postID == dummyPostId))
+                    } as MutableList<Like>
+                    Log.e("[좋아요취소시기존좋아요수]", dummyLikesDataSet.filter {
+                        (it.postID == dummyPostId)
+                    }.size.toString() + ", 전체 데이터셋크기:${dummyLikesDataSet.size.toString()}")
+                }
+
+                // icon exchange
+                background = if (isLikePressed) {
+                    getDrawable(R.drawable.outline_favorite_24)
+                } else {
+                    getDrawable(R.drawable.outline_favorite_border_24)
+                }
+
+                // heart count renew
+                binding.articleFavoriteCountTv.text = dummyLikesDataSet.filter {
+                    (it.postID == dummyPostId)
+                }.size.toString()
+
+                Log.e("[Like]", dummyLikesDataSet.filter { (it.postID == dummyPostId) }.size.toString())
+
+                // save to sharedPreferences
+                with (myShared.edit()) {
+                    putString(getString(R.string.dummy_likes_key), Gson().toJson(dummyLikesDataSet))
+                    commit()
                 }
             }
         }
 
+        // share btn
+        with (binding.articleShareBtn) {
+            // TODO share btn -> to kakaotalk
+        }
 
+        // leave a comment
+        with (binding.replyAddBtn) {
+            setOnClickListener {
+                if (binding.replyContentEt.text.toString().isNotBlank()) { // not empty nor whitespaces
+                    dummyCommentsDataSet.add(Comment(
+                        dummyCommentsDataSet.size+1,
+                        DateTimeFormatManager.getCurrentDatetime(),
+                        null,
+                        binding.replyContentEt.text.toString(),
+                        dummyPostId,
+                        true,
+                        -1,
+                        R.string.dummy_username_1
+                    ))
+
+                    with (myShared.edit()) {
+                        val sharedKey = getString(R.string.dummy_comments_key)
+                        putString(sharedKey, Gson().toJson(dummyCommentsDataSet))
+                        commit()
+                    }
+                    binding.commentsRv.adapter?.notifyDataSetChanged()
+                    binding.articleCommentCountTv.text = dummyCommentsDataSet.size.toString()
+
+                }
+                binding.replyContentEt.text.clear()
+
+                // hide softkey
+                val inputMng:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMng.hideSoftInputFromWindow(binding.replyContentEt.windowToken, 0)
+            }
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -123,7 +318,6 @@ class ArticleActivity : AppCompatActivity() {
             if(TestUser.userID !=myPost.userID ){
                 binding.articleToolbar.menu.removeItem(R.id.delete_article_btn)
             }
-
         }
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -168,13 +362,17 @@ class ArticleActivity : AppCompatActivity() {
 
                 })
                 dialog.show()
-
-
+            }
+            R.id.report_btn -> {
+                isBookMarked = !isBookMarked
+                Toast.makeText(this, "신고 럿성", Toast.LENGTH_SHORT).show()
             }
         }
         return true
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
 
-
-
+        finish()
+    }
 }
