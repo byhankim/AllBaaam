@@ -4,4 +4,5 @@ object TestUser {
     var userName:String =""
     var userID:Int=-1
     var phoneCheck = false
+    var token:String = ""
 }

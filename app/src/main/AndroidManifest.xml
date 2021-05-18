@@ -26,7 +26,6 @@
         </activity>
         <activity android:name=".RetrofitActivity" />
         <activity android:name=".Mypg004Activity" />
-        <activity android:name=".mypage.MySavedContentsActivity" />
         <activity android:name=".mypage.boardActivity.PolicyActivity" />
         <activity android:name=".mypage.boardActivity.SuggestionActivity" />
         <activity android:name=".mypage.boardActivity.NoticeActivity" />
@@ -43,6 +42,23 @@
             android:theme="@style/Theme.OwlPrototype" >
 
         </activity>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="ae8087a7fee06c8297d57b1125dfe15b"/>
+
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakaoae8087a7fee06c8297d57b1125dfe15b" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>

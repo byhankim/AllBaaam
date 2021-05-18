@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -32,8 +33,15 @@ import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
+import com.han.owlmergerprototype.rest.Login
+import com.han.owlmergerprototype.rest.RestService
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import org.w3c.dom.Text
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @Suppress("DEPRECATION")
 class NoLoginCommFragment(var owner: Activity): Fragment() {
@@ -43,9 +51,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
 
     private lateinit var recyclerView: RecyclerView
-    val nickname = arrayListOf(
-        "배고픈 수현이","야근하는 다미","피곤한 한울이","고민하는 현진이","화가난 성현이"
-    )
+
+
+
     companion object{
         const val TAG : String = "looooog"
 
@@ -278,12 +286,47 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     })
                     val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
                     kakaoLoginBTN.setOnClickListener(View.OnClickListener {
-                        dialog.dismiss()
-                        TestUser.userName ="떡볶이가 좋은 빙봉"
-                        TestUser.userID = 1
-                        inte = Intent(context, BottomNavActivity::class.java)
-                        startActivity(inte)
-                        activity!!.finish()
+                        val retrofit = Retrofit.Builder()
+                            .baseUrl("https://91c1ad0a482f.ngrok.io/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+
+                        val loginService = retrofit.create(RestService::class.java)
+                        loginService.loginAndGetToken().enqueue(object : Callback<Login> {
+
+                            override fun onFailure(call: Call<Login>, t: Throwable) {
+                                val dialog = AlertDialog.Builder(dialog.context)
+                                dialog.setTitle("통신실패")
+                                dialog.setMessage("실패")
+                                dialog.show()
+                            }
+                            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                                val login = response.body()
+
+                                if(login?.ok==true){
+                                    dialog.dismiss()
+                                    TestUser.token = login.token
+                                    inte = Intent(context, BottomNavActivity::class.java)
+                                    startActivity(inte)
+                                    activity!!.finish()
+
+                                }else{
+                                    Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+                                }
+
+
+                                /*  val dialog = AlertDialog.Builder(this@LoginActivity)
+                                  dialog.setTitle("통신성공")
+                                  dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+                                  dialog.show()*/
+
+                            }
+
+                        })
+
+
+//                        TestUser.userName ="떡볶이가 좋은 빙봉"
+//                        TestUser.userID = 1
 
                     })
                     dialog.show()
