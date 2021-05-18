@@ -50,10 +50,10 @@ class SplashActivity : AppCompatActivity() {
         val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
         val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
 
-        with (myShared.edit()) {
-            putString(sharedKey, Gson().toJson(dummyDataSet))
-            apply()
-        }
+//        with (myShared.edit()) {
+//            putString(sharedKey, Gson().toJson(dummyDataSet))
+//            apply()
+//        }
 
 
         // ----------------------------------------------------------------
@@ -82,10 +82,10 @@ class SplashActivity : AppCompatActivity() {
         commentsDummyDataSet.add(Comment(20, "20210518233223", null, "me2", 7, false, 19, 2))
         commentsDummyDataSet.add(Comment(21, "20210520111111", null, "ㅇㅋ", 7, false, 11, 1))
 
-        with (myShared.edit()) {
-            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
-            apply()
-        }
+//        with (myShared.edit()) {
+//            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
+//            apply()
+//        }
 
 
 
@@ -99,6 +99,7 @@ class SplashActivity : AppCompatActivity() {
         likeDatasets.add(Like(3, "20210517", null, R.string.dummy_uid_3, 1, -1))
         likeDatasets.add(Like(4, "20210517", null, R.string.dummy_uid_4, 1, -1))
         likeDatasets.add(Like(5, "20210517", null, R.string.dummy_uid_5, 1, -1))
+
         likeDatasets.add(Like(6, "20210517", null, R.string.dummy_uid_2, 2, -1))
         likeDatasets.add(Like(7, "20210517", null, R.string.dummy_uid_3, 2, -1))
         likeDatasets.add(Like(8, "20210517", null, R.string.dummy_uid_4, 3, -1))
@@ -123,14 +124,15 @@ class SplashActivity : AppCompatActivity() {
         bookmarkDatasets.add(Bookmark(5, "20210517152133", null, true, 1, 5))
         bookmarkDatasets.add(Bookmark(6, "20210517152233", null, true, 1, 6))
         bookmarkDatasets.add(Bookmark(7, "20210517152333", null, true, 1, 7))
-        bookmarkDatasets.add(Bookmark(8, "20210517152433", null, true, 1, 8))
+//        bookmarkDatasets.add(Bookmark(8, "20210517152433", null, true, 1, 8))
+
         bookmarkDatasets.add(Bookmark(9, "20210517152533", null, true, 2, 3))
         bookmarkDatasets.add(Bookmark(10, "20210517152633", null, true, 2, 5))
 
-        with (myShared.edit()) {
-            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
-            commit()
-        }
+//        with (myShared.edit()) {
+//            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
+//            commit()
+//        }
 
 
         // ----------------------------------------------------------------

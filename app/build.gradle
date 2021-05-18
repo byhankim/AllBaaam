@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -77,4 +78,12 @@ dependencies {
 
     // http image network - glide
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.12.0'
+
+    // room
+    def room_version = "2.3.0"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 }

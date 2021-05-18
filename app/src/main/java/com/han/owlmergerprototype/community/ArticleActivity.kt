@@ -51,7 +51,7 @@ class ArticleActivity : AppCompatActivity() {
 
         // post id
         dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
-        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
+//        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
 
         binding = ArticleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -99,7 +99,7 @@ class ArticleActivity : AppCompatActivity() {
 //                 setOnClickListener {}
             }
 
-            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
+//            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
             commentCount = dummyCommentsDataSet.size
         }
 
@@ -191,13 +191,14 @@ class ArticleActivity : AppCompatActivity() {
             } else {
                 "0"
             }
+            Log.e("[currentLikes]", currentLike.size.toString())
 
             // did the user press like?
             val userLike = currentLike.filter {
                 it.userID == R.string.dummy_uid_1
             }
-            isLikePressed = currentLike.isNotEmpty()
-            Log.e("[userLikes]", "${currentLike.isNotEmpty()}")
+            isLikePressed = userLike.isNotEmpty()
+            Log.e("[userLikesToThisPost]", "${userLike.isNotEmpty()}")
 
             // default Liked state
             background = if (isLikePressed) {
@@ -210,19 +211,32 @@ class ArticleActivity : AppCompatActivity() {
             setOnClickListener {
                 isLikePressed = !isLikePressed
 
+                val isLikeDuplicate = dummyLikesDataSet.filter {
+                    (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                }
+                if (isLikeDuplicate.isNotEmpty())
+                    Log.e("[like_duplicate:]", isLikeDuplicate.toString())
+
+                // 중복 없다면 더하기
                 if (isLikePressed) {
-                    dummyLikesDataSet.add(Like(
-                        dummyLikesDataSet.size+1,
-                        DateTimeFormatManager.getCurrentDatetime(),
-                        null,
-                        R.string.dummy_uid_1,
-                        dummyPostId
-                    ))
+                    if (isLikeDuplicate.isEmpty()) {
+                        dummyLikesDataSet.add(Like(
+                            dummyLikesDataSet.size+1,
+                            DateTimeFormatManager.getCurrentDatetime(),
+                            null,
+                            R.string.dummy_uid_1,
+                            dummyPostId
+                        ))
+                    }
                 } else {
-                    // 좋아요 눌렀다가 이제 끈거면 해당 아이템 제거해버리기
-                    dummyLikesDataSet = dummyBookmarksDataSet.filter{
-                        it.userID == R.string.dummy_uid_1
+                    // 좋아요 취소
+                    dummyLikesDataSet = dummyLikesDataSet.filterNot{
+                        // 이 유저가 / 이 글에서 누른 좋아요만 빼기
+                        ((it.userID == R.string.dummy_uid_1) && (it.postID == dummyPostId))
                     } as MutableList<Like>
+                    Log.e("[좋아요취소시기존좋아요수]", dummyLikesDataSet.filter {
+                        (it.postID == dummyPostId)
+                    }.size.toString() + ", 전체 데이터셋크기:${dummyLikesDataSet.size.toString()}")
                 }
 
                 // icon exchange
@@ -233,7 +247,11 @@ class ArticleActivity : AppCompatActivity() {
                 }
 
                 // heart count renew
-                binding.articleFavoriteCountTv.text = dummyLikesDataSet.size.toString()
+                binding.articleFavoriteCountTv.text = dummyLikesDataSet.filter {
+                    (it.postID == dummyPostId)
+                }.size.toString()
+
+                Log.e("[Like]", dummyLikesDataSet.filter { (it.postID == dummyPostId) }.size.toString())
 
                 // save to sharedPreferences
                 with (myShared.edit()) {
