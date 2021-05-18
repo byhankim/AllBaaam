@@ -29,16 +29,13 @@
         android:textSize="50dp"
         />
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/kakao_login_btn"
+        android:layout_width="237dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/naver_login_btn"
+        />
 
     <Button
         android:id="@+id/btn_retrofit"

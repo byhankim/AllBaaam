@@ -16,6 +16,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
+import com.han.owlmergerprototype.MainActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
@@ -33,6 +35,14 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.utils.SpaceDecoration
+import com.kakao.auth.ISessionCallback
+import com.kakao.auth.Session
+import com.kakao.network.ErrorResult
+import com.kakao.usermgmt.LoginButton
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.MeV2ResponseCallback
+import com.kakao.usermgmt.response.MeV2Response
+import com.kakao.util.exception.KakaoException
 import org.w3c.dom.Text
 
 @Suppress("DEPRECATION")
@@ -40,6 +50,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
     private lateinit var themeSelectorRv: RecyclerView
+    private lateinit var callback:SessionCallback
 
 
     private lateinit var recyclerView: RecyclerView
@@ -269,24 +280,31 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 holder.lastItemBlur.isVisible = true
                 holder.loginView.isVisible = true
                 holder.loginBTN.setOnClickListener {
-                    val dialog = Dialog(context!!)
-                    dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-                    dialog.setContentView(R.layout.activity_login)
-                    val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
-                    cancelBTN.setOnClickListener(View.OnClickListener {
-                        dialog.dismiss()
-                    })
-                    val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
-                    kakaoLoginBTN.setOnClickListener(View.OnClickListener {
-                        dialog.dismiss()
-                        TestUser.userName ="떡볶이가 좋은 빙봉"
-                        TestUser.userID = 1
-                        inte = Intent(context, BottomNavActivity::class.java)
-                        startActivity(inte)
-                        activity!!.finish()
-
-                    })
-                    dialog.show()
+//                    val dialog = Dialog(context!!)
+//                    dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+//                    dialog.setContentView(R.layout.activity_login)
+//                    val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
+//                    cancelBTN.setOnClickListener(View.OnClickListener {
+//                        dialog.dismiss()
+//                    })
+//                    val kakaoLoginBTN:LoginButton = dialog.findViewById(R.id.kakao_login_btn)
+//                    kakaoLoginBTN.setOnClickListener(View.OnClickListener {
+//                        dialog.dismiss()
+//
+//                        callback = SessionCallback()
+//                        Session.getCurrentSession().addCallback(callback)
+//                        Session.getCurrentSession().checkAndImplicitOpen()
+//
+//                        TestUser.userName ="떡볶이가 좋은 빙봉"
+//                        TestUser.userID = 1
+//                        inte = Intent(context, BottomNavActivity::class.java)
+//                        startActivity(inte)
+//                        activity!!.finish()
+//
+//                    })
+//                    dialog.show()
+                    inte = Intent(context,MainActivity::class.java)
+                    startActivity(inte)
 
 
 
@@ -327,4 +345,42 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
 
     }
+
+
+    private inner class SessionCallback : ISessionCallback {
+        override fun onSessionOpened() {
+            // 로그인 세션이 열렸을 때
+            UserManagement.getInstance().me( object : MeV2ResponseCallback() {
+                override fun onSuccess(result: MeV2Response?) {
+                    // 로그인이 성공했을 때
+                    var intent = Intent(context, BottomNavActivity::class.java)
+                    intent.putExtra("name", result!!.getNickname())
+                    intent.putExtra("profile", result!!.getProfileImagePath())
+                    startActivity(intent)
+
+                }
+
+                override fun onSessionClosed(errorResult: ErrorResult?) {
+                    // 로그인 도중 세션이 비정상적인 이유로 닫혔을 때
+                    Toast.makeText(
+                        context,
+                        "세션이 닫혔습니다. 다시 시도해주세요 : ${errorResult.toString()}",
+                        Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+        override fun onSessionOpenFailed(exception: KakaoException?) {
+            // 로그인 세션이 정상적으로 열리지 않았을 때
+            if (exception != null) {
+                com.kakao.util.helper.log.Logger.e(exception)
+                Toast.makeText(
+                    context,
+                    "로그인 도중 오류가 발생했습니다. 인터넷 연결을 확인해주세요 : $exception",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+
 }

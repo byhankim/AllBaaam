@@ -89,4 +89,7 @@ dependencies {
     //shadow
     api 'tk.zielony:carbon:0.16.0.1'
     implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.1'
+
+    //카카오로그인
+    implementation 'com.kakao.sdk:usermgmt:1.27.0'
 }

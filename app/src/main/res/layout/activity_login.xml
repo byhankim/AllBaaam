@@ -23,13 +23,13 @@
         android:layout_centerHorizontal="true"
         android:textSize="15dp"
         android:text="간편한 소셜 로그인으로\n더 많은 콘텐츠를 만나볼 수 있어요!"/>
-    <Button
+    <com.kakao.usermgmt.LoginButton
         android:id="@+id/kakao_login_btn"
         android:layout_width="237dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="20dp"
         android:layout_above="@+id/naver_login_btn"
-        android:text="카카오톡 로그인"/>
+       />
     <Button
         android:id="@+id/naver_login_btn"
         android:layout_width="237dp"
