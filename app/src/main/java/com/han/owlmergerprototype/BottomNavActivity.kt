@@ -1,5 +1,6 @@
 package com.han.owlmergerprototype
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,9 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.han.owlmergerprototype.community.CommFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.han.owlmergerprototype.MapFragment
+import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.MypageFragment
 
 class BottomNavActivity : AppCompatActivity() {
@@ -56,14 +60,20 @@ class BottomNavActivity : AppCompatActivity() {
                 fragmentManager.popBackStack()
             }
 
-
+                // MAP
                 if (isChecked) {
+                    Log.d(TAG, "BottomNavActivity - onCreate() MAP isChecked called")
 
-                    mapFragment = MapFragment.newInstance()
-                   
-                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
+                    val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
+                    startActivity(intent)
+
+//                    mapFragment = MapFragment.newInstance()
+//                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
+
+
+
                 } else {
-                   
+                   Log.d(TAG, "BottomNavActivity - onCreate() MAP !isChecked! called")
                     commFragment = CommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
 

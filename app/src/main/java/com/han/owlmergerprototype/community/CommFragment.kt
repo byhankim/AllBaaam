@@ -33,6 +33,8 @@ import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
+import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class CommFragment(var owner: Activity): Fragment() {

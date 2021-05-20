@@ -1,5 +1,6 @@
 package com.han.owlmergerprototype.noLoginTest
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,8 @@ import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.mypage.MypageFragment
 
 class NoLoginBottonNavActivity : AppCompatActivity() {
 
@@ -57,26 +60,25 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
                 fragmentManager.popBackStack()
             }
 
-
+                // MAP
                 if (isChecked) {
-                    Log.d(TAG, "BottomActivity - switch map")
+//                    Log.d(TAG, "BottomActivity - switch map")
+                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /isChecked /called")
+                    val intent = Intent(this, MapsMainActivity::class.java)
+                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /isChecked /called222")
+//                    val intent = Intent(this, MapsMainActivity::class.java)
+                    startActivity(intent)
 
-                    mapFragment = MapFragment.newInstance()
-                   
-                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
+//                    mapFragment = MapFragment.newInstance()
+//                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
+
+
                 } else {
-
+                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
                     noLoginCommFragment = NoLoginCommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
-
                 }
-            
-
         }
-
-
-
-
     }
 
 

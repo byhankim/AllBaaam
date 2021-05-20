@@ -363,10 +363,6 @@ class ArticleActivity : AppCompatActivity() {
                 })
                 dialog.show()
             }
-            R.id.report_btn -> {
-                isBookMarked = !isBookMarked
-                Toast.makeText(this, "신고 럿성", Toast.LENGTH_SHORT).show()
-            }
         }
         return true
     }
