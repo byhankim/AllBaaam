@@ -50,7 +50,7 @@ class CommFragment(var owner: Activity): Fragment() {
 
 
     companion object{
-        const val TAG : String = "looooog"
+        const val TAG : String = "로그"
 
         fun newInstance(owner: Activity) : CommFragment {
             return CommFragment(owner)
@@ -222,6 +222,53 @@ class CommFragment(var owner: Activity): Fragment() {
                 val comBtnLayout:RelativeLayout = dialog.findViewById(R.id.complete_auth_btn_tint_layout)
                 val authET:EditText = dialog.findViewById(R.id.put_auth_number_et)
                 val authBTN:TextView = dialog.findViewById<TextView>(R.id.complete_auth_btn)
+                val agreeAllCV:CheckBox = dialog.findViewById(R.id.agree_all_policy_cb)
+                val agree1CB:CheckBox = dialog.findViewById(R.id.agree_for_service_cb)
+                val agree2CB:CheckBox = dialog.findViewById(R.id.agree_for_gps_info_cb)
+                val agree3CB:CheckBox = dialog.findViewById(R.id.agree_for_marketing_cb)
+
+                var flag:Int = 0
+
+                agreeAllCV.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if(isChecked){
+                        agree1CB.isChecked=true
+                        agree2CB.isChecked=true
+                        agree3CB.isChecked=true
+
+                    }else{
+//                        if(agree1CB.isChecked||agree2CB.isChecked||agree3CB.isChecked){
+//
+//                        }else{
+//                            agree1CB.isChecked=false
+//                            agree2CB.isChecked=false
+//                            agree3CB.isChecked=false
+//                        }
+                        if(agree1CB.isChecked&&agree2CB.isChecked&&agree3CB.isChecked){
+                            agree1CB.isChecked=false
+                            agree2CB.isChecked=false
+                            agree3CB.isChecked=false
+                        }
+
+
+                    }
+                }
+                agree1CB.setOnCheckedChangeListener { buttonView, isChecked ->
+
+                        if(agree2CB.isChecked&&agree3CB.isChecked) {
+                            agreeAllCV.isChecked = isChecked
+                        }
+                }
+                agree2CB.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if(agree1CB.isChecked&&agree3CB.isChecked){
+                        agreeAllCV.isChecked = isChecked
+                    }
+                }
+                agree3CB.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if(agree2CB.isChecked&&agree1CB.isChecked){
+                        agreeAllCV.isChecked = isChecked
+                    }
+                }
+
 
                 phoneET.addTextChangedListener(object: TextWatcher{
                         override fun beforeTextChanged(
@@ -239,8 +286,13 @@ class CommFragment(var owner: Activity): Fragment() {
                             before: Int,
                             count: Int
                         ) {
-                            if(it.toString().length>=10){
+                            if(phoneET.length()>=10){
+                                Log.d(TAG,"${phoneET.length()}")
+
                                 sendBTN.isClickable=true
+                                sendBTN.setOnClickListener {
+                                    authLayout.isVisible = true
+                                }
                             }
                         }
 
@@ -250,17 +302,16 @@ class CommFragment(var owner: Activity): Fragment() {
 
                     })
 
-                sendBTN.setOnClickListener {
-                    authLayout.isVisible = true
-                }
 
-                authET.addTextChangedListener(object: TextWatcher{
+
+                authET.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(
                         s: CharSequence?,
                         start: Int,
                         count: Int,
                         after: Int
                     ) {
+
 
                     }
 
@@ -270,10 +321,20 @@ class CommFragment(var owner: Activity): Fragment() {
                         before: Int,
                         count: Int
                     ) {
-                        if(it.toString().length>=4){
-                            authBTN.isClickable=true
+                        if (authET.length() >= 4) {
+                            authBTN.isClickable = true
                             comBtnLayout.isVisible = true
+                            authBTN.setOnClickListener(View.OnClickListener {
+                                if (agree2CB.isChecked && agree1CB.isChecked) {
+                                    TestUser.phoneCheck = true
+                                    dialog.dismiss()
+                                } else {
+                                    Toast.makeText(dialog.context, "약관동의를 확인해주세요", Toast.LENGTH_SHORT).show()
+                                }
+
+                            })
                         }
+
                     }
 
                     override fun afterTextChanged(s: Editable?) {
@@ -281,10 +342,7 @@ class CommFragment(var owner: Activity): Fragment() {
                     }
 
                 })
-                authBTN.setOnClickListener(View.OnClickListener {
-                    TestUser.phoneCheck = true
-                    dialog.dismiss()
-                })
+
 
                 dialog.show()
 

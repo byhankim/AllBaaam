@@ -48,11 +48,7 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".RetrofitActivity" />
         <activity android:name=".Mypg004Activity" />
@@ -63,7 +59,13 @@
         <activity android:name=".mypage.MyContentsActivity" />
         <activity
             android:name=".BottomNavActivity"
-            android:theme="@style/Theme.OwlPrototype" />
+            android:theme="@style/Theme.OwlPrototype">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".CommunityMainActivity"
             android:theme="@style/Theme.OwlPrototype" />
