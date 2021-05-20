@@ -125,27 +125,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/theme_selector_recyclerview"
-        android:background="@color/black"
-        android:alpha="@string/opacity_value_et">
+        android:background="@color/gray8">
+        <!--android:alpha="@string/opacity_value_et"-->
+
         <EditText
             android:id="@+id/comm_write_article_content_et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/comm_write_article_et_height"
+            android:maxLength="@string/comm_write_article_et_max_text_length"
             android:maxLines="@string/write_et_maxlines"
-            android:maxLength="@string/comm_write_article_et_max_text_length"/>
+            android:textSize="@dimen/comm_write_article_content_text_size"
+            android:padding="@dimen/comm_Write_article_content_padding"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"/>
+
         <TextView
             android:id="@+id/comm_write_article_add_img_btn"
             android:layout_width="@dimen/comm_write_article_img_icon_size"
             android:layout_height="@dimen/comm_write_article_img_icon_size"
             android:layout_below="@id/comm_write_article_content_et"
             android:background="@drawable/upload_image"
+            android:backgroundTint="@color/gray1"
             android:layout_margin="@dimen/comm_write_article_btn_margin"/>
+        <TextView
+            android:id="@+id/comm_write_article_set_location_btn"
+            android:layout_width="@dimen/comm_write_article_img_icon_size"
+            android:layout_height="@dimen/comm_write_article_img_icon_size"
+            android:layout_below="@id/comm_write_article_content_et"
+            android:layout_toEndOf="@id/comm_write_article_add_img_btn"
+            android:layout_alignBaseline="@id/comm_write_article_add_img_btn"
+            android:background="@drawable/outline_place_24"
+            android:backgroundTint="@color/gray1"/>
+        <TextView
+            android:id="@+id/comm_write_article_set_location_tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/comm_write_article_set_location_btn"
+            android:layout_alignBaseline="@id/comm_write_article_set_location_btn"
+            android:layout_marginStart="@dimen/comm_write_article_location_tooltip_tv_margin_horizontal"
+            android:text="@string/set_location_btn_tooltip_text"
+            android:textColor="@color/brand1"/>
         <TextView
             android:id="@+id/create_article_current_text_count_tv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/create_article_text_limit_indicator_tv_height"
             android:text="@string/create_article_current_text_count_dummy_count"
-            android:layout_alignBottom="@id/comm_write_article_add_img_btn"
+            android:layout_alignBottom="@id/comm_write_article_content_et"
             android:layout_toStartOf="@id/create_article_text_limit_tv"
             android:layout_marginTop="@dimen/create_article_current_text_counter_margin_vertical"
             android:layout_marginBottom="@dimen/create_article_current_text_counter_margin_vertical"/>
@@ -157,8 +182,8 @@
             android:textSize="@dimen/create_article_text_limit_tv_text_size"
             android:textColor="@color/gray3"
             android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/comm_write_article_add_img_btn"
-            android:layout_marginEnd="@dimen/comm_write_article_btn_margin"
+            android:layout_alignBottom="@id/comm_write_article_content_et"
+            android:layout_marginEnd="@dimen/comm_write_article_btn_margin_horizontal"
             android:layout_marginTop="@dimen/create_article_current_text_counter_margin_vertical"
             android:layout_marginBottom="@dimen/create_article_current_text_counter_margin_vertical"/>
         <!--<TextView
