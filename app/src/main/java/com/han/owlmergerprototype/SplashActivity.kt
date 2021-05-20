@@ -48,11 +48,12 @@ class SplashActivity : AppCompatActivity() {
         val sharedPrefName = getString(R.string.owl_shared_preferences_name)
         val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
         val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
-
-//        with (myShared.edit()) {
-//            putString(sharedKey, Gson().toJson(dummyDataSet))
-//            apply()
-//        }
+/**/
+        with (myShared.edit()) {
+            putString(sharedKey, Gson().toJson(dummyDataSet))
+            apply()
+        }
+/**/
 
 
         // ----------------------------------------------------------------
@@ -81,11 +82,13 @@ class SplashActivity : AppCompatActivity() {
         commentsDummyDataSet.add(Comment(20, "20210518233223", null, "me2", 7, false, 19, 2))
         commentsDummyDataSet.add(Comment(21, "20210520111111", null, "ㅇㅋ", 7, false, 11, 1))
 
-//        with (myShared.edit()) {
-//            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
-//            apply()
-//        }
+/**/
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
+            apply()
+        }
 
+/**/
         // ----------------------------------------------------------------
         //      when fetching from shared preferences
         // ----------------------------------------------------------------
