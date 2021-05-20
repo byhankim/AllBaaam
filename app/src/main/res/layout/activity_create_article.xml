@@ -204,7 +204,7 @@
         android:paddingStart="@dimen/create_article_img_margin_vertical"
         android:paddingEnd="@dimen/create_article_img_margin_vertical"
         android:paddingBottom="@dimen/create_article_img_margin_vertical"
-        android:background="@color/black"
+        android:background="@color/gray8"
         android:src="@drawable/crazy_human"
         android:visibility="gone"
         />
