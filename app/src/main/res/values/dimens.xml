@@ -8,11 +8,11 @@
     <dimen name="comm_theme_tv_width">101dp</dimen>
     <dimen name="scrollview_padding_horizontal">2dp</dimen>
     <dimen name="toolbar_elevation_size">4dp</dimen>
-    <dimen name="comm_write_article_et_height">250dp</dimen>
+    <dimen name="comm_write_article_et_height">200dp</dimen>
     <dimen name="scrollview_margin_bottom">20dp</dimen>
     <dimen name="comm_write_article_btn_margin">12dp</dimen>
-    <dimen name="comm_write_article_img_icon_size">40dp</dimen>
-    <dimen name="comm_write_article_title_et_height">40dp</dimen>
+    <dimen name="comm_write_article_img_icon_size">24dp</dimen>
+    <dimen name="comm_write_article_title_et_height">24dp</dimen>
     <dimen name="article_profile_size">60dp</dimen>
     <dimen name="article_padding_lr">20dp</dimen>
     <dimen name="article_cate_tv_height">16dp</dimen>
@@ -90,4 +90,8 @@
     <dimen name="article_content_body_margin_end">10dp</dimen>
     <dimen name="article_favorite_count_tv_margin_vertical">2dp</dimen>
     <dimen name="create_article_count_tv_margin_horizontal">8dp</dimen>
+    <dimen name="comm_write_article_location_tooltip_tv_margin_horizontal">5dp</dimen>
+    <dimen name="comm_write_article_content_text_size">16sp</dimen>
+    <dimen name="comm_Write_article_content_padding">18dp</dimen>
+    <dimen name="comm_write_article_btn_margin_horizontal">17dp</dimen>
 </resources>

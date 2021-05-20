@@ -100,23 +100,6 @@ class CreateArticleActivity : AppCompatActivity() {
             }*/
         }
 
-//        with (binding.commWriteArticleAddImgBtn) {
-//            /*
-//            *
-//            *
-//            val intent = Intent()
-//            intent.action = Intent.ACTION_PICK // 뭔가 가져오겠다는 뜻
-//            intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//            startActivityForResult(intent, PICK_FROM_GALLERY)
-//            * */
-//            setOnClickListener {
-//                val intent = Intent(Intent.ACTION_PICK)
-//                intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//                startActivityForResult(intent, PICK_FROM_GALLERY)
-//            }
-////            binding.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
-//        }
-
         binding.commWriteArticleAddImgBtn.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_PICK // 뭔가 가져오겠다는 뜻
@@ -140,50 +123,6 @@ class CreateArticleActivity : AppCompatActivity() {
                 }
             }
         })
-
-
-        /*
-        // left side button
-        val backBtn: Button = Button(this)
-        val lParams1: Toolbar.LayoutParams = Toolbar.LayoutParams(
-            Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT)
-        lParams1.gravity = Gravity.START
-        backBtn.layoutParams = lParams1
-//        backBtn.text = "Back"
-        backBtn.background = getDrawable(R.drawable.arrow_back)
-        backBtn.width = 50
-        backBtn.height = 50
-        binding.commMainToolbar.addView(backBtn)
-
-        // middle textview section
-        val titleTv = TextView(this)
-        val lParams2: Toolbar.LayoutParams = Toolbar.LayoutParams(
-            Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT)
-        lParams2.gravity = Gravity.CENTER
-        titleTv.layoutParams = lParams2
-        titleTv.text = "글 작성하기"
-        binding.commMainToolbar.addView(titleTv)
-
-        // end side button
-        val writeBtn: Button = Button(this)
-        val lParams3: Toolbar.LayoutParams = Toolbar.LayoutParams(
-            Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT)
-        lParams3.gravity = Gravity.END
-        writeBtn.layoutParams = lParams3
-//        writeBtn.text = "Back"
-        writeBtn.background = getDrawable(R.drawable.done)
-        writeBtn.width = 50
-        writeBtn.height = 50
-        binding.commMainToolbar.addView(writeBtn)
-
-        backBtn.setOnClickListener {
-            Toast.makeText(this, "응~ 뒤로 안가줘~", Toast.LENGTH_SHORT).show()
-        }
-        writeBtn.setOnClickListener {
-            Toast.makeText(this, "응~ 글 안써줘~", Toast.LENGTH_SHORT).show()
-        }
-        */
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -192,21 +131,6 @@ class CreateArticleActivity : AppCompatActivity() {
         // buttons
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back) // set drawable icon
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // TODO TODO TODO
-        // theme
-        /*binding.commListLr.setOnClickListener {
-            var category = "none"
-            category = when (it.id) {
-                R.id.cate_honey_tips -> "꿀팁"
-                R.id.cate_stocks_overseas -> "해외주식"
-                R.id.cate_soccor_games -> "해외축구"
-                R.id.cate_job_talks -> "이직잡담"
-                R.id.cate_study_hard -> "빡공하는 올빼미"
-                else -> "none"
-            }
-            Toast.makeText(this, category, Toast.LENGTH_SHORT).show()
-        }*/
 
         return true
     }
@@ -360,10 +284,6 @@ class CreateArticleActivity : AppCompatActivity() {
             tempBitmap!!.compress(Bitmap.CompressFormat.JPEG, R.dimen.image_upload_compress_quality, bitmapStream)
             bitmapStream.close()
             fileLocation = tempFile.absolutePath
-
-
-
-
 
             // ?????
             flag = true

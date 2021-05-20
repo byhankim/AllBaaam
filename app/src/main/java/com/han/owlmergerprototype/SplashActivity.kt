@@ -14,6 +14,8 @@ import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.Like
 import com.han.owlmergerprototype.data.Post
 
+const val DUMMY_USER_ID = 1
+
 class SplashActivity : AppCompatActivity() {
     private val timeoutCount: Long = 1500
 
@@ -38,13 +40,13 @@ class SplashActivity : AppCompatActivity() {
         //      커뮤니티 메인 프래그먼트 dp용 더미데이터
         // ----------------------------------------------------------------
         val dummyDataSet = mutableListOf<Post>()
-        dummyDataSet.add(Post(1, "20210511", "20210512", "아무도 나랑 마포 떡볶이 맛집에 가주지 않았다", 1, -1, 1))
-        dummyDataSet.add(Post(2, "20210512", "20210513", "니하오?", 2, -1, 2))
-        dummyDataSet.add(Post(3, "20210513", "20210514", "짜이찌엔?", 2, -1, 2))
-        dummyDataSet.add(Post(4, "20210514", "20210515", "recyclerview 극혐 ㅋㅋ ㄹㅇ 인정각 날카롭게 서는 부분 반박시 -틀-", 3, -1, 3))
-        dummyDataSet.add(Post(5, "20210515", "20210516", "아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니", 1, -1, 1))
-        dummyDataSet.add(Post(6, "20210516", "20210517", "내가 가장 싫어하는것은 첫번째는 말을 하다 마는 것이고 두번째는", 4, -1, 3))
-        dummyDataSet.add(Post(7, "20210517", "20210518", "오늘 나랑 마포 떡볶이 맛집 탐방 갈 사람?? 진짜 내 전재산 걸고 존맛탱임 ㄹㅇ ㅋ", 1, -1, 1))
+        dummyDataSet.add(Post(1, "20210511010101", "20210512010101", "아무도 나랑 마포 떡볶이 맛집에 가주지 않았다", 1, -1, 1))
+        dummyDataSet.add(Post(2, "20210512020202", "20210513020202", "니하오?", 2, -1, 2))
+        dummyDataSet.add(Post(3, "20210513030303", "20210514030303", "짜이찌엔?", 2, -1, 2))
+        dummyDataSet.add(Post(4, "20210514040404", "20210515040404", "recyclerview 극혐 ㅋㅋ ㄹㅇ 인정각 날카롭게 서는 부분 반박시 -틀-", 3, -1, 3))
+        dummyDataSet.add(Post(5, "20210515050505", "20210516050505", "아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니 근데 솔직히 진짜 아니", 1, -1, 1))
+        dummyDataSet.add(Post(6, "20210516060606", "20210517060606", "내가 가장 싫어하는것은 첫번째는 말을 하다 마는 것이고 두번째는", 4, -1, 3))
+        dummyDataSet.add(Post(7, "20210517070707", "20210518080808", "오늘 나랑 마포 떡볶이 맛집 탐방 갈 사람?? 진짜 내 전재산 걸고 존맛탱임 ㄹㅇ ㅋ", 1, -1, 1))
 
         val sharedPrefName = getString(R.string.owl_shared_preferences_name)
         val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
@@ -80,8 +82,8 @@ class SplashActivity : AppCompatActivity() {
         commentsDummyDataSet.add(Comment(17, "20210515000101", null, "111111111111111111111111111111111111111111111111111111111111", 7, true, null, 3))
         commentsDummyDataSet.add(Comment(18, "20210516161616", null, "날씨좋다", 7, true, null, 2))
         commentsDummyDataSet.add(Comment(19, "20210517080808", null, "집가고 싶어요", 7, true, null, 1))
-        commentsDummyDataSet.add(Comment(20, "20210518233223", null, "me2", 7, false, 19, 2))
-        commentsDummyDataSet.add(Comment(21, "20210520111111", null, "ㅇㅋ", 7, false, 11, 1))
+        commentsDummyDataSet.add(Comment(20, "20210518132313", null, "me2", 7, false, 19, 2))
+        commentsDummyDataSet.add(Comment(21, "20210518111111", null, "ㅇㅋ", 7, false, 11, 1))
 
 /**/
 //        with (myShared.edit()) {
@@ -96,15 +98,15 @@ class SplashActivity : AppCompatActivity() {
         // ----------------------------------------------------------------
         val likeDatasets = mutableListOf<Like>()
 
-        likeDatasets.add(Like(1, "20210517", null, R.string.dummy_uid_1, 1, -1))
-        likeDatasets.add(Like(2, "20210517", null, R.string.dummy_uid_2, 1, -1))
-        likeDatasets.add(Like(3, "20210517", null, R.string.dummy_uid_3, 1, -1))
-        likeDatasets.add(Like(4, "20210517", null, R.string.dummy_uid_4, 1, -1))
-        likeDatasets.add(Like(5, "20210517", null, R.string.dummy_uid_5, 1, -1))
+        likeDatasets.add(Like(1, "20210517030303", null, DUMMY_USER_ID, 1, -1))
+        likeDatasets.add(Like(2, "20210517040404", null, DUMMY_USER_ID, 2, -1))
+        likeDatasets.add(Like(3, "20210517050505", null, DUMMY_USER_ID, 3, -1))
+        likeDatasets.add(Like(4, "20210517060606", null, DUMMY_USER_ID, 4, -1))
+        likeDatasets.add(Like(5, "20210517070707", null, DUMMY_USER_ID, 5, -1))
 
-        likeDatasets.add(Like(6, "20210517", null, R.string.dummy_uid_2, 2, -1))
-        likeDatasets.add(Like(7, "20210517", null, R.string.dummy_uid_3, 2, -1))
-        likeDatasets.add(Like(8, "20210517", null, R.string.dummy_uid_4, 3, -1))
+        likeDatasets.add(Like(6, "20210517080808", null, 2, 2, -1))
+        likeDatasets.add(Like(7, "20210517090909", null, 3, 2, -1))
+        likeDatasets.add(Like(8, "20210517101010", null, 4, 3, -1))
 
 
 //        with (myShared.edit()) {
@@ -119,13 +121,13 @@ class SplashActivity : AppCompatActivity() {
         // ----------------------------------------------------------------
         val bookmarkDatasets = mutableListOf<Bookmark>()
 
-        bookmarkDatasets.add(Bookmark(1, "20210517151733", null, true, 1, 1))
-        bookmarkDatasets.add(Bookmark(2, "20210517151833", null, true, 1, 2))
-        bookmarkDatasets.add(Bookmark(3, "20210517151933", null, true, 1, 3))
-        bookmarkDatasets.add(Bookmark(4, "20210517152033", null, true, 1, 4))
-        bookmarkDatasets.add(Bookmark(5, "20210517152133", null, true, 1, 5))
-        bookmarkDatasets.add(Bookmark(6, "20210517152233", null, true, 1, 6))
-        bookmarkDatasets.add(Bookmark(7, "20210517152333", null, true, 1, 7))
+        bookmarkDatasets.add(Bookmark(1, "20210517151733", null, true, DUMMY_USER_ID, 1))
+        bookmarkDatasets.add(Bookmark(2, "20210517151833", null, true, DUMMY_USER_ID, 2))
+        bookmarkDatasets.add(Bookmark(3, "20210517151933", null, true, DUMMY_USER_ID, 3))
+        bookmarkDatasets.add(Bookmark(4, "20210517152033", null, true, DUMMY_USER_ID, 4))
+        bookmarkDatasets.add(Bookmark(5, "20210517152133", null, true, DUMMY_USER_ID, 5))
+        bookmarkDatasets.add(Bookmark(6, "20210517152233", null, true, DUMMY_USER_ID, 6))
+        bookmarkDatasets.add(Bookmark(7, "20210517152333", null, true, DUMMY_USER_ID, 7))
 //        bookmarkDatasets.add(Bookmark(8, "20210517152433", null, true, 1, 8))
 
         bookmarkDatasets.add(Bookmark(9, "20210517152533", null, true, 2, 3))

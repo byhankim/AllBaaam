@@ -83,6 +83,9 @@ class ArticleActivity : AppCompatActivity() {
                 dummyDataSetFromSharedPreferences.filter { it.id == dummyPostId }[0]
             }
         }
+
+        // time gap in text
+        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
         binding.articleContentTv.text = myPost.contents
 
 //        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
@@ -126,7 +129,7 @@ class ArticleActivity : AppCompatActivity() {
 
             // default
             val currentBookmark = dummyBookmarksDataSet.filter {
-                (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                (it.postID == dummyPostId) && (it.userID == TestUser.userID)
             }
             Log.e("[crntBkmrk(single)]", "currentBookmark is empty: ${currentBookmark.isEmpty()}")
             binding.articleBookmarkBtn.background = if (currentBookmark.isNotEmpty()) {
@@ -144,7 +147,7 @@ class ArticleActivity : AppCompatActivity() {
 
                 // 기존 데이터셋에 중복되어있는지 여부 확인
                 val isBookmarkDuplicate = dummyBookmarksDataSet.filter {
-                    (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                    (it.postID == dummyPostId) && (it.userID == TestUser.userID)
                 }
 
                 // 북마크 데이터 중복이 아니면 dataset 리스트에 더해주고
@@ -157,7 +160,7 @@ class ArticleActivity : AppCompatActivity() {
                                 DateTimeFormatManager.getCurrentDatetime(),
                                 null,
                                 false,
-                                R.string.dummy_uid_1,
+                                TestUser.userID,
                                 dummyPostId
                             )
                         )
@@ -166,7 +169,7 @@ class ArticleActivity : AppCompatActivity() {
                 } else {
                     // 리스트에서 제거
                     dummyBookmarksDataSet = dummyBookmarksDataSet.filterNot {
-                        (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                        (it.postID == dummyPostId) && (it.userID == TestUser.userID)
                     } as MutableList<Bookmark>
                 }
 
@@ -207,7 +210,7 @@ class ArticleActivity : AppCompatActivity() {
 
             // did the user press like?
             val userLike = currentLike.filter {
-                it.userID == R.string.dummy_uid_1
+                it.userID == TestUser.userID
             }
             isLikePressed = userLike.isNotEmpty()
             Log.e("[userLikesToThisPost]", "${userLike.isNotEmpty()}")
@@ -224,7 +227,7 @@ class ArticleActivity : AppCompatActivity() {
                 isLikePressed = !isLikePressed
 
                 val isLikeDuplicate = dummyLikesDataSet.filter {
-                    (it.postID == dummyPostId) && (it.userID == R.string.dummy_uid_1)
+                    (it.postID == dummyPostId) && (it.userID == TestUser.userID)
                 }
                 if (isLikeDuplicate.isNotEmpty())
                     Log.e("[like_duplicate:]", isLikeDuplicate.toString())
@@ -236,7 +239,7 @@ class ArticleActivity : AppCompatActivity() {
                             dummyLikesDataSet.size+1,
                             DateTimeFormatManager.getCurrentDatetime(),
                             null,
-                            R.string.dummy_uid_1,
+                            TestUser.userID,
                             dummyPostId
                         ))
                     }
@@ -244,7 +247,7 @@ class ArticleActivity : AppCompatActivity() {
                     // 좋아요 취소
                     dummyLikesDataSet = dummyLikesDataSet.filterNot{
                         // 이 유저가 / 이 글에서 누른 좋아요만 빼기
-                        ((it.userID == R.string.dummy_uid_1) && (it.postID == dummyPostId))
+                        ((it.userID == TestUser.userID) && (it.postID == dummyPostId))
                     } as MutableList<Like>
                     Log.e("[좋아요취소시기존좋아요수]", dummyLikesDataSet.filter {
                         (it.postID == dummyPostId)
@@ -290,7 +293,7 @@ class ArticleActivity : AppCompatActivity() {
                         dummyPostId,
                         true,
                         -1,
-                        R.string.dummy_username_1
+                        TestUser.userID
                     ))
 
                     with (myShared.edit()) {

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 
 class CommentRecyclerAdapter (
     private val commentsList: MutableList<Comment>,
@@ -43,7 +44,7 @@ class CommentRecyclerAdapter (
                 1 -> owner.getString(R.string.dummy_username_1)
                 else -> owner.getString(R.string.dummy_username_retrieve_error)
             }
-            timePassed.text = commentEntity.createdAt
+            timePassed.text = DateTimeFormatManager.getTimeGapFromNow(commentEntity.createdAt)
             content.text = commentEntity.contents
 
             if (!commentEntity.isParent) {
