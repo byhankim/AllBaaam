@@ -15,6 +15,7 @@ import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.MypageFragment
+import com.kakao.sdk.common.KakaoSdk
 
 class NoLoginBottonNavActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
     private lateinit var nav:BottomNavigationView
     private lateinit var switch:SwitchCompat
     private lateinit var fragmentManager : FragmentManager
+    private lateinit var noLoginFragment:NoLoginFragment
 
 
     companion object{
@@ -38,6 +40,8 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)
         fragmentManager = supportFragmentManager
+
+
        
 
         nav.menu.getItem(0).isCheckable = false
@@ -93,13 +97,13 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
             R.id.alarm_btn -> {
                 Log.d(TAG, "BottomActivity - 알람 클릭")
                 nav.menu.getItem(0).isCheckable = true
-                alarmFragment = AlarmFragment.newInstance()
+                noLoginFragment = NoLoginFragment.newInstance()
 
                 if(fragmentManager.backStackEntryCount !=0){
                     fragmentManager.popBackStack()
                 }
                 fragmentManager.beginTransaction()
-                        .add(R.id.fragments_frame,alarmFragment)
+                        .add(R.id.fragments_frame,noLoginFragment)
                         .addToBackStack(null)
                         .commit()
 
@@ -109,12 +113,12 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
 
             R.id.mypage_btn -> {
                 Log.d(TAG, "BottomActivity - 마페 클릭")
-                nologinMypageFragment = NoLoginMypageFragment.newInstance()
+                noLoginFragment = NoLoginFragment.newInstance()
                 if(fragmentManager.backStackEntryCount !=0){
                     fragmentManager.popBackStack()
                 }
                 supportFragmentManager.beginTransaction()
-                        .add(R.id.fragments_frame,nologinMypageFragment)
+                        .add(R.id.fragments_frame,noLoginFragment)
                         .addToBackStack(null)
                         .commit()
 

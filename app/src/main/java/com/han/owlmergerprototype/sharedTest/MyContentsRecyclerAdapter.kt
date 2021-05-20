@@ -1,15 +1,20 @@
 package com.han.owlmergerprototype.sharedTest
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.MyViewHolder
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.ArticleEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.mypage.MyContentFragment
 
-class MyContentsRecyclerAdapter: RecyclerView.Adapter<MyContentsViewHolder>() {
+class MyContentsRecyclerAdapter(val context: Context): RecyclerView.Adapter<MyContentsViewHolder>() {
 
     private var articleList = ArrayList<Post>()
 
@@ -19,6 +24,14 @@ class MyContentsRecyclerAdapter: RecyclerView.Adapter<MyContentsViewHolder>() {
 
     override fun onBindViewHolder(holder: MyContentsViewHolder, position: Int) {
         holder.bind(this.articleList[position])
+        val article=this.articleList[position]
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ArticleActivity::class.java).apply {
+                putExtra(context.getString(R.string.dummy_post_id), article.id)
+
+            }
+            context.startActivity(intent)
+        }
     }
 
     fun submitList(articleList:ArrayList<Post>){

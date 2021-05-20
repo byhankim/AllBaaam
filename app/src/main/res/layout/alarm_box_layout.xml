@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="120dp"
-    android:background="@drawable/my_contents_box"
-    android:padding="15dp">
-
-    <TextView
-        android:layout_width="14.88dp"
-        android:layout_height="14dp"
-        android:background="@drawable/ic_deletex"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"></TextView>
+    android:background="@drawable/round_corner_ui1"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="20dp">
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_marginBottom="8dp">
         <TextView
             android:id="@+id/alarm_time_textView"
             android:layout_width="wrap_content"
@@ -21,15 +17,62 @@
             android:text="5 분전"
             android:textColor="@color/white"
             android:layout_marginBottom="8dp"
-            android:textSize="10dp"></TextView>
+            android:textSize="12sp"></TextView>
+
         <TextView
-            android:id="@+id/which_contents_textView"
-            android:layout_width="match_parent"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/ic_deletex"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"></TextView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/which_alarm_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/brand1"
+            android:text="[댓글 알림]"
+            android:layout_alignParentLeft="true"
+            android:layout_marginEnd="10dp"
+            android:textSize="14sp"
+            android:layout_below="@+id/alarm_time_textView"></TextView>
+        <TextView
+            android:id="@+id/which_title_textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="[댓글 알림] 마포구청 근처 떡볶....글에"
+            android:text="마포구청 근처 떡볶이 맛집 아시나요?"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:ellipsize="end"
             android:layout_alignParentLeft="true"
+            android:textSize="14sp"
             android:layout_below="@+id/alarm_time_textView"></TextView>
+        <TextView
+            android:id="@+id/geul_ea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="...글에"
+            android:layout_alignParentLeft="true"
+            android:textSize="14sp"
+            android:layout_below="@+id/alarm_time_textView"></TextView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/alarm_context_textView"
             android:layout_width="match_parent"
@@ -37,9 +80,10 @@
             android:textColor="@color/white"
             android:text="누군가 댓글을 달았어요! 얼른 확인해보세요:)"
             android:layout_alignParentLeft="true"
+            android:layout_marginBottom="12dp"
+            android:textSize="14sp"
             android:layout_below="@+id/which_contents_textView"></TextView>
+    </LinearLayout>
 
-    </RelativeLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

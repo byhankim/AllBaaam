@@ -93,4 +93,6 @@
     <string name="article_comment_count_text">121</string>
     <string name="title_activity_maps_main">Map</string>
     <string name="set_location_btn_tooltip_text">위치를 지정하여 글을 올려보세요!</string>
+    <string name="u_have_to_login">회원가입/로그인 해야 볼 수 있어요!</string>
+
 </resources>

@@ -190,7 +190,7 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/round_corner">
+        android:background="@drawable/round_corner_gray7">
         <Button
             android:clickable="false"
             android:id="@+id/complete_auth_btn"
@@ -207,7 +207,7 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/round_corner"
+            android:background="@drawable/round_corner_gray7"
             android:backgroundTint="#33874FE1"></RelativeLayout>
 
     </RelativeLayout>
