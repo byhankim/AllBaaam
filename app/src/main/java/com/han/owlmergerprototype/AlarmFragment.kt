@@ -15,7 +15,6 @@ import com.han.owlmergerprototype.utils.SpaceDecoration
 
 class AlarmFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
-    private lateinit var backBTN:TextView
     private lateinit var toolbar: Toolbar
     val timeArray = arrayListOf(
             "10 분전","1 일전","1 일전","5 일전","6 일전"

@@ -23,6 +23,7 @@
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:itemIconSize="20dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@color/black"

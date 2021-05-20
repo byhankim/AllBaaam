@@ -15,6 +15,7 @@
 
     <!-- Owl Colors -->
     <color name="brand1">#874FE1</color>
+    <color name="brand1_12">#1F874FE1</color>
     <color name="brand2">#9F43D1</color>
     <color name="brand3">#BB86FC</color>
 

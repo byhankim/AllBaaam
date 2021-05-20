@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray7">
+    android:background="@color/gray7"
+    android:padding="16dp">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mypage_toolbar"
         android:layout_width="match_parent"
@@ -16,29 +17,45 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="4">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/mypage_listView_layout">
-            <TextView
-                android:id="@+id/user_name_tv"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로그인 부탁"
-                android:textSize="25dp"
-                android:textColor="@color/white"
+                android:orientation="vertical"
                 android:layout_centerInParent="true"
-                android:layout_above="@+id/profile_imageview"></TextView>
+                android:gravity="center"
+                android:layout_marginBottom="40dp">
+                <TextView
+                    android:id="@+id/user_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="로그인 부탁"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    android:layout_above="@+id/mypage_owl_birth"
+                    android:layout_marginBottom="20dp"></TextView>
+                <TextView
+                    android:id="@+id/mypage_owl_birth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2021/05/28 부터 올빼미"
+                    android:textSize="16sp"></TextView>
+            </LinearLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_imageview"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:paddingTop="17dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/zzang">
-            </de.hdodenhof.circleimageview.CircleImageView>
+
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/profile_imageview"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:paddingTop="17dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:src="@drawable/zzang">-->
+<!--            </de.hdodenhof.circleimageview.CircleImageView>-->
         </RelativeLayout>
 
 
@@ -49,25 +66,45 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:padding="5dp"
+            android:padding="6dp"
             android:gravity="center">
-            <Button
-                android:id="@+id/my_contents_btn"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="내가 쓴 글 보기"
-                android:layout_marginRight="10dp"
-
-                android:background="@drawable/mypage_btn"></Button>
-            <Button
-                android:id="@+id/my_saved_btn"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp">
+                <Button
+                    android:id="@+id/my_contents_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="내가 쓴 글 보기"
+                    android:textColor="@color/brand1"
+                    android:background="@drawable/mypage_btn"></Button>
+                <RelativeLayout
+                    android:visibility="invisible"
+                    android:id="@+id/complete_auth_btn_tint_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/round_corner_white_12"></RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/tb_mpg_saved"
-                android:layout_marginLeft="10dp"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <Button
+                    android:id="@+id/my_saved_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="@string/tb_mpg_saved"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/brand1"
+                    android:padding="10dp"
+                    android:background="@drawable/mypage_btn"></Button>
 
-                android:background="@drawable/mypage_btn"></Button>
+
+            </RelativeLayout>
+
+
 
         </LinearLayout>
 
@@ -78,7 +115,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:padding="40dp">
+        android:padding="20dp">
 
     </ListView>
 

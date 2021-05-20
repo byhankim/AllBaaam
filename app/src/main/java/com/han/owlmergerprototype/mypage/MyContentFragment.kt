@@ -26,9 +26,9 @@ class MyContentFragment:Fragment() {
 
     private lateinit var myContentRecyclerAdapter: MyContentsRecyclerAdapter
     private lateinit var recyclerView: RecyclerView
-    val dateArray = arrayListOf(
-        "21/04/28","21/10/08","21/06/22","21/03/24","21/03/14"
-    )
+//    val dateArray = arrayListOf(
+//        "21/04/28","21/10/08","21/06/22","21/03/24","21/03/14"
+//    )
     var articleList =ArrayList<Post>()
     companion object{
         const val TAG : String = "로그"
@@ -65,6 +65,7 @@ class MyContentFragment:Fragment() {
 
 
 
+
         /*val adap2 = RecyclerAdapter()
         recyclerView = view.findViewById(R.id.mycontens_rcyView)
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
@@ -77,7 +78,7 @@ class MyContentFragment:Fragment() {
     }
 
     private fun MyContentsRecyblerViewSetting(articleList: ArrayList<Post>){
-        this.myContentRecyclerAdapter = MyContentsRecyclerAdapter()
+        this.myContentRecyclerAdapter = MyContentsRecyclerAdapter(context!!)
         this.myContentRecyclerAdapter.submitList(this.articleList)
         val myLinearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         myLinearLayoutManager.stackFromEnd = true
@@ -94,31 +95,32 @@ class MyContentFragment:Fragment() {
 
     }
 
-    inner class RecyclerAdapter:RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
-        //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-            val itemView = layoutInflater.inflate(R.layout.my_contents_box_layout,null)
-            val holder = ViewHolderClass(itemView)
-            return holder
-        }
-
-        //데이터 셋팅
-        override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-            holder.rowTextView.text = dateArray[position]
-        }
-
-        //리사이클러뷰의 항목갯수 반환
-        override fun getItemCount(): Int {
-            return dateArray.size
-        }
-
-
-        inner class ViewHolderClass(itemView:View) :RecyclerView.ViewHolder(itemView){
-            //항목View 내부의 View 상속
-            val rowTextView:TextView = itemView.findViewById(R.id.date_tv)
-        }
-
-
-
-    }
+//    inner class RecyclerAdapter:RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
+//        //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
+//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
+//            val itemView = layoutInflater.inflate(R.layout.my_contents_box_layout,null)
+//            val holder = ViewHolderClass(itemView)
+//            return holder
+//        }
+//
+//        //데이터 셋팅
+//        override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+//            holder.rowTextView.text = dateArray[position]
+//            holder.
+//        }
+//
+//        //리사이클러뷰의 항목갯수 반환
+//        override fun getItemCount(): Int {
+//            return dateArray.size
+//        }
+//
+//
+//        inner class ViewHolderClass(itemView:View) :RecyclerView.ViewHolder(itemView){
+//            //항목View 내부의 View 상속
+//            val rowTextView:TextView = itemView.findViewById(R.id.date_tv)
+//        }
+//
+//
+//
+//    }
 }

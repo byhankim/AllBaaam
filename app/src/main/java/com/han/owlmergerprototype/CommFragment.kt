@@ -163,9 +163,9 @@ class CommFragment(var owner: Activity): Fragment() {
                 com.han.owlmergerprototype.data.ThemeEntity(
                     getString(com.han.owlmergerprototype.R.string.comm_latenight_food),
                     com.han.owlmergerprototype.R.drawable.ic_chicken,
-                    com.han.owlmergerprototype.R.color.style1_2_20,
-                    com.han.owlmergerprototype.R.color.style2_2,
-                    com.han.owlmergerprototype.R.color.style1_2,
+                    com.han.owlmergerprototype.R.color.style1_1_20,
+                    com.han.owlmergerprototype.R.color.style2_1,
+                    com.han.owlmergerprototype.R.color.style1_1,
                     4,
                     false
                 )

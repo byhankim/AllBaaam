@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dialog_declaration_btn_height"
             android:text="@string/reason_of_declaration1"
-            android:background="@drawable/round_corner"
+            android:background="@drawable/round_corner_gray7"
             android:textSize="@dimen/dialog_declaration_text_size"
             android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
             android:gravity="center" ></TextView>
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dialog_declaration_btn_height"
             android:text="@string/reason_of_declaration2"
-            android:background="@drawable/round_corner"
+            android:background="@drawable/round_corner_gray7"
             android:textSize="@dimen/dialog_declaration_text_size"
             android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
             android:gravity="center" ></TextView>
@@ -58,7 +58,7 @@
             android:text="@string/reason_of_declaration3"
             android:textSize="@dimen/dialog_declaration_text_size"
             android:layout_marginTop="@dimen/dialog_declaration_margin_between_btn"
-            android:background="@drawable/round_corner"
+            android:background="@drawable/round_corner_gray7"
             android:gravity="center" ></TextView>
 
 

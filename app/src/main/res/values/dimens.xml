@@ -22,7 +22,7 @@
     <dimen name="article_uname_margintop">7dp</dimen>
     <dimen name="article_cate_tv_margintop">5dp</dimen>
     <dimen name="article_timestamp_tv_size">12sp</dimen>
-    <dimen name="article_content_padding_horizontal">30dp</dimen>
+    <dimen name="article_content_padding_horizontal">24dp</dimen>
     <dimen name="article_content_tv_paddingtop">20dp</dimen>
     <dimen name="hoonsoo_text_size">12sp</dimen>
     <dimen name="hoonsoo_padding_vertical">8dp</dimen>

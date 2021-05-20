@@ -75,6 +75,8 @@
     <string name="dialog_auth_msg">핸드폰 인증을 하시면\n주변 올빼미들과 소통할 수 있어요!</string>
     <string name="dialog_notice_msg">번호는 안전하게 보관되며 어디에도 공개되지 않아요</string>
 
+    <string name="u_have_to_login">회원가입/로그인 해야 볼 수 있어요!</string>
+
 
 
 </resources>

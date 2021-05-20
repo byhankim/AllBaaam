@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray7">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/nologin_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/toolbar_elevation_size"
+        android:background="@color/black">
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/nologin_layout_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_bottom_nav_alarm"
+            android:textSize="@dimen/create_article_title_tv_size"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/u_have_to_login"
+            android:layout_marginBottom="32dp"></TextView>
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/nologin_layout_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="올빼미 되기"
+                android:textColor="@color/brand1"
+                android:background="@drawable/mypage_btn"></Button>
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/complete_auth_btn_tint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_corner_white_12"></RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
