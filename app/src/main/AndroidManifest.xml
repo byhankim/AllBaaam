@@ -41,13 +41,18 @@
             android:name=".map.MapsMainActivity"
             android:label="@string/title_activity_maps_main"/>
         <activity android:name=".widgetstest.BottomNavTestActivity" />
-        <activity android:name=".noLoginTest.NoLoginBottonNavActivity" />
+        <activity android:name=".noLoginTest.NoLoginBottomNavActivity" />
         <activity
             android:name=".community.ArticleActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".RetrofitActivity" />
@@ -60,11 +65,7 @@
         <activity
             android:name=".BottomNavActivity"
             android:theme="@style/Theme.OwlPrototype">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CommunityMainActivity"

@@ -40,7 +40,7 @@ class CommentRecyclerAdapter (
     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
         val commentEntity = commentsList[position]
         with (holder) {
-            userName.text = when (commentEntity.userID) {
+            userName.text = when (commentEntity.userId) {
                 1 -> owner.getString(R.string.dummy_username_1)
                 else -> owner.getString(R.string.dummy_username_retrieve_error)
             }

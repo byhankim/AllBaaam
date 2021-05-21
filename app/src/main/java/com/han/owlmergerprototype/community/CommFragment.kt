@@ -2,6 +2,7 @@ package com.han.owlmergerprototype.community
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
@@ -35,7 +37,14 @@ import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
+import com.han.owlmergerprototype.rest.RestService
+import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.utils.SpaceDecoration
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class CommFragment(var owner: Activity): Fragment() {
     private lateinit var floatBTN: FloatingActionButton
@@ -226,8 +235,13 @@ class CommFragment(var owner: Activity): Fragment() {
                 val agree1CB:CheckBox = dialog.findViewById(R.id.agree_for_service_cb)
                 val agree2CB:CheckBox = dialog.findViewById(R.id.agree_for_gps_info_cb)
                 val agree3CB:CheckBox = dialog.findViewById(R.id.agree_for_marketing_cb)
+                val retrofit = Retrofit.Builder()
+                    .baseUrl("https://64aa493c7cf5.ngrok.io/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                val loginService = retrofit.create(RestService::class.java)
 
-                var flag:Int = 0
+
 
                 agreeAllCV.setOnCheckedChangeListener { buttonView, isChecked ->
                     if(isChecked){
@@ -236,19 +250,11 @@ class CommFragment(var owner: Activity): Fragment() {
                         agree3CB.isChecked=true
 
                     }else{
-//                        if(agree1CB.isChecked||agree2CB.isChecked||agree3CB.isChecked){
-//
-//                        }else{
-//                            agree1CB.isChecked=false
-//                            agree2CB.isChecked=false
-//                            agree3CB.isChecked=false
-//                        }
                         if(agree1CB.isChecked&&agree2CB.isChecked&&agree3CB.isChecked){
                             agree1CB.isChecked=false
                             agree2CB.isChecked=false
                             agree3CB.isChecked=false
                         }
-
 
                     }
                 }
@@ -292,6 +298,8 @@ class CommFragment(var owner: Activity): Fragment() {
                                 sendBTN.isClickable=true
                                 sendBTN.setOnClickListener {
                                     authLayout.isVisible = true
+
+
                                 }
                             }
                         }

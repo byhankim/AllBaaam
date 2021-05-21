@@ -112,11 +112,13 @@
                     android:gravity="center_vertical"
                     android:text="@string/agree_all_policy"
                     android:layout_weight="1"></TextView>
+
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/agree_all_policy_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"></androidx.appcompat.widget.AppCompatCheckBox>
+                    android:layout_gravity="center_vertical"
+                    android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -131,11 +133,14 @@
                     android:gravity="center_vertical"
                     android:text="@string/agree_for_service"
                     android:layout_weight="1"></TextView>
+
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/agree_for_service_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"></androidx.appcompat.widget.AppCompatCheckBox>
+                    android:layout_gravity="center_vertical"
+                    android:backgroundTint="@color/brand1"
+                    android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"

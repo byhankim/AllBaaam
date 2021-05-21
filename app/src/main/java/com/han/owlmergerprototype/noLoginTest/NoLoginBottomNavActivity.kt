@@ -1,6 +1,8 @@
 package com.han.owlmergerprototype.noLoginTest
 
+import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,24 +12,26 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.han.owlmergerprototype.AlarmFragment
+import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.MypageFragment
 import com.kakao.sdk.common.KakaoSdk
 
-class NoLoginBottonNavActivity : AppCompatActivity() {
+class NoLoginBottomNavActivity : AppCompatActivity() {
 
     private lateinit var mapFragment: MapFragment
-    private lateinit var alarmFragment: AlarmFragment
-    private lateinit var nologinMypageFragment:NoLoginMypageFragment
     private lateinit var commFragment: CommFragment
     private lateinit var noLoginCommFragment: NoLoginCommFragment
     private lateinit var nav:BottomNavigationView
     private lateinit var switch:SwitchCompat
     private lateinit var fragmentManager : FragmentManager
     private lateinit var noLoginFragment:NoLoginFragment
+    private lateinit var autoLogin : SharedPreferences
+    private lateinit var inte: Intent
 
 
     companion object{
@@ -36,13 +40,29 @@ class NoLoginBottonNavActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        autoLogin = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE)
+
+        val token = autoLogin.getString("token",null)
+        val uname = autoLogin.getString("userName",null)
+        val uid = autoLogin.getInt("userId",-1)
+        Log.d(NoLoginCommFragment.TAG,"onCreate() called : ${token}")
+
+        if (token!=null&&uname!=null){
+            TestUser.token = token
+            TestUser.userName = uname
+            TestUser.userID = uid
+
+            inte = Intent(this, BottomNavActivity::class.java)
+            startActivity(inte)
+            finish()
+        }
+
         setContentView(R.layout.bottom_nav_layout)
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)
         fragmentManager = supportFragmentManager
 
-
-       
 
         nav.menu.getItem(0).isCheckable = false
 
