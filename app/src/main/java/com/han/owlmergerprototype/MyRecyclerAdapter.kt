@@ -4,19 +4,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.han.owlmergerprototype.MyRecyclerviewInterface
-import com.han.owlmergerprototype.MyViewHolder
-import com.han.owlmergerprototype.databinding.ActivityMypg004Binding
-import com.han.owlmergerprototype.databinding.LayoutRecyclerItemBinding
+import com.han.owlmergerprototype.rest.CommunityPost
 
-class MyRecyclerAdapter(myRecyclerviewInterface: MyRecyclerviewInterface): RecyclerView.Adapter<MyViewHolder>() {
+class MyRecyclerAdapter(modelList:ArrayList<CommunityPost>, myRecyclerviewInterface: MyRecyclerviewInterface): RecyclerView.Adapter<MyViewHolder>() {
     val TAG: String = "로그"
-    private var modelList = ArrayList<MyModel>()
     private var myRecyclerviewInterface: MyRecyclerviewInterface? = null
+    private lateinit var modelList:ArrayList<CommunityPost>
 
     // 생성자
     init {
         this.myRecyclerviewInterface = myRecyclerviewInterface
+        this.modelList = modelList
     }
 
     // 뷰 홀더가 생성되었을 때
@@ -40,7 +38,5 @@ class MyRecyclerAdapter(myRecyclerviewInterface: MyRecyclerviewInterface): Recyc
     }
 
     // 외부에서 데이터 보내기
-    fun submitList(modelList: ArrayList<MyModel>) {
-        this.modelList = modelList
-    }
+
 }

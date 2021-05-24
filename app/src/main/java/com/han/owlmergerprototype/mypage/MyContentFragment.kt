@@ -23,10 +23,7 @@ import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.ArticleEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
-import com.han.owlmergerprototype.rest.MyComment
-import com.han.owlmergerprototype.rest.MyPosts
-import com.han.owlmergerprototype.rest.RestService
-import com.han.owlmergerprototype.rest.UserInfo
+import com.han.owlmergerprototype.rest.*
 import com.han.owlmergerprototype.sharedTest.MyContentsRecyclerAdapter
 import com.han.owlmergerprototype.sharedTest.SharedPrefManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
@@ -43,34 +40,19 @@ class MyContentFragment:Fragment() {
     private lateinit var myContentRecyclerAdapter: MyContentsRecyclerAdapter
     private lateinit var recyclerView: RecyclerView
 
-    private var articleList =ArrayList<Post>()
-
     companion object{
-        const val TAG : String = "로그"
+        const val TAG : String = "MyContentFragment"
 
         fun newInstance() : MyContentFragment {
 
             return MyContentFragment()
         }
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-
 
         val view = inflater.inflate(R.layout.fragment_mycontents,container,false)
 
@@ -78,13 +60,13 @@ class MyContentFragment:Fragment() {
 
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://64aa493c7cf5.ngrok.io/")
+            .baseUrl("https://d4f88a051f32.ngrok.io/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
 
         val loginService = retrofit.create(RestService::class.java)
-        Log.d(TAG, "onCreateView0: 이거먼저")
+        Log.e(TAG, "onCreateView0: 이거먼저")
         loginService.getMyPost(TestUser.token).enqueue(object : Callback<MyPosts> {
             override fun onFailure(call: Call<MyPosts>, t: Throwable) {
                 val dialog = AlertDialog.Builder(context)
@@ -95,94 +77,35 @@ class MyContentFragment:Fragment() {
             override fun onResponse(call: Call<MyPosts>, response: Response<MyPosts>) {
                 val myPosts = response.body()
 
-                if(myPosts?.ok==true){
-                    Log.d(TAG, "onCreateView2: ${myPosts.posts}")
-                    articleList = myPosts.posts as ArrayList<Post>
-                    Log.d(TAG, "onCreateView3: ${articleList}")
-                    Toast.makeText(context,"좋아용", Toast.LENGTH_SHORT).show()
+                if(response.isSuccessful){
+
+                    activity?.runOnUiThread {
+                        MyContentsRecyblerViewSetting(myPosts!!.posts as ArrayList<CommunityPost>)
+                    }
 
 
                 }else{
                     Toast.makeText(context,"틀리셨어용", Toast.LENGTH_SHORT).show()
                 }
-
-
             }
-
-
         })
-
-
-
-
-
-        Log.d(TAG, "onCreateView1: ${articleList}")
-        MyContentsRecyblerViewSetting(articleList)
-
         return view
-
-
-
-        /*val adap2 = RecyclerAdapter()
-        recyclerView = view.findViewById(R.id.mycontens_rcyView)
-        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
-        val deco = SpaceDecoration(size)
-        recyclerView.addItemDecoration(deco)
-        recyclerView.adapter = adap2
-        recyclerView.layoutManager = LinearLayoutManager(context)*/
-
 
     }
 
 
-    private fun MyContentsRecyblerViewSetting(articleList: ArrayList<Post>){
-        myContentRecyclerAdapter = MyContentsRecyclerAdapter(context!!)
-
-
-        myContentRecyclerAdapter.submitList(articleList)
+    private fun MyContentsRecyblerViewSetting(articleList: ArrayList<CommunityPost>){
+        myContentRecyclerAdapter = MyContentsRecyclerAdapter(context!!,articleList)
         val myLinearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         myLinearLayoutManager.stackFromEnd = true
+        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
+        val deco = SpaceDecoration(size)
 
         recyclerView.apply{
             layoutManager = myLinearLayoutManager
+            addItemDecoration(deco)
             adapter = myContentRecyclerAdapter
         }
-        val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
-        val deco = SpaceDecoration(size)
-        recyclerView.addItemDecoration(deco)
-
-
 
     }
-
-
-
-//    inner class RecyclerAdapter:RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
-//        //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-//            val itemView = layoutInflater.inflate(R.layout.my_contents_box_layout,null)
-//            val holder = ViewHolderClass(itemView)
-//            return holder
-//        }
-//
-//        //데이터 셋팅
-//        override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
-//            holder.rowTextView.text = dateArray[position]
-//            holder.
-//        }
-//
-//        //리사이클러뷰의 항목갯수 반환
-//        override fun getItemCount(): Int {
-//            return dateArray.size
-//        }
-//
-//
-//        inner class ViewHolderClass(itemView:View) :RecyclerView.ViewHolder(itemView){
-//            //항목View 내부의 View 상속
-//            val rowTextView:TextView = itemView.findViewById(R.id.date_tv)
-//        }
-//
-//
-//
-//    }
 }

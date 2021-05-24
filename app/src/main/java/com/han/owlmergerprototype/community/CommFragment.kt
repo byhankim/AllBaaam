@@ -7,7 +7,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -18,9 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
-import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,24 +26,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
-import com.han.owlmergerprototype.map.MapsMainActivity
-import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
+import com.han.owlmergerprototype.rest.Ok
 import com.han.owlmergerprototype.rest.RestService
-import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.FormUrlEncoded
 
-class CommFragment(var owner: Activity): Fragment() {
+class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해줌
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
 
@@ -55,14 +50,14 @@ class CommFragment(var owner: Activity): Fragment() {
 
     // dummy post dataset
     private lateinit var dummyCommPostDatasets: MutableList<Post>
-
+    private lateinit var autoLogin : SharedPreferences
 
 
     companion object{
         const val TAG : String = "로그"
 
         fun newInstance(owner: Activity) : CommFragment {
-            return CommFragment(owner)
+            return CommFragment()
         }
     }
 
@@ -92,14 +87,14 @@ class CommFragment(var owner: Activity): Fragment() {
         // ---------------------------------------------------------------------
         // Community Posts RV
         // ---------------------------------------------------------------------
-        val myShared = owner.getSharedPreferences(
+        val myShared = activity?.getSharedPreferences(
             getString(R.string.owl_shared_preferences_name),
             Context.MODE_PRIVATE
         )
 
         val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
         val dummyCommunityPostsList: MutableList<Post> =
-            Gson().fromJson(myShared.getString(
+            Gson().fromJson(myShared?.getString(
                 getString(R.string.owl_shared_preferences_dummy_comm_posts),
                 ""),
                 dummyCommPostsType
@@ -112,10 +107,10 @@ class CommFragment(var owner: Activity): Fragment() {
 
 
         with (recyclerView) {
-            layoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, true)
+            layoutManager = LinearLayoutManager(activity as Activity, LinearLayoutManager.VERTICAL, true)
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-            adapter = RecyclerAdapter(owner, dummyCommunityPostsList)
+            adapter = RecyclerAdapter(activity as Activity, dummyCommunityPostsList)
         }
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
@@ -127,7 +122,7 @@ class CommFragment(var owner: Activity): Fragment() {
         // ---------------------------------------------------------------------
         themeSelectorRv = view1.findViewById(R.id.comm_theme_selector_recyclerview)
 
-        val manager = LinearLayoutManager(owner, LinearLayoutManager.HORIZONTAL, false)
+        val manager = LinearLayoutManager(activity as Activity, LinearLayoutManager.HORIZONTAL, false)
 
 
         with (themeSelectorRv) {
@@ -204,7 +199,7 @@ class CommFragment(var owner: Activity): Fragment() {
                     )
             adapter = com.han.owlmergerprototype.community.ThemeSelectorRecyclerAdapter(
                 testList,
-                owner,
+                activity as Activity,
                 true
             )
         }
@@ -214,7 +209,7 @@ class CommFragment(var owner: Activity): Fragment() {
         floatBTN = view1.findViewById(R.id.fab)
 
         floatBTN.setOnClickListener {
-            if(TestUser.phoneCheck==true){
+            if(TestUser.verify==true){
                 inte = Intent(context, CreateArticleActivity::class.java)
                 startActivity(inte)
             }else{
@@ -236,7 +231,7 @@ class CommFragment(var owner: Activity): Fragment() {
                 val agree2CB:CheckBox = dialog.findViewById(R.id.agree_for_gps_info_cb)
                 val agree3CB:CheckBox = dialog.findViewById(R.id.agree_for_marketing_cb)
                 val retrofit = Retrofit.Builder()
-                    .baseUrl("https://64aa493c7cf5.ngrok.io/")
+                    .baseUrl(getString(R.string.base_url))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 val loginService = retrofit.create(RestService::class.java)
@@ -298,9 +293,47 @@ class CommFragment(var owner: Activity): Fragment() {
                                 sendBTN.isClickable=true
                                 sendBTN.setOnClickListener {
                                     authLayout.isVisible = true
+                                    val phoneNum = phoneET.text.toString()
+                                    Log.d(TAG,"${phoneET.length()},phonenum = ${phoneNum.substring(1)}")
 
+                                    loginService.getVerifyCode(TestUser.token,phoneNum.substring(1)).enqueue(object : Callback<Ok> {
+                                        override fun onFailure(call: Call<Ok>, t: Throwable) {
+                                            val dialog = AlertDialog.Builder(dialog.context)
+                                            dialog.setTitle("통신실패")
+                                            dialog.setMessage("실패")
+                                            dialog.show()
+                                        }
+                                        override fun onResponse(call: Call<Ok>, response: Response<Ok>) {
+                                            val ok = response.body()
+                                            if(ok!!.ok){
+                                                Toast.makeText(dialog.context,"문자갑니둥", Toast.LENGTH_SHORT).show()
+
+                                            }else{
+                                                Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+                                            }
+
+
+//                                              val dialog = AlertDialog.Builder(this@LoginActivity)
+//                                              dialog.setTitle("통신성공")
+//                                              dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+//                                              dialog.show()
+
+                                        }
+
+
+                                    })
 
                                 }
+
+
+
+
+
+
+
+
+
+
                             }
                         }
 
@@ -334,10 +367,47 @@ class CommFragment(var owner: Activity): Fragment() {
                             comBtnLayout.isVisible = true
                             authBTN.setOnClickListener(View.OnClickListener {
                                 if (agree2CB.isChecked && agree1CB.isChecked) {
-                                    TestUser.phoneCheck = true
-                                    dialog.dismiss()
+                                    TestUser.verify = true
+                                    val verifiedCode = authET.text.toString().toInt()
+                                    Log.d(TAG, "onTextChanged: ${verifiedCode-1}")
+
+                                    loginService.verifyPhoneNumber(TestUser.token,verifiedCode).enqueue(object : Callback<Ok> {
+                                        override fun onFailure(call: Call<Ok>, t: Throwable) {
+                                            val dialog = AlertDialog.Builder(dialog.context)
+                                            dialog.setTitle("통신실패")
+                                            dialog.setMessage("실패")
+                                            dialog.show()
+                                        }
+                                        override fun onResponse(call: Call<Ok>, response: Response<Ok>) {
+                                            val ok = response.body()
+                                            if(ok!!.ok){
+
+                                                autoLogin = context!!.getSharedPreferences("autoLogin",Activity.MODE_PRIVATE)
+                                                val editor = autoLogin.edit()
+                                                editor.putBoolean("verified",true)
+                                                editor.apply()
+                                                TestUser.verify=true
+                                                Toast.makeText(context,"인증완료", Toast.LENGTH_SHORT).show()
+                                                dialog.dismiss()
+
+                                            }else{
+                                                Log.d(TAG, "onResponse: ${ok.error}")
+                                                Toast.makeText(context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+                                            }
+
+
+//                                              val dialog = AlertDialog.Builder(this@LoginActivity)
+//                                              dialog.setTitle("통신성공")
+//                                              dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+//                                              dialog.show()
+
+                                        }
+
+
+                                    })
+
                                 } else {
-                                    Toast.makeText(dialog.context, "약관동의를 확인해주세요", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "약관동의를 확인해주세요", Toast.LENGTH_SHORT).show()
                                 }
 
                             })
@@ -372,7 +442,7 @@ class CommFragment(var owner: Activity): Fragment() {
             val category: TextView = itemView.findViewById(R.id.tv_badge)
             val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
-            val content: TextView = itemView.findViewById(R.id.user_name_txt)
+            val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
 
             // listener DX
@@ -479,14 +549,14 @@ class CommFragment(var owner: Activity): Fragment() {
 
         Log.e("[HI]", "comm Fragment's onResume :3")
 
-        val myShared = owner.getSharedPreferences(
+        val myShared = activity?.getSharedPreferences(
             getString(R.string.owl_shared_preferences_name),
             Context.MODE_PRIVATE
         )
 
         val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
         val dummyCommunityPostsList: MutableList<Post> =
-            Gson().fromJson(myShared.getString(
+            Gson().fromJson(myShared?.getString(
                 getString(R.string.owl_shared_preferences_dummy_comm_posts),
                 ""),
                 dummyCommPostsType

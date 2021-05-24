@@ -1,6 +1,6 @@
 package com.han.owlmergerprototype.rest
 
-data class Post(
+data class CommunityPost(
     var id:Int,
     var createdAt:String,
     var contents:String,

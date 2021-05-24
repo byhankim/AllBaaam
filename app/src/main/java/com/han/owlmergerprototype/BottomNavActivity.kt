@@ -2,16 +2,14 @@ package com.han.owlmergerprototype
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.han.owlmergerprototype.community.CommFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.MypageFragment
 
@@ -28,7 +26,7 @@ class BottomNavActivity : AppCompatActivity() {
 
 
     companion object{
-        const val TAG:String = "로그"
+        const val TAG:String = "BottomNavActivity"
     }
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {

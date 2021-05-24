@@ -65,7 +65,7 @@
                     tools:ignore="MissingConstraints" />
 
                 <TextView
-                    android:id="@+id/user_name_txt"
+                    android:id="@+id/content_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_nicname"
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="8dp"
-                android:gravity="center_horizontal">
+                android:gravity="right">
                 <TextView
                     android:id="@+id/profile_img"
                     android:layout_width="wrap_content"

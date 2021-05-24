@@ -5,7 +5,11 @@ import retrofit2.http.*
 
 interface RestService {
     @GET("/auth/kakao/")
-    fun loginAndGetToken(
+    fun kakaoLogin(
+    ):Call<Login>
+
+    @GET("/auth/naver/")
+    fun naverLogin(
     ):Call<Login>
 
     @GET("/users/me/")
@@ -13,16 +17,18 @@ interface RestService {
         @Header("token")token:String
     ): Call<UserInfo>
 
+    @FormUrlEncoded
     @POST("/auth/verify/")
     fun getVerifyCode(
         @Header("token")token:String,
         @Field("phone") phone:String
-    ):Call<VerifyCode>
+    ):Call<Ok>
 
-    @POST("/auth/verify/")
+    @FormUrlEncoded
+    @POST("/auth/verify-check/")
     fun verifyPhoneNumber(
         @Header("token")token:String,
-        @Field("verifyCode") phone:String
+        @Field("verifyCode") verifyCode:Int
     ):Call<Ok>
 
     @GET("/posts/bookmark/")

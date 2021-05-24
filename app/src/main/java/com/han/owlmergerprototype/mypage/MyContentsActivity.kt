@@ -25,7 +25,6 @@ class MyContentsActivity:AppCompatActivity() {
 
             appendFragment(MyContentFragment.newInstance())
             appendFragment(MyReplyFragment.newInstance())
-            Log.d("LOOOG!!","프레그먼트 추가 완료")
         }
 
         val viewP=binding.viewPager
@@ -37,9 +36,6 @@ class MyContentsActivity:AppCompatActivity() {
         binding.mycontentsToolbar.setNavigationOnClickListener {
             finish()
         }
-
-
-
 
     }
 }

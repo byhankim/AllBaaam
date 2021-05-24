@@ -4,12 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.han.owlmergerprototype.MyRecyclerAdapter
-import com.han.owlmergerprototype.MyRecyclerviewInterface
-import com.han.owlmergerprototype.databinding.ActivityMainBinding
+import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.databinding.ActivityMypg004Binding
+import com.han.owlmergerprototype.rest.MyPosts
+import com.han.owlmergerprototype.rest.CommunityPost
+import com.han.owlmergerprototype.rest.RestService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class Mypg004Activity : AppCompatActivity(), MyRecyclerviewInterface {
 
@@ -21,9 +29,10 @@ class Mypg004Activity : AppCompatActivity(), MyRecyclerviewInterface {
     val TAG: String = "로그"
 
     //데이터를 담을 그릇, 즉 배열
-    var modelList = ArrayList<MyModel>()
+    var modelList = ArrayList<CommunityPost>()
 
     private lateinit var myRecyclerAdapter: MyRecyclerAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,28 +49,69 @@ class Mypg004Activity : AppCompatActivity(), MyRecyclerviewInterface {
                 finish()
             }
 
-            Log.d(TAG, "Mypg004Activity - 반복문 돌리기 전 this.modelList.size : ${this.modelList.size}")
+            val retrofit = Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-            for (i in 1..10) {
-                val myModel = MyModel(name = "쩡대리 $i")
-                this.modelList.add(myModel)
-            }
-            Log.d(TAG, "Mypg004Activity - 반복문 돌린 후 this.modelList.size : ${this.modelList.size}")
+
+            val loginService = retrofit.create(RestService::class.java)
+
+
+
+            loginService.getMyBookMark(TestUser.token).enqueue(object : Callback<MyPosts> {
+                override fun onFailure(call: Call<MyPosts>, t: Throwable) {
+                    val dialog = android.app.AlertDialog.Builder(this@Mypg004Activity)
+                    dialog.setTitle("통신실패")
+                    dialog.setMessage("실패")
+                    dialog.show()
+                }
+                override fun onResponse(call: Call<MyPosts>, response: Response<MyPosts>) {
+                    val post = response.body()
+
+                    if(post?.ok==true){
+
+                        modelList=post.posts
+                        Log.d(TAG, "여기는 ok : ${modelList}")
+                        Log.d(TAG, "여기는 ok : ${post.posts}")
+                        val manager = LinearLayoutManager(this@Mypg004Activity,
+                            LinearLayoutManager.VERTICAL, false)
+
+
+
+                        with(binding.myRecyclerView) {
+                            layoutManager = manager
+                            DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+
+
+                            adapter = MyRecyclerAdapter(modelList,this@Mypg004Activity)
+                        }
+
+                    }else{
+                        Log.d(TAG, "false")
+                        Toast.makeText(this@Mypg004Activity, "false", Toast.LENGTH_SHORT).show()
+
+                    }
+
+
+                    /*  val dialog = AlertDialog.Builder(this@LoginActivity)
+                      dialog.setTitle("통신성공")
+                      dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+                      dialog.show()*/
+
+                }
+
+
+            })
+
+            Log.d(TAG, "여기는 통신 끝 : ${modelList}")
 
             // 어답터 인스턴스 생성
-            myRecyclerAdapter = MyRecyclerAdapter(this)
-            myRecyclerAdapter.submitList(this.modelList)
+
 
             // 리사이클러뷰 설정
             // my_recycler_view.apply {
-            binding.myRecyclerView.apply {
 
-                // 리사이클러뷰 방향 등 설정
-                layoutManager = LinearLayoutManager(this@Mypg004Activity, LinearLayoutManager.VERTICAL,false)
-
-                // 어답터 장착
-                adapter = myRecyclerAdapter
-            }
         } catch (e : Exception) {
             Log.d(TAG, "onCreate: Exception / exception : ${e}")
             e.printStackTrace()
@@ -84,7 +134,7 @@ class Mypg004Activity : AppCompatActivity(), MyRecyclerviewInterface {
         // 값이 비어있으면 ""을 넣는다
         // unwrapping
 
-        val title: String = this.modelList[position].name ?: ""
+
 
         AlertDialog.Builder(this)
             .setTitle(title)
