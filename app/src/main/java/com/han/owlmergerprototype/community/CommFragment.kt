@@ -31,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
@@ -369,6 +370,9 @@ class CommFragment(var owner: Activity): Fragment() {
             val content: TextView = itemView.findViewById(R.id.user_name_txt)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
 
+            val likeCount: TextView = itemView.findViewById(R.id.article_favorite_num_btn)
+            val commentCount: TextView = itemView.findViewById(R.id.article_comment_num_btn)
+
             // listener DX
             fun bindListener(item: CommentEntity) {
                 itemView.setOnClickListener { /*itemListener(item)*/ }
@@ -383,7 +387,7 @@ class CommFragment(var owner: Activity): Fragment() {
         }
 
         fun getCategoryNameInArticle(category: String):String{
-            val cateInArt :String = "#"+category
+            val cateInArt :String = "#$category"
             return cateInArt
         }
 
@@ -403,45 +407,48 @@ class CommFragment(var owner: Activity): Fragment() {
                 when (postEntity.category) {
                     "TIP" -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_5))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_5, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5, null))
                     }
                     "STOCK" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_4))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_4, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4, null))
                     }
                     "STUDY" -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_6))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_6, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6, null))
                     }
                     "SPORTS" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_3))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_3, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3, null))
                     }
                     "FOOD" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_2))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_2, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2, null))
                     }
                     "GAME" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_games))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_7))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_7, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7, null))
                     }
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = postEntity.user.userName
                 datetime.text = postEntity.createdAt
                 content.text = postEntity.contents
+
+                likeCount.text = postEntity.like.size.toString()
+                commentCount.text = postEntity.comments.size.toString()
             }
 
             holder.itemView.setOnClickListener {
@@ -498,7 +505,7 @@ class CommFragment(var owner: Activity): Fragment() {
         Log.e("[getPost]", "-.-cursorid: $cursorId")
         // no progressbar!!
 
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId)
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, token)
         // log?
         Log.e("[retrofitCall]", call.request().toString())
         call.enqueue(object: Callback<PostModel> {
@@ -508,8 +515,12 @@ class CommFragment(var owner: Activity): Fragment() {
                     Log.e("[getPostSuccess]", response.body().toString())
                     mCursorId = postModel.posts.last().id
                     Log.e("[new_cursorId]", mCursorId.toString())
-                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
-                    mAdapter.notifyDataSetChanged()
+                    if (postModel.posts.size == 0)
+                        return
+                    owner.runOnUiThread {
+                        mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+                        mAdapter.notifyDataSetChanged()
+                    }
                 }
             }
             override fun onFailure(call: Call<PostModel>, t: Throwable) {

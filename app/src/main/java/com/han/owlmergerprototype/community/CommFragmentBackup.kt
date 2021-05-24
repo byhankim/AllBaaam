@@ -440,7 +440,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
     private fun getPosts() {
         Log.e("[getPost]", "-.-")
         // no progressbar!!
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null)
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null, null)
 
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {

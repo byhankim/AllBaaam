@@ -51,13 +51,11 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     private lateinit var themeSelectorRv: RecyclerView
 
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var mAdapter: RecyclerAdapter
-
-
-    // rest post dataset
+    // rest post dataset :(
     private lateinit var postModel: PostModel
     private lateinit var postList: MutableList<PostEntity>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var mAdapter: RecyclerAdapter
 
     // category selection
     private var mCatetoryId: Int? = null
@@ -78,6 +76,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"CommFragment - onCreate() called")
 
+        postModel = PostModel("FAIL", mutableListOf(PostEntity()))
     }
 
     override fun onAttach(context: Context) {
@@ -131,8 +130,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 ""),
                 dummyCommPostsType
             )
-        recyclerView = view1.findViewById(R.id.article_rv)
-        mAdapter = RecyclerAdapter(owner, postModel.posts)
+//        recyclerView = view1.findViewById(R.id.article_rv)
+//        mAdapter = RecyclerAdapter(owner, postModel.posts)
 
 //        val manager: LinearLayoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, false)
 
@@ -144,7 +143,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
         themeSelectorRv = view1.findViewById(R.id.comm_theme_selector_recyclerview)
 
-        val manager = LinearLayoutManager(owner, LinearLayoutManager.HORIZONTAL, false)
+        val manager = LinearLayoutManager(owner, LinearLayoutManager.HORIZONTAL, true)
 
 
         with (themeSelectorRv) {
@@ -243,7 +242,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             return holder
         }
         fun getCategoryNameInArticle(category: String):String{
-            val cateInArt :String = "#"+category
+            val cateInArt :String = "#$category"
             return cateInArt
         }
 
@@ -296,7 +295,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 datetime.text = postEntity.createdAt
                 content.text = postEntity.contents
             }
-            if(position==0){
+            if(position==3){
                 holder.lastItemBlur.isVisible = true
                 holder.loginView.isVisible = true
                 holder.loginBTN.setOnClickListener {
@@ -387,7 +386,6 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
         fun reloadDataWithRetrofitResponse(newPostList: MutableList<PostEntity>) {
             commPostList = newPostList
-//            Log.e("[Adapter]", "dataset to be changed! ${commPostList.toString()}")
             notifyDataSetChanged()
         }
 
@@ -414,15 +412,17 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         Log.e("[getPost]", "-.-")
         // no progressbar!!
 
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId)
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, null)
 
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
                     Log.e("[getPostSuccess]", postModel.toString())
-                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
-                    mAdapter.notifyDataSetChanged()
+                    owner.runOnUiThread {
+                        mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+                        mAdapter.notifyDataSetChanged()
+                    }
                 }
             }
             override fun onFailure(call: Call<PostModel>, t: Throwable) {

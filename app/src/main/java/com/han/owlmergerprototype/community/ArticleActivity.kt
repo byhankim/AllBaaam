@@ -414,7 +414,7 @@ class ArticleActivity : AppCompatActivity(){
     // ===========================================================================
     private fun getPosts() {
         // no progressbar!!
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null)
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null, null)
 
         call.enqueue(object: Callback<PostModel>{
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {

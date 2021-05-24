@@ -18,7 +18,8 @@ interface RetrofitRESTService {
     // full posts (default)
     @GET("/posts")
     fun getPosts(
-        @Query("cursor") cursor_key: Int?
+        @Query("cursor") cursor_key: Int?,
+        @Header("token") token: String?
     ): Call<PostModel>
 
     // posts by category
@@ -29,6 +30,6 @@ interface RetrofitRESTService {
     ): Call<PostModel>
 
     // sort by popularity
-    @GET("/posts/popular?cursor={cursor_id}")
-    fun getPopularPosts(@Path("cursor_id") key: Int?): Call<PopularPostModel>
+    @GET("/posts/popular")
+    fun getPopularPosts(@Query("cursor_id") key: Int?): Call<PopularPostModel>
 }
