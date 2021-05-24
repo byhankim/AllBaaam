@@ -23,6 +23,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityManagerCompat
@@ -58,7 +59,11 @@ private const  val MY_PERMISSION_REQUEST_STORAGE = 500
 
 class CreateArticleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateArticleBinding
-    private lateinit var newArticleList : ArrayList<ArticleEntity>
+    private lateinit var mAdapter: ThemeSelectorRecyclerAdapter
+
+    // category number
+    private var selectedCategory: Int = -1
+    private var prevSelectedCategory: Int = -1
 
     // onStartActivity 분기용
     private var ACTIVITY_STATE = 100
@@ -81,6 +86,7 @@ class CreateArticleActivity : AppCompatActivity() {
         // android:maxLength="@dimen/create_article_et_text_maxlength"
 //        binding.commWriteArticleContentEt.filters = arrayOf(InputFilter.LengthFilter(R.dimen.create_article_et_text_maxlength))
 
+
         // theme selector rv
         val manager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -95,10 +101,22 @@ class CreateArticleActivity : AppCompatActivity() {
             testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.ic_chicken2, R.color.style1_2_20,R.color.style2_2, R.color.style1_2, 4, false))
             testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.ic_book2, R.color.style1_6_20,R.color.style2_6, R.color.style1_6, 5, false))
             testList.add(ThemeEntity(getString(R.string.comm_games), R.drawable.ic_game2, R.color.style1_7_20,R.color.style2_7, R.color.style1_7, 5, false))
-            adapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
+            mAdapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
             }*/
+            adapter = mAdapter
+//            selectedCategory
+
+            setOnClickListener {
+                selectedCategory = mAdapter.ThemeHolder(this).absoluteAdapterPosition
+                Toast.makeText(this@CreateArticleActivity, "selectedCategory: $selectedCategory", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        // test selectedCategory
+//        binding.commWriteArticleSetLocationTipTv.setOnClickListener {
+//        }
+
 
         binding.commWriteArticleAddImgBtn.setOnClickListener {
             val intent = Intent()
@@ -142,7 +160,7 @@ class CreateArticleActivity : AppCompatActivity() {
             }
             R.id.action_write_article -> {
                 // TO DO("Store them in SharedPreferences")
-                val sharedPrefName = getString(R.string.owl_shared_preferences_name)
+                /*val sharedPrefName = getString(R.string.owl_shared_preferences_name)
                 val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
 
                 val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
@@ -161,6 +179,10 @@ class CreateArticleActivity : AppCompatActivity() {
                     putString(sharedKey, Gson().toJson(dummyDataSetFromSharedPreferences))
                     commit()
                 }
+                */
+                if (checkValidate()) {
+                    //
+                }
 
                 // Activity back stack flush
                 val intent = Intent(this, BottomNavActivity::class.java)
@@ -170,6 +192,16 @@ class CreateArticleActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun checkValidate(): Boolean {
+        var flag = false
+        with (binding.commWriteArticleContentEt) {
+            if (text.toString().isNotEmpty()) {
+
+            }
+        }
+        return flag
     }
 
     private fun fildUploadAsync(queryString: String) {
@@ -326,5 +358,9 @@ class CreateArticleActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    private fun createPost() {
+        //
     }
 }

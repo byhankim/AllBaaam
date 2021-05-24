@@ -107,4 +107,6 @@ class ThemeSelectorRecyclerAdapter(
     }
 
     override fun getItemCount() = themesList.size
+
+    private fun getSelectedIndex() = selectedPos
 }

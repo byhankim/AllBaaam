@@ -5,8 +5,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -17,12 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
-import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import android.widget.TextView
-import androidx.core.widget.NestedScrollView
-import androidx.databinding.adapters.AbsListViewBindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,40 +26,36 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.*
-import com.han.owlmergerprototype.map.MapsMainActivity
-import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CommFragment(var owner: Activity): Fragment() {
+class CommFragmentBackup(var owner: Activity): Fragment() {
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var mAdapter: RecyclerRestAdapter
     private lateinit var themeSelectorRv: RecyclerView
 
     // dummy post dataset
-//    private lateinit var dummyCommPostDatasets: MutableList<Post>
+    private lateinit var dummyCommPostDatasets: MutableList<Post>
 
     // rest post dataset
     private lateinit var postModel: PostModel
     private lateinit var postList: MutableList<PostEntity>
 
     // category selection
-    private var mCatetoryId: Int? = null
-    private var mCursorId: Int? = null
+    private var catetoryId: Int? = null
 
 
 
     companion object{
         const val TAG : String = "looooog"
 
-        fun newInstance(owner: Activity) : CommFragment {
-            return CommFragment(owner)
+        fun newInstance(owner: Activity) : CommFragmentBackup {
+            return CommFragmentBackup(owner)
         }
     }
 
@@ -73,10 +63,7 @@ class CommFragment(var owner: Activity): Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"CommFragment - onCreate() called")
 
-//        Log.e("[oncreate]", postModel.toString())
-
-        // kotlin.UninitializedPropertyAccessException: lateinit blah blah
-        postModel = PostModel("FAIL", mutableListOf(PostEntity()))
+        getPosts()
     }
 
     override fun onAttach(context: Context) {
@@ -92,85 +79,42 @@ class CommFragment(var owner: Activity): Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val view1 = inflater.inflate(R.layout.fragment_comm,container,false)
-        val nScrollView: NestedScrollView = view1.findViewById(R.id.comm_post_section_nestedscrollview)
 
         // toolbar -> NONE!!!
         // (owner as AppCompatActivity).setSupportActionBar(toolbar)
 
+
         // ---------------------------------------------------------------------
         // Community Posts RV
         // ---------------------------------------------------------------------
+        val myShared = owner.getSharedPreferences(
+            getString(R.string.owl_shared_preferences_name),
+            Context.MODE_PRIVATE
+        )
 
-
-        try {
-            getPosts(mCursorId)
-            Log.e("[calledGetPosts]", "1")
-//            mCursorId = postModel.posts.last().id
-            Log.e("[initcursorid]", "2")
-        } catch(e: Exception) {
-            Log.e("[getPostsException]", e.toString())
-        }
+        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
+        val dummyCommunityPostsList: MutableList<Post> =
+            Gson().fromJson(myShared.getString(
+                getString(R.string.owl_shared_preferences_dummy_comm_posts),
+                ""),
+                dummyCommPostsType
+            )
 
         recyclerView = view1.findViewById(R.id.article_rv)
-        mAdapter = RecyclerRestAdapter(owner, postModel.posts)
+
+//        val manager: LinearLayoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, false)
+
+
 
         with (recyclerView) {
-            layoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, true)
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-            adapter = mAdapter
+            adapter = RecyclerAdapter(owner, dummyCommunityPostsList)
         }
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
         recyclerView.addItemDecoration(deco)
-
-        // scroll event listener
-//        recyclerView.addOnScrollListener(RecyclerView.OnScrollListener() {
-//            /*
-//            * recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//    @Override
-//    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//        super.onScrollStateChanged(recyclerView, newState);
-//
-//        if (!recyclerView.canScrollVertically(1)) {
-//            Toast.makeText(YourActivity.this, "Last", Toast.LENGTH_LONG).show();
-//
-//        }
-//    }
-//});
-//            * */
-//            onScrollStateChanged(recyclerView: RecyclerView, int newState) {
-//                super.onScrollStateChanged()
-//            }
-//        })
-
-        // ---------------------------------------------------------------------
-        // nestedScrollView refresh
-        // ---------------------------------------------------------------------
-        nScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-            /*
-            * if (v.getChildAt(v.getChildCount() - 1) != null)
-                {
-                    if (scrollY > oldScrollY)
-                    {
-                        if (scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()))
-                        {
-                            //code to fetch more data for endless scrolling
-                        }
-                    }
-                }
-            * */
-            if (v != null) {
-                if (v.getChildAt(v.childCount - 1) != null) {
-                    if (scrollY > oldScrollY) {
-                        if (scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) {
-                            Toast.makeText(owner, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
-                            getPosts(mCursorId)
-                        }
-                    }
-                }
-            }
-        }
 
 
         // ---------------------------------------------------------------------
@@ -356,10 +300,10 @@ class CommFragment(var owner: Activity): Fragment() {
         return view1
     }
 
-    inner class RecyclerRestAdapter(
+    inner class RecyclerAdapter(
         private val owner: Activity,
-        private var commPostList: MutableList<PostEntity> /*, private val itemListener: (CommentEntity) -> Unit */
-    ): RecyclerView.Adapter<RecyclerRestAdapter.PostHolder>(){
+        private val dummyPostsList: MutableList<Post> /*, private val itemListener: (CommentEntity) -> Unit */
+    ): RecyclerView.Adapter<RecyclerAdapter.PostHolder>(){
 
         inner class PostHolder(itemView: View/*, itemListener: (Post) -> Unit*/): RecyclerView.ViewHolder(itemView) {
 
@@ -387,51 +331,45 @@ class CommFragment(var owner: Activity): Fragment() {
             return cateInArt
         }
 
-        fun reloadDataWithRetrofitResponse(newPostList: MutableList<PostEntity>) {
-            commPostList = newPostList
-            Log.e("[Adapter]", "dataset to be changed!")
-            notifyDataSetChanged()
-        }
-
         //데이터 셋팅
         @SuppressLint("ResourceAsColor")
         override fun onBindViewHolder(holder: PostHolder, position: Int) {
-            val postEntity = commPostList[position]
+            val postEntity = dummyPostsList[position]
             lateinit var drawable : GradientDrawable
 
             with (holder) {
                 when (postEntity.category) {
-                    "TIP" -> {
+                    1 -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
                         category.setTextColor(owner.resources.getColor(R.color.style1_5))
                         drawable = categoryColor.background as GradientDrawable
                         drawable.setStroke(2,owner.resources.getColor(R.color.style1_5))
                     }
-                    "STOCK" -> {
+                    2 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
                         category.setTextColor(owner.resources.getColor(R.color.style1_4))
                         drawable = categoryColor.background as GradientDrawable
                         drawable.setStroke(2,owner.resources.getColor(R.color.style1_4))
                     }
-                    "STUDY" -> {
+                    3 -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
                         category.setTextColor(owner.resources.getColor(R.color.style1_6))
                         drawable = categoryColor.background as GradientDrawable
                         drawable.setStroke(2,owner.resources.getColor(R.color.style1_6))
                     }
-                    "SPORTS" -> {
+                    4 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
                         category.setTextColor(owner.resources.getColor(R.color.style1_3))
                         drawable = categoryColor.background as GradientDrawable
                         drawable.setStroke(2,owner.resources.getColor(R.color.style1_3))
                     }
-                    "FOOD" -> {
+                    5 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
                         category.setTextColor(owner.resources.getColor(R.color.style1_2))
                         drawable = categoryColor.background as GradientDrawable
                         drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
                     }
-                    "GAME" -> {
+                    6 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_games))
                         category.setTextColor(owner.resources.getColor(R.color.style1_7))
                         drawable = categoryColor.background as GradientDrawable
@@ -439,7 +377,13 @@ class CommFragment(var owner: Activity): Fragment() {
                     }
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
-                userName.text = postEntity.user.userName
+                userName.text = when (postEntity.userID) {
+                    1 -> "떡볶이가 좋은 빙봉"
+                    2 -> "배부른 하이에나"
+                    3 -> "잠들지 못하는 소크라테스"
+                    4 -> "집에 가고픈 야근가이"
+                    else -> "롤이 재밌는 콩순이"
+                }
                 datetime.text = postEntity.createdAt
                 content.text = postEntity.contents
             }
@@ -447,10 +391,7 @@ class CommFragment(var owner: Activity): Fragment() {
             holder.itemView.setOnClickListener {
                 Log.e("[CommFrag_itemview]", "clicked post id: ${postEntity.id}")
                 val intent = Intent(owner, ArticleActivity::class.java).apply {
-                    val selectedPost = Gson().toJson(postEntity)
-                    Log.e("[postSelected]", selectedPost.toString())
-                    putExtra(getString(R.string.dummy_post_id), selectedPost)
-                    putExtra("selectedPost", Gson().toJson(postEntity))
+                    putExtra(getString(R.string.dummy_post_id), postEntity.id)
                 }
                 owner.startActivity(intent)
             }
@@ -458,7 +399,7 @@ class CommFragment(var owner: Activity): Fragment() {
 
         //리사이클러뷰의 항목갯수 반환
         override fun getItemCount(): Int {
-            return commPostList.size
+            return dummyPostsList.size
         }
 
 
@@ -467,6 +408,8 @@ class CommFragment(var owner: Activity): Fragment() {
             val rowTextView: TextView = itemView.findViewById(R.id.tv_nicname)
         }
 
+
+
     }
 
     override fun onResume() {
@@ -474,7 +417,7 @@ class CommFragment(var owner: Activity): Fragment() {
 
         Log.e("[HI]", "comm Fragment's onResume :3")
 
-        /*val myShared = owner.getSharedPreferences(
+        val myShared = owner.getSharedPreferences(
             getString(R.string.owl_shared_preferences_name),
             Context.MODE_PRIVATE
         )
@@ -488,33 +431,26 @@ class CommFragment(var owner: Activity): Fragment() {
             )
 
         recyclerView.adapter?.notifyDataSetChanged()
-        Log.e("[CommFrag]", "dummy list size: ${dummyCommunityPostsList.size}...")*/
+        Log.e("[CommFrag]", "dummy list size: ${dummyCommunityPostsList.size}...")
     }
 
     // ===========================================================================
     //              RETROFIT NETWORKING
     // ===========================================================================
-    private fun getPosts(cursorId: Int?) {
-        Log.e("[getPost]", "-.-cursorid: $cursorId")
+    private fun getPosts() {
+        Log.e("[getPost]", "-.-")
         // no progressbar!!
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null)
 
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId)
-        // log?
-        Log.e("[retrofitCall]", call.request().toString())
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
-                    Log.e("[getPostSuccess]", response.body().toString())
-                    mCursorId = postModel.posts.last().id
-                    Log.e("[new_cursorId]", mCursorId.toString())
-                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
-                    mAdapter.notifyDataSetChanged()
+                    Log.e("[getPostSuccess]", postModel.toString())
                 }
             }
             override fun onFailure(call: Call<PostModel>, t: Throwable) {
                 Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
-                postModel = PostModel("error", mutableListOf(PostEntity()))
             }
         })
     }
