@@ -1,0 +1,130 @@
+{
+  "ok": true,
+  "posts": [
+    {
+      "id": 57,
+      "createdAt": "2021-05-21T04:52:31.050Z",
+      "updatedAt": "2021-05-21T04:52:31.050Z",
+      "contents": "안뇽하세요 리버풀 챔스 가고싶어용",
+      "category": "SPORTS",
+      "userId": 25,
+      "user": {
+        "userName": "배아픈 고양이"
+      },
+      "images": [
+        {
+          "id": 24,
+          "url": "https://owlservice.s3.ap-northeast-2.amazonaws.com/uploads/25-1621572629386-%EC%A0%9C%ED%8E%98%ED%86%A0%EC%88%98%ED%98%842.png"
+        }
+      ],
+      "comments": [],
+      "like": [],
+      "bookmark": []
+    },
+    {
+      "id": 56,
+      "createdAt": "2021-05-21T04:52:20.914Z",
+      "updatedAt": "2021-05-21T04:52:20.915Z",
+      "contents": "pigma3",
+      "category": "SPORTS",
+      "userId": 26,
+      "user": {
+        "userName": "앉아있는 사촌돼지"
+      },
+      "images": [
+        {
+          "id": 22,
+          "url": "https://owlservice.s3.ap-northeast-2.amazonaws.com/uploads/26-1621572553282-test_mt.png"
+        }
+      ],
+      "comments": [],
+      "like": [],
+      "bookmark": []
+    },
+    {
+      "id": 55,
+      "createdAt": "2021-05-21T02:51:13.954Z",
+      "updatedAt": "2021-05-21T02:51:13.955Z",
+      "contents": "pigma2",
+      "category": "SPORTS",
+      "userId": 26,
+      "user": {
+        "userName": "앉아있는 사촌돼지"
+      },
+      "images": [],
+      "comments": [
+        {
+          "id": 125,
+          "createdAt": "2021-05-21T02:52:12.001Z",
+          "updatedAt": "2021-05-21T02:52:12.002Z",
+          "contents": "pigma 에 달린 댓글1",
+          "userId": 26,
+          "postId": 55,
+          "isParent": true
+        },
+        {
+          "id": 129,
+          "createdAt": "2021-05-21T02:54:09.448Z",
+          "updatedAt": "2021-05-21T02:54:09.457Z",
+          "contents": "pigma2에 달린 댓글에 달린 댓글",
+          "userId": 26,
+          "postId": 55,
+          "isParent": false
+        },
+        {
+          "id": 131,
+          "createdAt": "2021-05-21T04:27:48.686Z",
+          "updatedAt": "2021-05-21T04:27:48.687Z",
+          "contents": "pigma 에 달린 댓글2",
+          "userId": 26,
+          "postId": 55,
+          "isParent": true
+        }
+      ],
+      "like": [],
+      "bookmark": []
+    },
+    {
+      "id": 54,
+      "createdAt": "2021-05-21T02:51:04.817Z",
+      "updatedAt": "2021-05-21T02:51:04.817Z",
+      "contents": "글 내용",
+      "category": "TIP",
+      "userId": 8,
+      "user": {
+        "userName": "사랑스런 고양이"
+      },
+      "images": [],
+      "comments": [
+        {
+          "id": 127,
+          "createdAt": "2021-05-21T02:53:30.051Z",
+          "updatedAt": "2021-05-21T02:53:30.052Z",
+          "contents": "글 내용",
+          "userId": 8,
+          "postId": 54,
+          "isParent": true
+        },
+        {
+          "id": 128,
+          "createdAt": "2021-05-21T02:53:57.158Z",
+          "updatedAt": "2021-05-21T02:53:57.159Z",
+          "contents": "나는 댓글",
+          "userId": 25,
+          "postId": 54,
+          "isParent": true
+        }
+      ],
+      "like": [],
+      "bookmark": [
+        {
+          "id": 155,
+          "createdAt": "2021-05-21T04:44:02.115Z",
+          "updatedAt": "2021-05-21T04:44:02.115Z",
+          "userId": 25,
+          "postId": 54
+        }
+      ]
+    }
+  ]
+}
