@@ -29,6 +29,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.ADDRESS
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.community.CreateArticleActivity
@@ -316,7 +317,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                         val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
 
                         val retrofit = Retrofit.Builder()
-                            .baseUrl(getString(R.string.base_url))
+                            .baseUrl(ADDRESS)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build()
 
@@ -424,7 +425,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                         val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImlhdCI6MTYyMTc0MzE3N30.kjG4cpKgJc-dlMS8fioznNaQYU9PRNUJpmVi8tX2pNE"
 
                         val retrofit = Retrofit.Builder()
-                            .baseUrl(getString(R.string.base_url))
+                            .baseUrl(ADDRESS)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build()
 

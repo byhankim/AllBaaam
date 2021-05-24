@@ -209,7 +209,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
         floatBTN = view1.findViewById(R.id.fab)
 
         floatBTN.setOnClickListener {
-            if(TestUser.phoneCheck==true){
+            if(TestUser.verify==true){
                 inte = Intent(context, CreateArticleActivity::class.java)
                 startActivity(inte)
             }else{
@@ -286,7 +286,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
 
                 })
                 authBTN.setOnClickListener(View.OnClickListener {
-                    TestUser.phoneCheck = true
+                    TestUser.verify = true
                     dialog.dismiss()
                 })
 
@@ -310,7 +310,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
             val category: TextView = itemView.findViewById(R.id.tv_badge)
             val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
-            val content: TextView = itemView.findViewById(R.id.user_name_txt)
+            val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
 
             // listener DX

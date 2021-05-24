@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.ADDRESS
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
@@ -311,7 +312,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 val agree2CB:CheckBox = dialog.findViewById(R.id.agree_for_gps_info_cb)
                 val agree3CB:CheckBox = dialog.findViewById(R.id.agree_for_marketing_cb)
                 val retrofit = Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
+                    .baseUrl(ADDRESS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 val loginService = retrofit.create(RestService::class.java)
