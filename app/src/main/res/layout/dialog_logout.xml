@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="@dimen/dialog_declaration_width"
+    android:layout_height="150dp"
+    android:background="@color/gray7"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="24dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_12"
+        android:padding="@dimen/dialog_padding">
+        <TextView
+            android:id="@+id/logout_cancel_btn"
+            android:layout_width="@dimen/delete_x_size"
+            android:layout_height="@dimen/delete_x_size"
+            android:background="@drawable/ic_deletex"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그아웃 하시겠습니까?"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@+id/logout_btn_layout"></TextView>
+
+
+    <LinearLayout
+        android:id="@+id/logout_btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:clickable="false"
+            android:id="@+id/logout_ok_btn"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="ok"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/neon_btn_style"
+            android:textColor="@color/brand1">
+            <!--android:layout_weight="1"
+            android:layout_marginEnd="8dp">-->
+
+        </Button>
+        <!--<Button
+            android:layout_marginStart="8dp"
+            android:clickable="false"
+            android:id="@+id/logout_cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="cancel"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/neon_btn_style"
+            android:textColor="@color/brand1"
+            android:layout_weight="1">
+
+        </Button>-->
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

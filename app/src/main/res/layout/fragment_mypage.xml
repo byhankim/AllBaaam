@@ -79,13 +79,13 @@
                     android:layout_height="40dp"
                     android:text="내가 쓴 글 보기"
                     android:textColor="@color/brand1"
-                    android:background="@drawable/mypage_btn"></Button>
+                    android:background="@drawable/mypage_btn"/>
                 <RelativeLayout
                     android:visibility="invisible"
                     android:id="@+id/complete_auth_btn_tint_layout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/round_corner_white_12"></RelativeLayout>
+                    android:background="@drawable/round_corner_white_12"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -99,9 +99,7 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/brand1"
                     android:padding="10dp"
-                    android:background="@drawable/mypage_btn"></Button>
-
-
+                    android:background="@drawable/mypage_btn"/>
             </RelativeLayout>
 
 
@@ -115,8 +113,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:padding="20dp">
-
-    </ListView>
+        android:padding="20dp"/>
 
 </LinearLayout>

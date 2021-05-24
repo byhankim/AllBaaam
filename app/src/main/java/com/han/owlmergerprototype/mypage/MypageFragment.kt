@@ -5,18 +5,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.Mypg004Activity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
-import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
-import com.han.owlmergerprototype.mypage.boardActivity.PolicyActivity
-import com.han.owlmergerprototype.mypage.boardActivity.SuggestionActivity
 
 
 class MypageFragment : Fragment() {
@@ -79,7 +80,7 @@ class MypageFragment : Fragment() {
 
             }
         }
-        val array = getResources().getStringArray(R.array.mypage_board)
+        val array = resources.getStringArray(R.array.mypage_board)
 
         val adap1 = ArrayAdapter(
             context!!,
@@ -93,53 +94,11 @@ class MypageFragment : Fragment() {
             inte = Intent(context, MyContentsActivity::class.java)
             startActivity(inte)
         }
-
-
-
         mysavedBTN=view.findViewById(R.id.my_saved_btn)
         mysavedBTN.setOnClickListener {
             inte = Intent(context, Mypg004Activity::class.java)
             startActivity(inte)
         }
-
-//        backBTN = view.findViewById(R.id.)
-//        backBTN.setOnClickListener {
-//
-//            val fragmentManager = getActivity()!!.getSupportFragmentManager();
-//            fragmentManager.beginTransaction().remove(this).commit();
-//            fragmentManager.popBackStack()
-//
-//        }
-
-
-
-        mypageLV.setOnItemClickListener { parent, view, position, id ->
-            // Get the selected item text from ListView
-            val selectedItem = parent.getItemAtPosition(position) as String
-
-            when(position){
-                0 -> {
-                    inte = Intent(context, NoticeActivity::class.java)
-                    startActivity(inte)
-                }
-                1 -> {
-                    inte = Intent(context, SuggestionActivity::class.java)
-                    startActivity(inte)
-                }
-                2 -> {
-                    inte = Intent(context, PolicyActivity::class.java)
-                    startActivity(inte)
-                }
-            }
-
-        }
-
         return view
     }
-
-
-
-
-
-
 }

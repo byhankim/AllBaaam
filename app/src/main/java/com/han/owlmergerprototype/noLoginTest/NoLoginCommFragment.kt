@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BlurMaskFilter
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -35,6 +36,7 @@ import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.rest.Login
 import com.han.owlmergerprototype.rest.RestService
+import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import com.kakao.sdk.common.KakaoSdk
 import org.w3c.dom.Text
@@ -53,12 +55,12 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
     private lateinit var recyclerView: RecyclerView
 
-
+    private lateinit var autoLogin :SharedPreferences
 
 
 
     companion object{
-        const val TAG : String = "looooog"
+        const val TAG : String = "로그"
 
         fun newInstance(owner: Activity) : NoLoginCommFragment {
             return NoLoginCommFragment(owner)
@@ -68,6 +70,10 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"CommFragment - onCreate() called")
+
+        autoLogin = context!!.getSharedPreferences("autoLogin",Activity.MODE_PRIVATE)
+
+
 
     }
 
@@ -290,16 +296,71 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     })
                     val kakaoLoginBTN:TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
                     kakaoLoginBTN.setOnClickListener(View.OnClickListener {
-                        dialog.dismiss()
-                        TestUser.userName ="떡볶이가 좋은 빙봉"
-                        TestUser.userID = 1
-                        inte = Intent(context, BottomNavActivity::class.java)
-                        startActivity(inte)
-                        activity!!.finish()
+
+                        val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
+
+                        val retrofit = Retrofit.Builder()
+                            .baseUrl(getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+
+
+                        val loginService = retrofit.create(RestService::class.java)
+                        loginService.getUserInfo(sooToken).enqueue(object : Callback<UserInfo> {
+                            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                                val dialog = AlertDialog.Builder(dialog.context)
+                                dialog.setTitle("통신실패")
+                                dialog.setMessage("실패")
+                                dialog.show()
+                            }
+                            override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                                val userInfo = response.body()
+
+                                if(userInfo?.ok==true){
+
+                                    TestUser.token =sooToken
+                                    TestUser.userName = userInfo.userName
+                                    TestUser.userID =userInfo.id
+                                    TestUser.verify = userInfo.verified
+
+                                    val editor = autoLogin.edit()
+                                    editor.putString("token",sooToken)
+                                    editor.putString("userName",userInfo.userName)
+                                    editor.putInt("userID",userInfo.id)
+                                    editor.putBoolean("verified",userInfo.verified)
+                                    editor.apply()
+
+
+                                    inte = Intent(context, BottomNavActivity::class.java)
+                                    startActivity(inte)
+                                    activity!!.finish()
+
+
+                                }else{
+                                    Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+                                }
+
+
+                                /*  val dialog = AlertDialog.Builder(this@LoginActivity)
+                                  dialog.setTitle("통신성공")
+                                  dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+                                  dialog.show()*/
+
+                            }
+
+
+                        })
+
+
+
+
+
+
+
 
 //                        val retrofit = Retrofit.Builder()
-//                            .baseUrl("https://91c1ad0a482f.ngrok.")
-//                            .addConverterFactory(GsonConverterFactory.create())
+////                            .baseUrl("https://91c1ad0a482f.ngrok.")
+////                            .addConverterFactory(GsonConverterFactory.create())
 //                            .build()
 //
 //                        val loginService = retrofit.create(RestService::class.java)
@@ -340,6 +401,102 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 //                        TestUser.userID = 1
 
                     })
+
+                    val naverLoginBTN:TextView = dialog.findViewById<TextView>(R.id.naver_login_btn)
+                    naverLoginBTN.setOnClickListener(View.OnClickListener {
+
+                        val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImlhdCI6MTYyMTc0MzE3N30.kjG4cpKgJc-dlMS8fioznNaQYU9PRNUJpmVi8tX2pNE"
+
+                        val retrofit = Retrofit.Builder()
+                            .baseUrl(getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+
+
+                        val loginService = retrofit.create(RestService::class.java)
+                        loginService.getUserInfo(sooToken).enqueue(object : Callback<UserInfo> {
+                            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                                val dialog = AlertDialog.Builder(dialog.context)
+                                dialog.setTitle("통신실패")
+                                dialog.setMessage("실패")
+                                dialog.show()
+                            }
+                            override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                                val userInfo = response.body()
+
+                                if(userInfo?.ok==true){
+
+                                    TestUser.token =sooToken
+                                    TestUser.userName = userInfo.userName
+                                    TestUser.userID =userInfo.id
+                                    TestUser.verify = userInfo.verified
+
+                                    val editor = autoLogin.edit()
+                                    editor.putString("token",sooToken)
+                                    editor.putString("userName",userInfo.userName)
+                                    editor.putInt("userID",userInfo.id)
+                                    editor.putInt("verified",userInfo.id)
+                                    editor.apply()
+
+                                    inte = Intent(context, BottomNavActivity::class.java)
+                                    startActivity(inte)
+                                    activity!!.finish()
+
+
+                                }else{
+                                    Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+                                }
+
+
+                                /*  val dialog = AlertDialog.Builder(this@LoginActivity)
+                                  dialog.setTitle("통신성공")
+                                  dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+                                  dialog.show()*/
+
+                            }
+
+
+                        })
+
+//                        val retrofit = Retrofit.Builder()
+//                            .baseUrl("https://64aa493c7cf5.ngrok.io/")
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .build()
+//
+//                        val loginService = retrofit.create(RestService::class.java)
+//                        loginService.naverLogin().enqueue(object : Callback<Login> {
+//                            override fun onFailure(call: Call<Login>, t: Throwable) {
+//                                val dialog = AlertDialog.Builder(dialog.context)
+//                                dialog.setTitle("통신실패")
+//                                dialog.setMessage("실패")
+//                                dialog.show()
+//                            }
+//                            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+//                                val login = response.body()
+//
+//                                if(login?.ok==true){
+//                                    dialog.dismiss()
+//                                    TestUser.token = login.token
+//                                    inte = Intent(context, BottomNavActivity::class.java)
+//                                    startActivity(inte)
+//                                    activity!!.finish()
+//
+//                                }else{
+//                                    Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
+//                                }
+//
+//
+//                                /*  val dialog = AlertDialog.Builder(this@LoginActivity)
+//                                  dialog.setTitle("통신성공")
+//                                  dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
+//                                  dialog.show()*/
+//
+//                            }
+//
+//
+//                        })
+
+                    })
                     dialog.show()
 
 
@@ -370,7 +527,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             //항목View 내부의 View 상속
             val category: TextView = itemView.findViewById(R.id.tv_badge)
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
-            val content: TextView = itemView.findViewById(R.id.user_name_txt)
+            val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
             val categoryColor: RelativeLayout = itemView.findViewById(R.id.category_in_article_layout)
             val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
