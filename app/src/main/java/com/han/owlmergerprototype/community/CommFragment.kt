@@ -19,6 +19,8 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.view.isVisible
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
+import androidx.databinding.adapters.AbsListViewBindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +35,11 @@ import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.rest.Ok
 import com.han.owlmergerprototype.rest.RestService
+import com.han.owlmergerprototype.common.token
+import com.han.owlmergerprototype.data.*
+import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
+import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,11 +53,21 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
     private lateinit var inte: Intent
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var mAdapter: RecyclerRestAdapter
     private lateinit var themeSelectorRv: RecyclerView
 
     // dummy post dataset
     private lateinit var dummyCommPostDatasets: MutableList<Post>
     private lateinit var autoLogin : SharedPreferences
+//    private lateinit var dummyCommPostDatasets: MutableList<Post>
+
+    // rest post dataset
+    private lateinit var postModel: PostModel
+    private lateinit var postList: MutableList<PostEntity>
+
+    // category selection
+    private var mCatetoryId: Int? = null
+    private var mCursorId: Int? = null
 
 
     companion object{
@@ -64,6 +81,11 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG,"CommFragment - onCreate() called")
+
+//        Log.e("[oncreate]", postModel.toString())
+
+        // kotlin.UninitializedPropertyAccessException: lateinit blah blah
+        postModel = PostModel("FAIL", mutableListOf(PostEntity()))
     }
 
     override fun onAttach(context: Context) {
@@ -79,10 +101,10 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             savedInstanceState: Bundle?
     ): View? {
         val view1 = inflater.inflate(R.layout.fragment_comm,container,false)
+        val nScrollView: NestedScrollView = view1.findViewById(R.id.comm_post_section_nestedscrollview)
 
         // toolbar -> NONE!!!
         // (owner as AppCompatActivity).setSupportActionBar(toolbar)
-
 
         // ---------------------------------------------------------------------
         // Community Posts RV
@@ -104,17 +126,75 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
 //        val manager: LinearLayoutManager = LinearLayoutManager(owner, LinearLayoutManager.VERTICAL, false)
 
+        try {
+            getPosts(mCursorId)
+            Log.e("[calledGetPosts]", "1")
+//            mCursorId = postModel.posts.last().id
+            Log.e("[initcursorid]", "2")
+        } catch(e: Exception) {
+            Log.e("[getPostsException]", e.toString())
+        }
 
+        recyclerView = view1.findViewById(R.id.article_rv)
+        mAdapter = RecyclerRestAdapter(activity!!, postModel.posts)
 
         with (recyclerView) {
-            layoutManager = LinearLayoutManager(activity as Activity, LinearLayoutManager.VERTICAL, true)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-            adapter = RecyclerAdapter(activity as Activity, dummyCommunityPostsList)
+            adapter = mAdapter
         }
         val size = resources.getDimensionPixelSize(R.dimen.comm_theme_padding_vertical) * 2
         val deco = SpaceDecoration(size)
         recyclerView.addItemDecoration(deco)
+
+        // scroll event listener
+//        recyclerView.addOnScrollListener(RecyclerView.OnScrollListener() {
+//            /*
+//            * recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//    @Override
+//    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//        super.onScrollStateChanged(recyclerView, newState);
+//
+//        if (!recyclerView.canScrollVertically(1)) {
+//            Toast.makeText(YourActivity.this, "Last", Toast.LENGTH_LONG).show();
+//
+//        }
+//    }
+//});
+//            * */
+//            onScrollStateChanged(recyclerView: RecyclerView, int newState) {
+//                super.onScrollStateChanged()
+//            }
+//        })
+
+        // ---------------------------------------------------------------------
+        // nestedScrollView refresh
+        // ---------------------------------------------------------------------
+        nScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            /*
+            * if (v.getChildAt(v.getChildCount() - 1) != null)
+                {
+                    if (scrollY > oldScrollY)
+                    {
+                        if (scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()))
+                        {
+                            //code to fetch more data for endless scrolling
+                        }
+                    }
+                }
+            * */
+            if (v != null) {
+                if (v.getChildAt(v.childCount - 1) != null) {
+                    if (scrollY > oldScrollY) {
+                        if (scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) {
+                            Toast.makeText(activity, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
+                            getPosts(mCursorId)
+                        }
+                    }
+                }
+            }
+        }
 
 
         // ---------------------------------------------------------------------
@@ -432,10 +512,10 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
         return view1
     }
 
-    inner class RecyclerAdapter(
+    inner class RecyclerRestAdapter(
         private val owner: Activity,
-        private val dummyPostsList: MutableList<Post> /*, private val itemListener: (CommentEntity) -> Unit */
-    ): RecyclerView.Adapter<RecyclerAdapter.PostHolder>(){
+        private var commPostList: MutableList<PostEntity> /*, private val itemListener: (CommentEntity) -> Unit */
+    ): RecyclerView.Adapter<RecyclerRestAdapter.PostHolder>(){
 
         inner class PostHolder(itemView: View/*, itemListener: (Post) -> Unit*/): RecyclerView.ViewHolder(itemView) {
 
@@ -444,6 +524,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             val userName: TextView = itemView.findViewById(R.id.tv_nicname)
             val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
+
+            val likeCount: TextView = itemView.findViewById(R.id.article_favorite_num_btn)
+            val commentCount: TextView = itemView.findViewById(R.id.article_comment_num_btn)
 
             // listener DX
             fun bindListener(item: CommentEntity) {
@@ -459,71 +542,77 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
         }
 
         fun getCategoryNameInArticle(category: String):String{
-            val cateInArt :String = "#"+category
+            val cateInArt :String = "#$category"
             return cateInArt
+        }
+
+        fun reloadDataWithRetrofitResponse(newPostList: MutableList<PostEntity>) {
+            commPostList = newPostList
+            Log.e("[Adapter]", "dataset to be changed!")
+            notifyDataSetChanged()
         }
 
         //데이터 셋팅
         @SuppressLint("ResourceAsColor")
         override fun onBindViewHolder(holder: PostHolder, position: Int) {
-            val postEntity = dummyPostsList[position]
+            val postEntity = commPostList[position]
             lateinit var drawable : GradientDrawable
 
             with (holder) {
                 when (postEntity.category) {
-                    1 -> {
+                    "TIP" -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_5))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_5, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_5, null))
                     }
-                    2 -> {
+                    "STOCK" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_4))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_4, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_4, null))
                     }
-                    3 -> {
+                    "STUDY" -> {
                         category.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_6))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_6, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_6, null))
                     }
-                    4 -> {
+                    "SPORTS" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_3))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_3, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_3, null))
                     }
-                    5 -> {
+                    "FOOD" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_2))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_2, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2, null))
                     }
-                    6 -> {
+                    "GAME" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_games))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_7))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_7, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_7, null))
                     }
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
-                userName.text = when (postEntity.userID) {
-                    1 -> "떡볶이가 좋은 빙봉"
-                    2 -> "배부른 하이에나"
-                    3 -> "잠들지 못하는 소크라테스"
-                    4 -> "집에 가고픈 야근가이"
-                    else -> "롤이 재밌는 콩순이"
-                }
+                userName.text = postEntity.user.userName
                 datetime.text = postEntity.createdAt
                 content.text = postEntity.contents
+
+                likeCount.text = postEntity.like.size.toString()
+                commentCount.text = postEntity.comments.size.toString()
             }
 
             holder.itemView.setOnClickListener {
                 Log.e("[CommFrag_itemview]", "clicked post id: ${postEntity.id}")
                 val intent = Intent(owner, ArticleActivity::class.java).apply {
-                    putExtra(getString(R.string.dummy_post_id), postEntity.id)
+                    val selectedPost = Gson().toJson(postEntity)
+                    Log.e("[postSelected]", selectedPost.toString())
+                    putExtra(getString(R.string.dummy_post_id), selectedPost)
+                    putExtra("selectedPost", Gson().toJson(postEntity))
                 }
                 owner.startActivity(intent)
             }
@@ -531,7 +620,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
         //리사이클러뷰의 항목갯수 반환
         override fun getItemCount(): Int {
-            return dummyPostsList.size
+            return commPostList.size
         }
 
 
@@ -540,8 +629,6 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             val rowTextView: TextView = itemView.findViewById(R.id.tv_nicname)
         }
 
-
-
     }
 
     override fun onResume() {
@@ -549,7 +636,8 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
         Log.e("[HI]", "comm Fragment's onResume :3")
 
-        val myShared = activity?.getSharedPreferences(
+//        val myShared = activity?.getSharedPreferences(
+        /*val myShared = owner.getSharedPreferences(
             getString(R.string.owl_shared_preferences_name),
             Context.MODE_PRIVATE
         )
@@ -563,6 +651,38 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             )
 
         recyclerView.adapter?.notifyDataSetChanged()
-        Log.e("[CommFrag]", "dummy list size: ${dummyCommunityPostsList.size}...")
+        Log.e("[CommFrag]", "dummy list size: ${dummyCommunityPostsList.size}...")*/
+    }
+
+    // ===========================================================================
+    //              RETROFIT NETWORKING
+    // ===========================================================================
+    private fun getPosts(cursorId: Int?) {
+        Log.e("[getPost]", "-.-cursorid: $cursorId")
+        // no progressbar!!
+
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, token)
+        // log?
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<PostModel> {
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                if (response.isSuccessful) {
+                    postModel = response.body() as PostModel
+                    Log.e("[getPostSuccess]", response.body().toString())
+                    mCursorId = postModel.posts.last().id
+                    Log.e("[new_cursorId]", mCursorId.toString())
+                    if (postModel.posts.size == 0)
+                        return
+                    activity!!.runOnUiThread {
+                        mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+                        mAdapter.notifyDataSetChanged() // 이거할때 runOnUiThread 써야됨!
+                    }
+                }
+            }
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                postModel = PostModel("error", mutableListOf(PostEntity()))
+            }
+        })
     }
 }

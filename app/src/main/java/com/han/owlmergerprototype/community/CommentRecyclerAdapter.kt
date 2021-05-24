@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
+import com.han.owlmergerprototype.data.CommentRESTEntity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 
 class CommentRecyclerAdapter (
-    private val commentsList: MutableList<Comment>,
+    private var commentsList: MutableList<CommentRESTEntity>,
     private val owner: ArticleActivity,
-    private val itemListener: (Comment) -> Unit
+    private val itemListener: (CommentRESTEntity) -> Unit
 ): RecyclerView.Adapter<CommentRecyclerAdapter.CommentHolder>() {
-    inner class CommentHolder(itemView: View, itemListenr: (Comment) -> Unit): RecyclerView.ViewHolder(itemView){
+    inner class CommentHolder(itemView: View, itemListenr: (CommentRESTEntity) -> Unit): RecyclerView.ViewHolder(itemView){
         val userName: TextView = itemView.findViewById(R.id.comment_username)
         val timePassed: TextView = itemView.findViewById(R.id.comment_time_passed)
         val content: TextView = itemView.findViewById(R.id.comment_content)
@@ -27,7 +28,7 @@ class CommentRecyclerAdapter (
 
         var hiddenSpace: TextView = itemView.findViewById(R.id.comment_depth_dummy_tv)
 
-        fun bindListener(item: Comment) {
+        fun bindListener(item: CommentRESTEntity) {
             itemView.setOnClickListener { itemListener(item) }
         }
     }
@@ -40,11 +41,12 @@ class CommentRecyclerAdapter (
     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
         val commentEntity = commentsList[position]
         with (holder) {
-            userName.text = when (commentEntity.userId) {
+            /*userName.text = when (commentEntity.userId) {
                 1 -> owner.getString(R.string.dummy_username_1)
                 else -> owner.getString(R.string.dummy_username_retrieve_error)
-            }
-            timePassed.text = DateTimeFormatManager.getTimeGapFromNow(commentEntity.createdAt)
+            }*/
+            userName.text = commentEntity.userId.toString()
+            timePassed.text = commentEntity.createdAt
             content.text = commentEntity.contents
 
             if (!commentEntity.isParent) {
@@ -60,4 +62,9 @@ class CommentRecyclerAdapter (
     }
 
     override fun getItemCount() = commentsList.size
+
+    fun refreshCommentsDataSet(newCommentList: MutableList<CommentRESTEntity>) {
+        commentsList = newCommentList
+        notifyDataSetChanged()
+    }
 }

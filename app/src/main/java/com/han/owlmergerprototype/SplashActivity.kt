@@ -133,10 +133,10 @@ class SplashActivity : AppCompatActivity() {
         bookmarkDatasets.add(Bookmark(9, "20210517152533", null, true, 2, 3))
         bookmarkDatasets.add(Bookmark(10, "20210517152633", null, true, 2, 5))
 
-//        with (myShared.edit()) {
-//            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
-//            commit()
-//        }
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
+            commit()
+        }
 
         // ----------------------------------------------------------------
         //      when fetching from shared preferences

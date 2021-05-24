@@ -27,14 +27,20 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
+import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.properties.Delegates
 
-class ArticleActivity : AppCompatActivity() {
+class ArticleActivity : AppCompatActivity(){
 
     private lateinit var binding: ArticleLayoutBinding
     private var dummyPostId by Delegates.notNull<Int>()
     private lateinit var myPost: Post
+    private lateinit var selectedPost: PostEntity
+    private lateinit var commentsList: MutableList<CommentRESTEntity>
 
     // icon toggle
     var isBookMarked = false
@@ -56,6 +62,9 @@ class ArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // RETROFIT REST NETWORKING
+//        intent.get
+
         // shared pref
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
 
@@ -64,13 +73,17 @@ class ArticleActivity : AppCompatActivity() {
         dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
 //        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
 
+        // post
+        selectedPost = Gson().fromJson(intent.getStringExtra("selectedPost"), PostEntity::class.java)
+        Log.e("[[ArticleActivity]]", selectedPost.toString())
+
         binding = ArticleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.articleToolbar)
 
 
 
-    // get Article Post Body from intent post_id
+        /*// get Article Post Body from intent post_id
         myPost = when (dummyPostId) {
             -1 -> Post(contents=getString(R.string.article_content_for_dummy_post_id_retrive_error))
             else -> {
@@ -87,8 +100,28 @@ class ArticleActivity : AppCompatActivity() {
         // time gap in text
         binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
         binding.articleContentTv.text = myPost.contents
-
+        */
 //        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
+
+        // POST BODY
+        binding.tvBadge.text = when (selectedPost.category) {
+            "TIP" -> "#꿀팁"
+            "STOCK" -> "#해외주식"
+            "STUDY" -> "#빡공"
+            "SPORTS" -> "#해외 스포츠"
+            "FOOD" -> "#야식"
+            "GAME" -> "#게임"
+            else -> "#고장났어~"
+        }
+
+        binding.articleTimestampTv.text = selectedPost.createdAt
+        binding.articleUname.text = selectedPost.user.userName
+        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+        binding.articleContentTv.text = selectedPost.contents
+
+        binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
+//        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+
 
         // RV
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -101,29 +134,28 @@ class ArticleActivity : AppCompatActivity() {
             // (opt) where article id == current post id
             val sharedCommentsKey = getString(R.string.dummy_comments_key)
 
-            val dummyCommentsType = object: TypeToken<MutableList<Comment>>() {}.type
+            val dummyCommentsType = object: TypeToken<MutableList<CommentRESTEntity>>() {}.type
 
+            commentsList = selectedPost.comments as MutableList<CommentRESTEntity>
             // filter by postID!!
-            dummyCommentsDataSet =
-                Gson().fromJson(myShared.getString(sharedCommentsKey, ""), dummyCommentsType)/*.filter{  }*/
 
             adapter = CommentRecyclerAdapter(
-                dummyCommentsDataSet,
+                commentsList,
                 this@ArticleActivity
             ) {
 //                 setOnClickListener {}
             }
 
 //            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
-            commentCount = dummyCommentsDataSet.size
+            commentCount = commentsList.size
         }
 
         // comment count
-        binding.articleCommentCountTv.text = dummyCommentsDataSet.size.toString()
+        binding.articleCommentCountTv.text = commentsList.size.toString()
 
 
         // fav btn
-        with (binding.articleBookmarkBtn) {
+        /*with (binding.articleBookmarkBtn) {
             val dummyBookmarkType = object: TypeToken<MutableList<Bookmark>>() {}.type
             dummyBookmarksDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_bookmarks_key), ""), dummyBookmarkType)
 
@@ -188,10 +220,10 @@ class ArticleActivity : AppCompatActivity() {
                 }
 
             }
-        }
+        }*/
 
         // like btn
-        with (binding.articleFavoriteBtn) {
+        /*with (binding.articleFavoriteBtn) {
             val dummyLikesType = object: TypeToken<MutableList<Like>>() {}.type
             dummyLikesDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_likes_key),""), dummyLikesType)
 
@@ -274,7 +306,8 @@ class ArticleActivity : AppCompatActivity() {
                     commit()
                 }
             }
-        }
+        }*/
+
 
         // share btn
         with (binding.articleShareBtn) {
@@ -282,7 +315,7 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         // leave a comment
-        with (binding.replyAddBtn) {
+        /*with (binding.replyAddBtn) {
             setOnClickListener {
                 if (binding.replyContentEt.text.toString().isNotBlank()) { // not empty nor whitespaces
                     dummyCommentsDataSet.add(Comment(
@@ -311,14 +344,14 @@ class ArticleActivity : AppCompatActivity() {
                 val inputMng:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMng.hideSoftInputFromWindow(binding.replyContentEt.windowToken, 0)
             }
-        }
+        }*/
     }
 
     @SuppressLint("ResourceType")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if(TestUser.userName!=""){
             binding.articleToolbar.inflateMenu(R.menu.article_menu)
-            if(TestUser.userID !=myPost.userID ){
+            if(TestUser.userID != selectedPost.userId ){
                 binding.articleToolbar.menu.removeItem(R.id.delete_article_btn)
             }
         }
@@ -373,5 +406,24 @@ class ArticleActivity : AppCompatActivity() {
         super.onBackPressed()
 
         finish()
+    }
+
+
+    // ===========================================================================
+    //              RETROFIT NETWORKING
+    // ===========================================================================
+    private fun getPosts() {
+        // no progressbar!!
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null, null)
+
+        call.enqueue(object: Callback<PostModel>{
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                if (response.isSuccessful) {
+                    val postModel = response.body() as PostModel
+                    Log.e("[getPostSuccess]", postModel.toString())
+                }
+            }
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {}
+        })
     }
 }
