@@ -8,20 +8,20 @@ class CreatePostEntityMinimal(
 class CreatePostEntityImage(
     var contents: String = "x",
     var category: String = "x",
-    var imageId: String? = ""
+    var imageId: Int? = -1
 )
 
 class CreatePostEntityLocation(
     var contents: String = "x",
     var category: String = "x",
-    var latitude: String? = "",
-    var longitude: String? = ""
+    var latitude: Double? = -1.0,
+    var longitude: Double? = -1.0
 )
 
 class CreatePostEntityFull(
     var contents: String = "x",
     var category: String = "x",
-    var imageId: String? = "",
-    var latitude: String? = "",
-    var longitude: String? = ""
+    var imageId: Int? = -1,
+    var latitude: Double? = -1.0,
+    var longitude: Double? = -1.0
 )

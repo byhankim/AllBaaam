@@ -551,7 +551,5 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.moveCamera(camera)
 
         }
-
-
     }
 }

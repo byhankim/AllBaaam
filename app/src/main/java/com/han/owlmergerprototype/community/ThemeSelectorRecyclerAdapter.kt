@@ -28,6 +28,7 @@ class ThemeSelectorRecyclerAdapter(
     private val owner: Activity,
     private val which : Boolean //true면 메인, false 글작성
 ): RecyclerView.Adapter<ThemeSelectorRecyclerAdapter.ThemeHolder>() {
+    public var pos = -1
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>
     private lateinit var iconsList: MutableList<Int>
@@ -65,9 +66,11 @@ class ThemeSelectorRecyclerAdapter(
                 if (themeEntity.toggleClicked) {
                     themeEntity.toggleClicked = false
                     selectedPos = -1
+                    pos = -1
                 } else {
                     themeEntity.toggleClicked = true
                     selectedPos = position
+                    pos = position
 
                     // ((INEFFECTIVE!!)) if newly clicked, reset all other toggle values
                     for (i in 0 until themesList.size) {
@@ -78,7 +81,7 @@ class ThemeSelectorRecyclerAdapter(
                 }
                 notifyDataSetChanged()
             }
-            if (selectedPos == position) {
+            if (/*selectedPos == position*/pos == position) {
 //                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themeEntity.themeColorOnClick))
 //                themeSelectorCv.alpha = 0.3f
 //                themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, themesList[position].themeColor))

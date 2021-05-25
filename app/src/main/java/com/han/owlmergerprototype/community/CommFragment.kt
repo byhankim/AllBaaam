@@ -20,6 +20,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.view.isVisible
 import android.widget.TextView
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +31,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.common.ADDRESS
+import com.han.owlmergerprototype.common.Constants
 import com.han.owlmergerprototype.common.RetrofitRESTService
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
@@ -50,12 +52,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해줌
-    private lateinit var floatBTN: FloatingActionButton
+private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var mAdapter: RecyclerRestAdapter
     private lateinit var themeSelectorRv: RecyclerView
+    private lateinit var tAdapter: ThemeSelectorRecyclerAdapter
+    private var selectedCategoryPos: Int = -1
 
     // dummy post dataset
     private lateinit var dummyCommPostDatasets: MutableList<Post>
@@ -69,6 +73,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
     // category selection
     private var mCatetoryId: Int? = null
     private var mCursorId: Int? = null
+
+
+    // sort by
 
 
     companion object{
@@ -97,9 +104,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val view1 = inflater.inflate(R.layout.fragment_comm,container,false)
         val nScrollView: NestedScrollView = view1.findViewById(R.id.comm_post_section_nestedscrollview)
@@ -115,13 +122,6 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             Context.MODE_PRIVATE
         )
 
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyCommunityPostsList: MutableList<Post> =
-            Gson().fromJson(myShared?.getString(
-                getString(R.string.owl_shared_preferences_dummy_comm_posts),
-                ""),
-                dummyCommPostsType
-            )
 
         recyclerView = view1.findViewById(R.id.article_rv)
 
@@ -141,7 +141,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
         }
 
         recyclerView = view1.findViewById(R.id.article_rv)
-        mAdapter = RecyclerRestAdapter(activity!!, postModel.posts!!)
+        mAdapter = RecyclerRestAdapter(activity!!, postModel.posts)
 
         with (recyclerView) {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -193,9 +193,20 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 if (v.getChildAt(v.childCount - 1) != null) {
                     if (scrollY > oldScrollY) {
                         if (scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) {
-                            Toast.makeText(activity, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
 
-                            getPosts(mCursorId)
+                            /*
+                            * Handler().postDelayed({
+//            startActivity(Intent(this, CommunityMainActivity::class.java))
+            startActivity(Intent(this, NoLoginBottomNavActivity::class.java))
+            finish()
+        }, timeoutCount)
+                            * */
+                            Handler().postDelayed({
+                                Toast.makeText(activity, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
+
+                                getPosts(mCursorId)
+                            }, 250)
+
                             //
                             // 1. postdelayed
 //                            Handler().postDelayed({
@@ -214,92 +225,36 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
 
         // ---------------------------------------------------------------------
+        //  인기순 받아오기
+        // ---------------------------------------------------------------------
+        val popularSortBtn = view1.findViewById<TextView>(R.id.comment_sort_by_popularity_btn)//comment_sort_by_popularity_btn
+        with (popularSortBtn) {
+            setOnClickListener {
+
+            }
+        }
+
+
+
+        // ---------------------------------------------------------------------
         // theme selector rv
         // ---------------------------------------------------------------------
         themeSelectorRv = view1.findViewById(R.id.comm_theme_selector_recyclerview)
 
         val manager = LinearLayoutManager(activity as Activity, LinearLayoutManager.HORIZONTAL, false)
 
-
+        tAdapter = ThemeSelectorRecyclerAdapter(Constants().getCategoryList(), activity as Activity, true)
         with (themeSelectorRv) {
             layoutManager = manager
             androidx.recyclerview.widget.DividerItemDecoration(
                 context,LinearLayoutManager.HORIZONTAL)
-            Log.e("[THEME_SELECTOR]", "aasaaaaaaaaaaahhh!!!")
-            val testList = kotlin.collections.mutableListOf<ThemeEntity>()
-            testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_honey_tip),
-                    com.han.owlmergerprototype.R.drawable.ic_idea,
-                    com.han.owlmergerprototype.R.color.style1_5_20,
-                    com.han.owlmergerprototype.R.color.style2_5,
-                    com.han.owlmergerprototype.R.color.style1_5,
-                    1,
-                    false
-                )
-            )
-            testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_stocks_overseas),
-                    com.han.owlmergerprototype.R.drawable.ic_graph,
-                    com.han.owlmergerprototype.R.color.style1_4_20,
-                    com.han.owlmergerprototype.R.color.style2_4,
-                    com.han.owlmergerprototype.R.color.style1_4,
-                    2,
-                    false
-                )
-            )
-            testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_sports_overseas),
-                    com.han.owlmergerprototype.R.drawable.ic_sport,
-                    com.han.owlmergerprototype.R.color.style1_3_20,
-                    com.han.owlmergerprototype.R.color.style2_3,
-                    com.han.owlmergerprototype.R.color.style1_3,
-                    3,
-                    false
-                )
-            )
-            testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_latenight_food),
-                    com.han.owlmergerprototype.R.drawable.ic_chicken,
-                    com.han.owlmergerprototype.R.color.style1_1_20,
-                    com.han.owlmergerprototype.R.color.style2_1,
-                    com.han.owlmergerprototype.R.color.style1_1,
-                    4,
-                    false
-                )
-            )
-            testList.add(
-                com.han.owlmergerprototype.data.ThemeEntity(
-                    getString(com.han.owlmergerprototype.R.string.comm_study_hard),
-                    com.han.owlmergerprototype.R.drawable.ic_book,
-                    com.han.owlmergerprototype.R.color.style1_6_20,
-                    com.han.owlmergerprototype.R.color.style2_6,
-                    com.han.owlmergerprototype.R.color.style1_6,
-                    5,
-                    false
-                )
-            )
-            testList.add(
-                    com.han.owlmergerprototype.data.ThemeEntity(
-                            getString(com.han.owlmergerprototype.R.string.comm_games),
-                            com.han.owlmergerprototype.R.drawable.ic_game,
-                            com.han.owlmergerprototype.R.color.style1_7_20,
-                            com.han.owlmergerprototype.R.color.style2_7,
-                            com.han.owlmergerprototype.R.color.style1_7,
-                            6,
-                            false
-                    )
-                    )
-            adapter = com.han.owlmergerprototype.community.ThemeSelectorRecyclerAdapter(
-                testList,
-                activity as Activity,
-                true
-            )
-        }
 
+            adapter = tAdapter
+            selectedCategoryPos = tAdapter.pos
+            setOnClickListener {
+                Toast.makeText(activity, "selectedPos: $tAdapter.pos", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // FAB
         floatBTN = view1.findViewById(R.id.fab)
@@ -351,9 +306,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 }
                 agree1CB.setOnCheckedChangeListener { buttonView, isChecked ->
 
-                        if(agree2CB.isChecked&&agree3CB.isChecked) {
-                            agreeAllCV.isChecked = isChecked
-                        }
+                    if(agree2CB.isChecked&&agree3CB.isChecked) {
+                        agreeAllCV.isChecked = isChecked
+                    }
                 }
                 agree2CB.setOnCheckedChangeListener { buttonView, isChecked ->
                     if(agree1CB.isChecked&&agree3CB.isChecked){
@@ -368,45 +323,45 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
 
                 phoneET.addTextChangedListener(object: TextWatcher{
-                        override fun beforeTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
 
-                        }
+                    }
 
-                        override fun onTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            before: Int,
-                            count: Int
-                        ) {
-                            if(phoneET.length()>=10){
-                                Log.d(TAG,"${phoneET.length()}")
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        if(phoneET.length()>=10){
+                            Log.d(TAG,"${phoneET.length()}")
 
-                                sendBTN.isClickable=true
-                                sendBTN.setOnClickListener {
-                                    authLayout.isVisible = true
-                                    val phoneNum = phoneET.text.toString()
-                                    Log.d(TAG,"${phoneET.length()},phonenum = ${phoneNum.substring(1)}")
+                            sendBTN.isClickable=true
+                            sendBTN.setOnClickListener {
+                                authLayout.isVisible = true
+                                val phoneNum = phoneET.text.toString()
+                                Log.d(TAG,"${phoneET.length()},phonenum = ${phoneNum.substring(1)}")
 
-                                    /*loginService.getVerifyCode(TestUser.token,phoneNum.substring(1)).enqueue(object : Callback<Ok> {
-                                        override fun onFailure(call: Call<Ok>, t: Throwable) {
-                                            val dialog = AlertDialog.Builder(dialog.context)
-                                            dialog.setTitle("통신실패")
-                                            dialog.setMessage("실패")
-                                            dialog.show()
+                                /*loginService.getVerifyCode(TestUser.token,phoneNum.substring(1)).enqueue(object : Callback<Ok> {
+                                    override fun onFailure(call: Call<Ok>, t: Throwable) {
+                                        val dialog = AlertDialog.Builder(dialog.context)
+                                        dialog.setTitle("통신실패")
+                                        dialog.setMessage("실패")
+                                        dialog.show()
+                                    }
+                                    override fun onResponse(call: Call<Ok>, response: Response<Ok>) {
+                                        val ok = response.body()
+                                        if(ok!!.ok){
+                                            Toast.makeText(dialog.context,"문자갑니둥", Toast.LENGTH_SHORT).show()
+
+                                        }else{
+                                            Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
                                         }
-                                        override fun onResponse(call: Call<Ok>, response: Response<Ok>) {
-                                            val ok = response.body()
-                                            if(ok!!.ok){
-                                                Toast.makeText(dialog.context,"문자갑니둥", Toast.LENGTH_SHORT).show()
-
-                                            }else{
-                                                Toast.makeText(dialog.context,"틀리셨어용", Toast.LENGTH_SHORT).show()
-                                            }
 
 
 //                                              val dialog = AlertDialog.Builder(this@LoginActivity)
@@ -414,30 +369,30 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 //                                              dialog.setMessage("ok: ${login?.ok.toString()} , token: ${login?.token}")
 //                                              dialog.show()
 
-                                        }
+                                    }
 
 
-                                    })*/
-
-                                }
-
-
-
-
-
-
-
-
-
+                                })*/
 
                             }
+
+
+
+
+
+
+
+
+
+
                         }
+                    }
 
-                        override fun afterTextChanged(s: Editable?) {
+                    override fun afterTextChanged(s: Editable?) {
 
-                        }
+                    }
 
-                    })
+                })
 
 
 
@@ -633,10 +588,10 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 call.enqueue(object: Callback<IsBookmark> {
                     override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
 
-                            val isbm = response.body()
-                            if (response.isSuccessful) {
-                                isBookmark.isChecked = isbm!!.isBookmark
-                            } else{
+                        val isbm = response.body()
+                        if (response.isSuccessful) {
+                            isBookmark.isChecked = isbm!!.isBookmark
+                        } else{
                             Log.d(TAG, "onResponse:")
                         }
 
@@ -652,9 +607,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
                         val islk = response.body()
 
-                            if (response.isSuccessful) {
-                                isLike.isChecked = islk!!.isLike
-                            } else{
+                        if (response.isSuccessful) {
+                            isLike.isChecked = islk!!.isLike
+                        } else{
                             Log.d(TAG, "onResponse: ")
                         }
 
@@ -685,11 +640,11 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 call.enqueue(object: Callback<IsLike> {
                     override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
 
-                            val isbm = response.body()
-                            if (response.isSuccessful) {
-                                Log.e(TAG,"[retrofitResult]: ${isbm?.isLike}")
+                        val isbm = response.body()
+                        if (response.isSuccessful) {
+                            Log.e(TAG,"[retrofitResult]: ${isbm?.isLike}")
 
-                            } else{
+                        } else{
                             Log.d(TAG, "onResponse:")
                         }
 
@@ -705,11 +660,11 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                 Log.e("[retrofitCall]", call.request().toString())
                 call.enqueue(object: Callback<IsBookmark> {
                     override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
-                            val isbm = response.body()
-                            if (response.isSuccessful) {
-                                Log.e(TAG,"[retrofitResult]: ${isbm?.isBookmark}")
+                        val isbm = response.body()
+                        if (response.isSuccessful) {
+                            Log.e(TAG,"[retrofitResult]: ${isbm?.isBookmark}")
 
-                            } else{
+                        } else{
                             Log.d(TAG, "onResponse:")
                         }
 
@@ -766,15 +721,16 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
         val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, token)
         // log?
-//        Log.e("[retrofitCall]", call.request().toString())
+        Log.e("[retrofitCall]", call.request().toString())
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
+                    Log.e("[getPostResult]", postModel.posts.toString())
 
                     // empty거나 null 이거나 이전에 받아온 모델하고 last post id가 같으면 처리 안함
                     if (postModel.posts.isNullOrEmpty() || mCursorId == postModel.posts.last().id)
-                    return
+                        return
                     postList.addAll(postModel.posts)
                     mCursorId = postModel.posts.last().id
                     Log.e("[new_cursorId]", mCursorId.toString())
@@ -792,9 +748,4 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             }
         })
     }
-
-
-
-
-
 }

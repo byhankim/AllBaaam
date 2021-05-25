@@ -528,7 +528,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         Log.e("[getPost]", "-.-")
         // no progressbar!!
 
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, null)
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null, null)
 
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {

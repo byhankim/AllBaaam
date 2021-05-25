@@ -1,6 +1,5 @@
 package com.han.owlmergerprototype.common
 
-import com.google.gson.JsonObject
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.*
 import retrofit2.Call
@@ -10,15 +9,15 @@ interface RetrofitRESTService {
 //    @FormUrlEncoded
     @POST("/posts")
     @Headers("Content-Type: application/json")
-    fun createPost( // without image
+    fun createPost(
         @Header("token") token: String,
         @Body body: String
     ): Call<OkFailResult>
 
-    // full posts (default)
+    // posts
     @GET("/posts")
     fun getPosts(
-        @Query("cursor") cursor_key: Int?,
+        @Query("cursor") cursorId: Int?,
         @Header("token") token: String?
     ): Call<PostModel>
 
@@ -48,7 +47,6 @@ interface RetrofitRESTService {
         @Header("token") token: String,
         @Body body: String
     ): Call<OkFailResult>
-
 
     // AUTH KAKAO
     @GET("/auth/kakao/")

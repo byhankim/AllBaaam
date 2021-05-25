@@ -83,8 +83,8 @@ class CreateArticleActivity : AppCompatActivity() {
 
         /*if 지도에서 넘어온 경우*/
         // latlng toast
-        var latitude = intent.getStringExtra("latitude") ?: ""
-        var longitude = intent.getStringExtra("longitude") ?: ""
+        latitude = intent.getStringExtra("latitude")?.toDouble()
+        longitude = intent.getStringExtra("longitude")?.toDouble()
         Log.d(TAG, "CreateArticleActivity - onCreate() latitude: $latitude longitude: $longitude called")
 
         val latlng_toast = Toast.makeText(this, "위도 : $latitude, 경도 : $longitude", Toast.LENGTH_SHORT)
@@ -93,7 +93,7 @@ class CreateArticleActivity : AppCompatActivity() {
         var latlng_text = findViewById<TextView>(R.id.comm_write_article_set_location_tip_tv)
         var latlng_img = findViewById<TextView>(R.id.comm_write_article_set_location_btn)
 
-        if ( latitude!=="" || longitude!=="" ) {
+        if ( latitude != null || longitude != null ) {
             latlng_text.text = "위도 : $latitude, 경도 : $longitude"
         } else {
             latlng_img.setOnClickListener {
@@ -412,39 +412,40 @@ class CreateArticleActivity : AppCompatActivity() {
             Gson().toJson(CreatePostEntityFull(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
-                imageId.toString(),
-                latitude.toString(),
-                longitude.toString()
+                imageId,
+                latitude,
+                longitude
             ))
         } else if (imageId == null && latitude != null) {
             Gson().toJson(CreatePostEntityLocation(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
-                latitude.toString(),
-                longitude.toString()
+                latitude,
+                longitude
             ))
         } else if (imageId != null && latitude == null) {
-            Gson().toJson(CreatePostEntityLocation(
+            Gson().toJson(CreatePostEntityImage(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
-                imageId.toString()
+                imageId
             ))
         } else {
-            Gson().toJson(CreatePostEntityLocation(
+            Gson().toJson(CreatePostEntityMinimal(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD"
             ))
         }
 
+        Log.e("postjson:", myJson)
         val result: Call<OkFailResult> = createPostService.createPost(
             token,
             myJson
         )
 
         // 로그찍기
-        Log.e("[createPstRESULT]",
-            Gson().toJson(CreatePostEntityMinimal(binding.commWriteArticleContentEt.text.toString(),
-            "FOOD")))
+//        Log.e("[createPstRESULT]",
+//            Gson().toJson(CreatePostEntityMinimal(binding.commWriteArticleContentEt.text.toString(),
+//            "FOOD")))
 
 
 

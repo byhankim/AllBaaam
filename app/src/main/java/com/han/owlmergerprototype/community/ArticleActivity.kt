@@ -158,13 +158,15 @@ class ArticleActivity : AppCompatActivity(){
         // ------------------------------------------------------------------------------
         //          add a comment
         // ------------------------------------------------------------------------------
-        with (binding.replyContentEt) {
-            if (binding.replyContentEt.text.toString().isEmpty()) {
-                requestFocus()
-                Toast.makeText(this@ArticleActivity, "댓글을 달려면 내용을 작성해주세요!", Toast.LENGTH_SHORT).show()
-                return
+        with (binding.replyAddBtn) {
+            setOnClickListener {
+                if (binding.replyContentEt.text.toString().isEmpty()) {
+                    requestFocus()
+                    Toast.makeText(this@ArticleActivity, "댓글을 달려면 내용을 작성해주세요!", Toast.LENGTH_SHORT).show()
+                } else {
+                    addComment(binding.replyContentEt.text.toString(), selectedPost.id, null)
+                }
             }
-            addComment(selectedPost.id, binding.replyContentEt.text.toString())
         }
 
 
@@ -453,8 +455,43 @@ class ArticleActivity : AppCompatActivity(){
         })
     }
 
-    private fun addComment(postId: Int, contents: String) {
+    private fun addComment(contents: String, postId: Int, parentId: Int?) {
+        val myJson = when (parentId) {
+            null -> {
+                Gson().toJson(CreateCommentEntity(contents, postId))
+            }
+            else -> {
+                Gson().toJson(CreateReCommentEntity(contents, postId, parentId))
+            }
+        }
+
+        Log.e("[jenjeanne]", myJson)
+
         val result: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.createComment(
-            token, "")
+            token, myJson)
+        result.enqueue(object: Callback<OkFailResult> {
+            override fun onResponse(call: Call<OkFailResult>, response: Response<OkFailResult>) {
+                if (response.isSuccessful) {
+                    val okFail = response.body()
+                    okFail?.let {
+                        Toast.makeText(this@ArticleActivity, "댓글을 작성하였습니다!", Toast.LENGTH_SHORT).show()
+                        Log.e("[AddCommentSuccess]", "yey")
+
+                        // get rid of keyboard
+                        binding.replyContentEt.setText("")
+                        val imm = this@ArticleActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(binding.replyContentEt.windowToken, 0)
+
+                        // refresh comment
+                        getComments(selectedPost.id)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
+                Toast.makeText(this@ArticleActivity, t.toString(), Toast.LENGTH_SHORT).show()
+                Log.e("[AddCommentFail]", "$t")
+            }
+        })
     }
 }
