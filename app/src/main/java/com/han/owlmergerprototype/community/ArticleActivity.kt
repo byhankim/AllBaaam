@@ -17,10 +17,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
@@ -37,24 +39,23 @@ import kotlin.properties.Delegates
 class ArticleActivity : AppCompatActivity(){
 
     private lateinit var binding: ArticleLayoutBinding
-    private var dummyPostId by Delegates.notNull<Int>()
-    private lateinit var myPost: Post
     private lateinit var selectedPost: PostEntity
+
+    // comments
     private lateinit var commentsList: MutableList<CommentRESTEntity>
+    private lateinit var cmtAdapter: CommentRecyclerAdapter
 
     // icon toggle
     var isBookMarked = false
     var isLikePressed = false
 
-    // comments
-    private lateinit var dummyCommentsDataSet: MutableList<Comment>
     private var commentCount = -1
 
     // likes
-    private lateinit var dummyLikesDataSet: MutableList<Like>
+    private lateinit var dummyLikesDataSet: MutableList<BookmarkEntity>
 
     // bookmarks
-    private lateinit var dummyBookmarksDataSet: MutableList<Bookmark>
+    private lateinit var dummyBookmarksDataSet: MutableList<BookmarkEntity>
 
 
 //    @RequiresApi(Build.VERSION_CODES.O)
@@ -67,10 +68,11 @@ class ArticleActivity : AppCompatActivity(){
 
         // shared pref
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
+        commentsList = mutableListOf()
 
 
         // post id
-        dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
+//        dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
 //        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
 
         // post
@@ -81,29 +83,19 @@ class ArticleActivity : AppCompatActivity(){
         setContentView(binding.root)
         setSupportActionBar(binding.articleToolbar)
 
+        // Comments RV
+        cmtAdapter = CommentRecyclerAdapter(commentsList, this) { }
 
+        with (binding.commentsRv) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
-        /*// get Article Post Body from intent post_id
-        myPost = when (dummyPostId) {
-            -1 -> Post(contents=getString(R.string.article_content_for_dummy_post_id_retrive_error))
-            else -> {
-                val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
-
-                val dummyPostType = object: TypeToken<MutableList<Post>>() {}.type
-                val dummyDataSetFromSharedPreferences: MutableList<Post> =
-                    Gson().fromJson(myShared.getString(sharedKey, ""), dummyPostType)
-
-                dummyDataSetFromSharedPreferences.filter { it.id == dummyPostId }[0]
-            }
+            adapter = cmtAdapter
         }
+        getComments(selectedPost.id)
 
-        // time gap in text
-        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
-        binding.articleContentTv.text = myPost.contents
-        */
-//        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
 
-        // POST BODY
+    // POST BODY
         binding.tvBadge.text = when (selectedPost.category) {
             "TIP" -> "#꿀팁"
             "STOCK" -> "#해외주식"
@@ -136,7 +128,8 @@ class ArticleActivity : AppCompatActivity(){
 
             val dummyCommentsType = object: TypeToken<MutableList<CommentRESTEntity>>() {}.type
 
-            commentsList = selectedPost.comments as MutableList<CommentRESTEntity>
+            // NOT HERE!!!!
+//            commentsList = selectedPost.comments as MutableList<CommentRESTEntity>
             // filter by postID!!
 
             adapter = CommentRecyclerAdapter(
@@ -152,6 +145,19 @@ class ArticleActivity : AppCompatActivity(){
 
         // comment count
         binding.articleCommentCountTv.text = commentsList.size.toString()
+
+
+        // ------------------------------------------------------------------------------
+        //          add a comment
+        // ------------------------------------------------------------------------------
+        with (binding.replyContentEt) {
+            if (binding.replyContentEt.text.toString().isEmpty()) {
+                requestFocus()
+                Toast.makeText(this@ArticleActivity, "댓글을 달려면 내용을 작성해주세요!", Toast.LENGTH_SHORT).show()
+                return
+            }
+            addComment(selectedPost.id, binding.replyContentEt.text.toString())
+        }
 
 
         // fav btn
@@ -412,18 +418,35 @@ class ArticleActivity : AppCompatActivity(){
     // ===========================================================================
     //              RETROFIT NETWORKING
     // ===========================================================================
-    private fun getPosts() {
+    private fun getComments(postId: Int) {
         // no progressbar!!
-        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(null, null)
-
-        call.enqueue(object: Callback<PostModel>{
-            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+        val call: Call<CommentRestModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPostComments(postId)
+        // log?
+//        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<CommentRestModel> {
+            override fun onResponse(call: Call<CommentRestModel>, response: Response<CommentRestModel>) {
                 if (response.isSuccessful) {
-                    val postModel = response.body() as PostModel
-                    Log.e("[getPostSuccess]", postModel.toString())
+                    val commentModel = response.body() as CommentRestModel
+                    if (commentModel.comments.isNullOrEmpty())
+                        return
+                    Log.e("[CommentModelSuccess]", commentModel.comments.toString())
+                    cmtAdapter.refreshCommentsDataSet(commentModel.comments)
+                    Log.e("[CommentModelRefresh]", "힝")
+                    runOnUiThread {
+                        cmtAdapter.refreshCommentsDataSet(commentModel.comments)
+                        with (binding.commentsRv) { adapter = cmtAdapter}
+                        cmtAdapter.notifyDataSetChanged()
+                    }
                 }
             }
-            override fun onFailure(call: Call<PostModel>, t: Throwable) {}
+            override fun onFailure(call: Call<CommentRestModel>, t: Throwable) {
+                Log.e("[getCommentsFailure]", "F A I L ${t.toString()}")
+            }
         })
+    }
+
+    private fun addComment(postId: Int, contents: String) {
+        val result: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.createComment(
+            token, "")
     }
 }

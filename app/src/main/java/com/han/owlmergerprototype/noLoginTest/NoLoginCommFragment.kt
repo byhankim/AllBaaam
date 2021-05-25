@@ -542,7 +542,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
 
         fun reloadDataWithRetrofitResponse(newPostList: MutableList<PostEntity>) {
             commPostList = newPostList
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
         }
 
         inner class ViewHolderClass(itemView:View) : RecyclerView.ViewHolder(itemView){
@@ -575,8 +575,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
                     Log.e("[getPostSuccess]", postModel.toString())
+                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
                     owner.runOnUiThread {
-                        mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+//                        recyclerView.adapter = mAdapter
                         mAdapter.notifyDataSetChanged()
                     }
                 }

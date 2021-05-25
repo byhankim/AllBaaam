@@ -45,7 +45,7 @@ class CommentRecyclerAdapter (
                 1 -> owner.getString(R.string.dummy_username_1)
                 else -> owner.getString(R.string.dummy_username_retrieve_error)
             }*/
-            userName.text = commentEntity.userId.toString()
+            userName.text = commentEntity.user.userName
             timePassed.text = commentEntity.createdAt
             content.text = commentEntity.contents
 
@@ -65,6 +65,6 @@ class CommentRecyclerAdapter (
 
     fun refreshCommentsDataSet(newCommentList: MutableList<CommentRESTEntity>) {
         commentsList = newCommentList
-        notifyDataSetChanged()
+        //notifyDataSetChanged()
     }
 }

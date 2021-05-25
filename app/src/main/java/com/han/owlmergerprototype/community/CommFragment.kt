@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -40,6 +41,7 @@ import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
+import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
@@ -86,7 +88,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 //        Log.e("[oncreate]", postModel.toString())
 
         // kotlin.UninitializedPropertyAccessException: lateinit blah blah
-        postModel = PostModel("FAIL", mutableListOf(PostEntity()))
+        postModel = PostModel("FAIL", mutableListOf())
     }
 
     override fun onAttach(context: Context) {
@@ -134,10 +136,14 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             Log.e("[initcursorid]", "2")
         } catch(e: Exception) {
             Log.e("[getPostsException]", e.toString())
+        } finally {
+            if (postModel.posts.isNullOrEmpty() ) {
+                postList = mutableListOf()
+            }
         }
 
         recyclerView = view1.findViewById(R.id.article_rv)
-        mAdapter = RecyclerRestAdapter(activity!!, postModel.posts)
+        mAdapter = RecyclerRestAdapter(activity!!, postModel.posts!!)
 
         with (recyclerView) {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -190,7 +196,18 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     if (scrollY > oldScrollY) {
                         if (scrollY >= (v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight)) {
                             Toast.makeText(activity, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
+
                             getPosts(mCursorId)
+                            //
+                            // 1. postdelayed
+//                            Handler().postDelayed({
+//                                getPosts(mCursorId)
+//                            }, 300)
+
+                            // 2. 1px up
+
+
+                            // 3. asynch -> boolean block -> release
                         }
                     }
                 }
@@ -377,7 +394,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                                     val phoneNum = phoneET.text.toString()
                                     Log.d(TAG,"${phoneET.length()},phonenum = ${phoneNum.substring(1)}")
 
-                                    loginService.getVerifyCode(TestUser.token,phoneNum.substring(1)).enqueue(object : Callback<Ok> {
+                                    /*loginService.getVerifyCode(TestUser.token,phoneNum.substring(1)).enqueue(object : Callback<Ok> {
                                         override fun onFailure(call: Call<Ok>, t: Throwable) {
                                             val dialog = AlertDialog.Builder(dialog.context)
                                             dialog.setTitle("통신실패")
@@ -402,7 +419,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                                         }
 
 
-                                    })
+                                    })*/
 
                                 }
 
@@ -451,8 +468,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                                     TestUser.verify = true
                                     val verifiedCode = authET.text.toString().toInt()
                                     Log.d(TAG, "onTextChanged: ${verifiedCode-1}")
+                                    dialog.dismiss()
 
-                                    loginService.verifyPhoneNumber(TestUser.token,verifiedCode).enqueue(object : Callback<Ok> {
+                                    /*loginService.verifyPhoneNumber(TestUser.token,verifiedCode).enqueue(object : Callback<Ok> {
                                         override fun onFailure(call: Call<Ok>, t: Throwable) {
                                             val dialog = AlertDialog.Builder(dialog.context)
                                             dialog.setTitle("통신실패")
@@ -485,7 +503,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                                         }
 
 
-                                    })
+                                    })*/
 
                                 } else {
                                     Toast.makeText(context, "약관동의를 확인해주세요", Toast.LENGTH_SHORT).show()
@@ -549,8 +567,8 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
         fun reloadDataWithRetrofitResponse(newPostList: MutableList<PostEntity>) {
             commPostList = newPostList
-            Log.e("[Adapter]", "dataset to be changed!")
-            notifyDataSetChanged()
+//            Log.e("[Adapter]", "dataset to be changed!")
+//            notifyDataSetChanged()
         }
 
         //데이터 셋팅
@@ -608,7 +626,6 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             }
 
             holder.itemView.setOnClickListener {
-                Log.e("[CommFrag_itemview]", "clicked post id: ${postEntity.id}")
                 val intent = Intent(owner, ArticleActivity::class.java).apply {
                     val selectedPost = Gson().toJson(postEntity)
                     Log.e("[postSelected]", selectedPost.toString())
@@ -664,18 +681,22 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
         val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPosts(cursorId, token)
         // log?
-        Log.e("[retrofitCall]", call.request().toString())
+//        Log.e("[retrofitCall]", call.request().toString())
         call.enqueue(object: Callback<PostModel> {
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
-                    Log.e("[getPostSuccess]", response.body().toString())
+
+                    // empty거나 null 이거나 이전에 받아온 모델하고 last post id가 같으면 처리 안함
+                    if (postModel.posts.isNullOrEmpty() || mCursorId == postModel.posts.last().id)
+                    return
+                    postList.addAll(postModel.posts)
                     mCursorId = postModel.posts.last().id
                     Log.e("[new_cursorId]", mCursorId.toString())
-                    if (postModel.posts.size == 0)
-                        return
+
+                    mAdapter.reloadDataWithRetrofitResponse(postList)
                     activity!!.runOnUiThread {
-                        mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+//                        recyclerView.adapter = mAdapter
                         mAdapter.notifyDataSetChanged() // 이거할때 runOnUiThread 써야됨!
                     }
                 }

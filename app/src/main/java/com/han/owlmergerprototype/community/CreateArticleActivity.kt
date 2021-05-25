@@ -2,51 +2,38 @@ package com.han.owlmergerprototype.community
 
 import android.Manifest
 import android.content.ContentUris
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.database.SQLException
 import android.graphics.Bitmap
-import android.icu.text.MessageFormat.format
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
-import android.text.format.DateFormat.format
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityManagerCompat
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.google.gson.internal.bind.util.ISO8601Utils.format
-import com.google.gson.reflect.TypeToken
+import com.google.gson.JsonObject
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.data.ArticleEntity
-import com.han.owlmergerprototype.data.ThemeEntity
+import com.han.owlmergerprototype.common.token
+import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
-import com.han.owlmergerprototype.sharedTest.SharedPrefManager
-import java.text.SimpleDateFormat
+import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import java.util.*
-import kotlin.collections.ArrayList
-import com.han.owlmergerprototype.data.Post
-import com.han.owlmergerprototype.data.TestUser
-import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Callback
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -65,6 +52,11 @@ class CreateArticleActivity : AppCompatActivity() {
     private var selectedCategory: Int = -1
     private var prevSelectedCategory: Int = -1
 
+    // retrofit
+    private var imageId: Int? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
+
     // onStartActivity 분기용
     private var ACTIVITY_STATE = 100
 
@@ -77,6 +69,8 @@ class CreateArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+//        latitude = intent.getDoubleExtra("lat", 0.0)
         binding = ActivityCreateArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.commMainToolbar)
@@ -116,7 +110,6 @@ class CreateArticleActivity : AppCompatActivity() {
         // test selectedCategory
 //        binding.commWriteArticleSetLocationTipTv.setOnClickListener {
 //        }
-
 
         binding.commWriteArticleAddImgBtn.setOnClickListener {
             val intent = Intent()
@@ -181,7 +174,7 @@ class CreateArticleActivity : AppCompatActivity() {
                 }
                 */
                 if (checkValidate()) {
-                    //
+                    createPost()
                 }
 
                 // Activity back stack flush
@@ -198,9 +191,12 @@ class CreateArticleActivity : AppCompatActivity() {
         var flag = false
         with (binding.commWriteArticleContentEt) {
             if (text.toString().isNotEmpty()) {
-
+                flag = true
+            } else {
+                requestFocus()
             }
         }
+//        with (mAdapter.ThemeHolder(binding.themeSelectorRecyclerview).)
         return flag
     }
 
@@ -361,6 +357,70 @@ class CreateArticleActivity : AppCompatActivity() {
     }
 
     private fun createPost() {
-        //
+        //getMapCommunity
+        val createPostService = OwlRetrofitManager.OwlRestService.owlRestService
+
+        val myJson = if (imageId != null && latitude != null) {
+            // full
+            Gson().toJson(CreatePostEntityFull(
+                binding.commWriteArticleContentEt.text.toString(),
+                "FOOD",
+                imageId.toString(),
+                latitude.toString(),
+                longitude.toString()
+            ))
+        } else if (imageId == null && latitude != null) {
+            Gson().toJson(CreatePostEntityLocation(
+                binding.commWriteArticleContentEt.text.toString(),
+                "FOOD",
+                latitude.toString(),
+                longitude.toString()
+            ))
+        } else if (imageId != null && latitude == null) {
+            Gson().toJson(CreatePostEntityLocation(
+                binding.commWriteArticleContentEt.text.toString(),
+                "FOOD",
+                imageId.toString()
+            ))
+        } else {
+            Gson().toJson(CreatePostEntityLocation(
+                binding.commWriteArticleContentEt.text.toString(),
+                "FOOD"
+            ))
+        }
+
+        val result: Call<OkFailResult> = createPostService.createPost(
+            token,
+            myJson
+        )
+
+        // 로그찍기
+        Log.e("[createPstRESULT]",
+            Gson().toJson(CreatePostEntityMinimal(binding.commWriteArticleContentEt.text.toString(),
+            "FOOD")))
+
+
+
+        result.enqueue(object: Callback<OkFailResult> {
+            override fun onResponse(
+                call: Call<OkFailResult>,
+                response: retrofit2.Response<OkFailResult>
+            ) {
+                Log.e("[CreatePostCALL]", call.toString())
+                if (response.isSuccessful) {
+                    val okFail = response.body()
+                    okFail?.let {
+                        Toast.makeText(this@CreateArticleActivity, okFail.ok/* + okFail.error*/, Toast.LENGTH_SHORT).show()
+                        Log.e("[CreatePostSuccess]", "YEY")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
+                Toast.makeText(this@CreateArticleActivity, t.toString(), Toast.LENGTH_SHORT).show()
+                Log.e("[CreatePostFail]", "$t")
+            }
+        })
     }
+
 }
