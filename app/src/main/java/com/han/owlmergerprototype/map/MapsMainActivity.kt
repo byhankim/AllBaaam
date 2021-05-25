@@ -163,7 +163,6 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val intent = Intent(this, ArticleActivity::class.java).apply {
                 val selectedPost = Gson().toJson(mapCmntObject.post)
-
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost = ${selectedPost}")
                 putExtra("selectedPost", selectedPost)
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost2222 = ${selectedPost}")
