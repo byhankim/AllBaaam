@@ -109,10 +109,6 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     private val onBottomNavigationSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{
 
-
-       
-
-
         when(it.itemId){
             R.id.alarm_btn -> {
                 Log.d(TAG, "BottomActivity - 알람 클릭")
@@ -126,9 +122,6 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,noLoginFragment)
                         .addToBackStack(null)
                         .commit()
-
-
-
             }
 
             R.id.mypage_btn -> {
@@ -141,9 +134,6 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,noLoginFragment)
                         .addToBackStack(null)
                         .commit()
-
-
-
             }
         }
         true

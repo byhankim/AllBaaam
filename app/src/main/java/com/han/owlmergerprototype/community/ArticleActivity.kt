@@ -29,7 +29,11 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
+<<<<<<< HEAD
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
+=======
+import com.han.owlmergerprototype.map.MapsMainActivity
+>>>>>>> origin/jin-map-cmnt
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,6 +74,10 @@ class ArticleActivity : AppCompatActivity(){
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
         commentsList = mutableListOf()
 
+
+        //== map cmnt object ==//
+//        val mapCmntObject = Gson().fromJson(intent.getStringExtra("mapCmntObject"), MapsMainActivity::class.java)
+//        Log.d("로그", "ArticleActivity - onCreate() called / mapCmntObject = ${mapCmntObject}")
 
         // post id
 //        dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
@@ -113,6 +121,9 @@ class ArticleActivity : AppCompatActivity(){
 
         binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
 //        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+        // time gap in text
+//        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
+//        binding.articleContentTv.text = myPost.contents
 
 
         // RV
