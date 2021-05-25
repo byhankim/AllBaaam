@@ -7,8 +7,11 @@ data class Post(
         var createdAt: String = "",
         var updatedAt: String = "",
         var contents: String = "",
-        var category: Int = -1,
+        var category: Int=-1,
         var images:ArrayList<Image>?=null,
         var cmntID: Int = -1,
-        var userID: Int = -1
+        var user: User,
+        var comments:ArrayList<Comment>,
+        var like:ArrayList<Like>,
+        var bookmark:ArrayList<Bookmark>
 )

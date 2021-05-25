@@ -7,7 +7,6 @@
     android:id="@+id/comm_main_article_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
     app:cardCornerRadius="4dp"
     android:backgroundTint="@color/gray8"
     >
@@ -85,18 +84,25 @@
                 android:orientation="vertical"
                 android:paddingStart="8dp"
                 android:gravity="right">
-                <TextView
-                    android:id="@+id/profile_img"
+
+                <ToggleButton
+                    android:id="@+id/article_bookmark_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/outline_bookmark_border_24"
-                    android:backgroundTint="@color/gray1" />
+                    android:background="@drawable/bookmark_selector"
+                     />
                 <TextView
                     android:id="@+id/comm_post_date_created_tv"
                     android:layout_width="wrap_content"
+                    android:gravity="right"
+                    android:maxWidth="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/profile_img"
+                    android:layout_below="@id/article_bookmark_btn"
                     android:layout_marginTop="8dp"
                     android:layout_alignParentEnd="true"
                     android:text="3분전"
@@ -121,12 +127,16 @@
             android:orientation="horizontal"
             android:layout_marginTop="24dp"
             android:layout_below="@+id/contents_and_nickname_layout">
-            <TextView
+
+            <ToggleButton
                 android:id="@+id/article_favorite_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/outline_favorite_border_24"
-                android:backgroundTint="@color/gray1"/>
+                android:background="@drawable/favorite_selector"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:textOff=""
+                android:textOn=""></ToggleButton>
             <TextView
                 android:id="@+id/article_favorite_num_btn"
                 android:layout_width="wrap_content"

@@ -129,7 +129,7 @@ class NoLoginMypageFragment : Fragment() {
     fun setDialog(){
         val dialog = Dialog(context!!)
         dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-        dialog.setContentView(R.layout.activity_login)
+        dialog.setContentView(R.layout.dialog_login)
         val cancelBTN:TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
         cancelBTN.setOnClickListener(View.OnClickListener {
             dialog.dismiss()

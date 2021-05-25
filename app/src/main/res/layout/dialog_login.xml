@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="250dp"
+    android:background="@color/gray8"
+    android:padding="15dp"
+    android:layout_centerInParent="true">
+
+    <TextView
+        android:id="@+id/login_dialog_cancel_btn"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/ic_deletex"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:layout_below="@+id/login_dialog_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:text="간편한 소셜 로그인으로\n더 많은 콘텐츠를 만나볼 수 있어요!"/>
+    <Button
+        android:id="@+id/kakao_login_btn"
+        android:layout_width="237dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/naver_login_btn"
+        android:text="카카오톡 로그인"/>
+    <Button
+        android:id="@+id/naver_login_btn"
+        android:layout_width="237dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+
+        android:text="네이버 로그인"/>
+
+</RelativeLayout>
+

@@ -20,6 +20,7 @@
             android:textSize="12sp"></TextView>
 
         <TextView
+            android:id="@+id/alarm_delete_btn"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:background="@drawable/ic_deletex"
@@ -36,7 +37,7 @@
         android:layout_centerVertical="true">
 
         <TextView
-            android:id="@+id/which_alarm_textView"
+            android:id="@+id/alarm_category_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/brand1"
@@ -46,7 +47,7 @@
             android:textSize="14sp"
             android:layout_below="@+id/alarm_time_textView"></TextView>
         <TextView
-            android:id="@+id/which_title_textView"
+            android:id="@+id/alarm_title_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

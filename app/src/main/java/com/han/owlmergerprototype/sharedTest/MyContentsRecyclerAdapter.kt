@@ -1,21 +1,17 @@
 package com.han.owlmergerprototype.sharedTest
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.han.owlmergerprototype.MyViewHolder
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
-import com.han.owlmergerprototype.data.ArticleEntity
 import com.han.owlmergerprototype.data.Post
-import com.han.owlmergerprototype.mypage.MyContentFragment
-import com.han.owlmergerprototype.rest.CommunityPost
+import com.han.owlmergerprototype.rest.PostForMy
 
-class MyContentsRecyclerAdapter(val context: Context, val articleList: ArrayList<CommunityPost>): RecyclerView.Adapter<MyContentsViewHolder>() {
+class MyContentsRecyclerAdapter(val context: Context, val articleList: ArrayList<PostForMy>): RecyclerView.Adapter<MyContentsViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyContentsViewHolder {
@@ -34,7 +30,46 @@ class MyContentsRecyclerAdapter(val context: Context, val articleList: ArrayList
             context.startActivity(intent)
         }
         with(holder){
-            categoryTV.text = article.category.toString()
+            lateinit var drawable : GradientDrawable
+            when(article.category){
+                "TIP"-> {
+                    categoryTV.text = context.resources.getText(R.string.comm_honey_tip)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_5))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_5)).toString()
+                }
+                "STOCK"-> {
+                    categoryTV.text = context.resources.getText(R.string.comm_stocks_overseas)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_4))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_4)).toString()
+                }
+                "STUDY"->{
+                    categoryTV.text = context.resources.getText(R.string.comm_study_hard)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_6))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_6)).toString()
+                }
+                "SPORTS"-> {
+                    categoryTV.text = context.resources.getText(R.string.comm_sports_overseas)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_3))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_3)).toString()
+                }
+                "FOOD"-> {
+                    categoryTV.text = context.resources.getText(R.string.comm_food)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_1))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_1)).toString()
+                }
+                "GAME"-> {
+                    categoryTV.text = context.resources.getText(R.string.comm_games)
+                    categoryTV.setTextColor(context.resources.getColor(R.color.style1_7))
+                    drawable = categoryColor.background as GradientDrawable
+                    drawable.setStroke(2, context.resources.getColor(R.color.style1_7)).toString()
+                }
+                else -> "없엉"
+            }
             dateTV.text = article.createdAt
             contentTV.text = article.contents
         }

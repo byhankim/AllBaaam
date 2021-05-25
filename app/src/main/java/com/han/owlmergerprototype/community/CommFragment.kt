@@ -21,7 +21,6 @@ import android.widget.*
 import androidx.core.view.isVisible
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
-import androidx.databinding.adapters.AbsListViewBindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,12 +30,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.common.ADDRESS
+import com.han.owlmergerprototype.common.RetrofitRESTService
 import com.han.owlmergerprototype.data.CommentEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.ThemeEntity
 import com.han.owlmergerprototype.rest.Ok
-import com.han.owlmergerprototype.rest.RestService
 import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.map.MapsMainActivity
@@ -49,7 +48,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.FormUrlEncoded
 
 class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해줌
     private lateinit var floatBTN: FloatingActionButton
@@ -332,7 +330,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     .baseUrl(ADDRESS)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                val loginService = retrofit.create(RestService::class.java)
+                val loginService = retrofit.create(RetrofitRESTService::class.java)
 
 
 
@@ -546,6 +544,8 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
             val likeCount: TextView = itemView.findViewById(R.id.article_favorite_num_btn)
             val commentCount: TextView = itemView.findViewById(R.id.article_comment_num_btn)
+            val isLike:ToggleButton = itemView.findViewById(R.id.article_favorite_btn)
+            val isBookmark:ToggleButton = itemView.findViewById(R.id.article_bookmark_btn)
 
             // listener DX
             fun bindListener(item: CommentEntity) {
@@ -623,6 +623,50 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
                 likeCount.text = postEntity.like.size.toString()
                 commentCount.text = postEntity.comments.size.toString()
+
+
+                ////////////is-bookmark is-like
+
+                val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.getIsBookmark(TestUser.token,postEntity.id)
+
+                Log.e("[retrofitCall]", call.request().toString())
+                call.enqueue(object: Callback<IsBookmark> {
+                    override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
+
+                            val isbm = response.body()
+                            if (response.isSuccessful) {
+                                isBookmark.isChecked = isbm!!.isBookmark
+                            } else{
+                            Log.d(TAG, "onResponse:")
+                        }
+
+                    }
+                    override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
+                        Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                    }
+                })
+
+                val call2: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.getIsLike(TestUser.token,postEntity.id)
+                Log.e("[retrofitCall]", call.request().toString())
+                call2.enqueue(object: Callback<IsLike> {
+                    override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
+                        val islk = response.body()
+
+                            if (response.isSuccessful) {
+                                isLike.isChecked = islk!!.isLike
+                            } else{
+                            Log.d(TAG, "onResponse: ")
+                        }
+
+                    }
+                    override fun onFailure(call: Call<IsLike>, t: Throwable) {
+                        Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                    }
+                })
+
+
+
+
             }
 
             holder.itemView.setOnClickListener {
@@ -633,6 +677,47 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     putExtra("selectedPost", Gson().toJson(postEntity))
                 }
                 owner.startActivity(intent)
+            }
+            holder.isLike.setOnClickListener {
+                val call: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.postLike(TestUser.token,postEntity.id)
+
+                Log.e("[retrofitCall]", call.request().toString())
+                call.enqueue(object: Callback<IsLike> {
+                    override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
+
+                            val isbm = response.body()
+                            if (response.isSuccessful) {
+                                Log.e(TAG,"[retrofitResult]: ${isbm?.isLike}")
+
+                            } else{
+                            Log.d(TAG, "onResponse:")
+                        }
+
+                    }
+                    override fun onFailure(call: Call<IsLike>, t: Throwable) {
+                        Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                    }
+                })
+            }
+            holder.isBookmark.setOnClickListener {
+                val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.postBookmark(TestUser.token,postEntity.id)
+
+                Log.e("[retrofitCall]", call.request().toString())
+                call.enqueue(object: Callback<IsBookmark> {
+                    override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
+                            val isbm = response.body()
+                            if (response.isSuccessful) {
+                                Log.e(TAG,"[retrofitResult]: ${isbm?.isBookmark}")
+
+                            } else{
+                            Log.d(TAG, "onResponse:")
+                        }
+
+                    }
+                    override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
+                        Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                    }
+                })
             }
         }
 
@@ -707,4 +792,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             }
         })
     }
+
+
+
+
+
 }
