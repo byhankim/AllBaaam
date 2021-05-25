@@ -60,33 +60,23 @@ class BottomNavActivity : AppCompatActivity() {
                 fragmentManager.popBackStack()
             }
 
-                // MAP
-                if (isChecked) {
-                    Log.d(TAG, "BottomNavActivity - onCreate() MAP isChecked called")
+            // MAP
+            if (isChecked) {
+                Log.d(TAG, "BottomNavActivity - onCreate() MAP isChecked called")
 
-                    val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
-                    startActivity(intent)
+                val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
+                startActivity(intent)
 
 //                    mapFragment = MapFragment.newInstance()
 //                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
 
-
-
-                } else {
-                   Log.d(TAG, "BottomNavActivity - onCreate() MAP !isChecked! called")
-                    commFragment = CommFragment.newInstance(this)
-                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
-
-                }
-            
-
+            } else {
+               Log.d(TAG, "BottomNavActivity - onCreate() MAP !isChecked! called")
+                commFragment = CommFragment.newInstance(this)
+                supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
+            }
         }
-
-
-
-
     }
-
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private val onBottomNavigationSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{

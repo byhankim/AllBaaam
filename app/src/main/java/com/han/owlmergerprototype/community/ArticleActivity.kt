@@ -27,6 +27,7 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
+import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import kotlin.properties.Delegates
 
@@ -60,6 +61,10 @@ class ArticleActivity : AppCompatActivity() {
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
 
 
+        //== map cmnt object ==//
+//        val mapCmntObject = Gson().fromJson(intent.getStringExtra("mapCmntObject"), MapsMainActivity::class.java)
+//        Log.d("로그", "ArticleActivity - onCreate() called / mapCmntObject = ${mapCmntObject}")
+
         // post id
         dummyPostId = intent.getIntExtra(getString(R.string.dummy_post_id), -1)
 //        Log.e("[ArticleBody]", "dummy post id: $dummyPostId")
@@ -85,8 +90,8 @@ class ArticleActivity : AppCompatActivity() {
         }
 
         // time gap in text
-        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
-        binding.articleContentTv.text = myPost.contents
+//        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
+//        binding.articleContentTv.text = myPost.contents
 
 //        binding.articleContentTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.crazy_human, 0, 0)
 

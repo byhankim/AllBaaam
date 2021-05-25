@@ -52,10 +52,10 @@ class SplashActivity : AppCompatActivity() {
         val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
         val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
 /**/
-//        with (myShared.edit()) {
-//            putString(sharedKey, Gson().toJson(dummyDataSet))
-//            apply()
-//        }
+        with (myShared.edit()) {
+            putString(sharedKey, Gson().toJson(dummyDataSet))
+            apply()
+        }
 /**/
 
 
@@ -86,10 +86,10 @@ class SplashActivity : AppCompatActivity() {
         commentsDummyDataSet.add(Comment(21, "20210518111111", null, "ㅇㅋ", 7, false, 11, 1))
 
 /**/
-//        with (myShared.edit()) {
-//            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
-//            apply()
-//        }
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_comments_key), Gson().toJson(commentsDummyDataSet))
+            apply()
+        }
 
 
 
@@ -109,10 +109,10 @@ class SplashActivity : AppCompatActivity() {
         likeDatasets.add(Like(8, "20210517101010", null, 4, 3, -1))
 
 
-//        with (myShared.edit()) {
-//            putString(getString(R.string.dummy_likes_key), Gson().toJson(likeDatasets))
-//            apply()
-//        }
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_likes_key), Gson().toJson(likeDatasets))
+            apply()
+        }
 
 
 
@@ -133,10 +133,10 @@ class SplashActivity : AppCompatActivity() {
         bookmarkDatasets.add(Bookmark(9, "20210517152533", null, true, 2, 3))
         bookmarkDatasets.add(Bookmark(10, "20210517152633", null, true, 2, 5))
 
-//        with (myShared.edit()) {
-//            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
-//            commit()
-//        }
+        with (myShared.edit()) {
+            putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(bookmarkDatasets))
+            commit()
+        }
 
         // ----------------------------------------------------------------
         //      when fetching from shared preferences

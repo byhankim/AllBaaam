@@ -23,6 +23,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityManagerCompat
@@ -44,6 +45,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
+import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import okhttp3.Response
 import java.io.File
@@ -67,7 +69,7 @@ class CreateArticleActivity : AppCompatActivity() {
     private lateinit var currentSelectedUri: Uri
     private lateinit var myImageDir: File
     private var fileLocation = ""
-
+    val TAG: String = "로그"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,47 @@ class CreateArticleActivity : AppCompatActivity() {
         binding = ActivityCreateArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.commMainToolbar)
+
+        /*if 지도에서 넘어온 경우*/
+        // latlng toast
+        var latitude = intent.getStringExtra("latitude") ?: ""
+        var longitude = intent.getStringExtra("longitude") ?: ""
+        Log.d(TAG, "CreateArticleActivity - onCreate() latitude: $latitude longitude: $longitude called")
+
+        val latlng_toast = Toast.makeText(this, "위도 : $latitude, 경도 : $longitude", Toast.LENGTH_SHORT)
+        latlng_toast.show()
+
+        var latlng_text = findViewById<TextView>(R.id.comm_write_article_set_location_tip_tv)
+        var latlng_img = findViewById<TextView>(R.id.comm_write_article_set_location_btn)
+
+        if ( latitude!=="" || longitude!=="" ) {
+            latlng_text.text = "위도 : $latitude, 경도 : $longitude"
+        } else {
+            latlng_img.setOnClickListener {
+                val intent = Intent(this, MapsMainActivity::class.java)
+                startActivity(intent)
+            }
+            latlng_text.setOnClickListener {
+                val intent = Intent(this, MapsMainActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+        /*else 글쓰기 탭으로 바로 연결된 경우 : 위경도 text는 없음*/
+        /**
+         * 1위치 값 권한설정 - 권한설정 거부시
+         * 2시/구 설정 화면 노출
+         * 위경도 값 없으면 지도로 연결되도록 화면구성
+         */
+
+
+
+        // 동까지만 받아오는 코드 작성필요
+        // db에는 위경도 지금대로 저장
+
+
+
+
 
         // set maxlines
         binding.commWriteArticleContentEt.maxLines = 5
