@@ -1,14 +1,14 @@
 package com.han.owlmergerprototype.dataMapCmnt
 
 data class Post(
-    val bookmark: List<Any>,
+    val bookmark: MutableList<Any>,
     val category: String,
-    val comments: List<Any>,
+    val comments: MutableList<Any>,
     val contents: String,
     val createdAt: String,
     val id: Int,
-    val images: List<Any>,
-    val like: List<Any>,
+    val images: MutableList<Any>,
+    val like: MutableList<Any>,
     val updatedAt: String,
     val user: User,
     val userId: Int

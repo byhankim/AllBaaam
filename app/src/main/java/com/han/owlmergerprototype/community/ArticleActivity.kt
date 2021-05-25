@@ -29,11 +29,8 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ArticleLayoutBinding
-<<<<<<< HEAD
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
-=======
 import com.han.owlmergerprototype.map.MapsMainActivity
->>>>>>> origin/jin-map-cmnt
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import retrofit2.Call
 import retrofit2.Callback

@@ -162,9 +162,10 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 //            intent.putExtra("Map", "${mapCmntObject}")
 
             val intent = Intent(this, ArticleActivity::class.java).apply {
-                val selectedPost = Gson().toJson(mapCmntObject)
+                val selectedPost = Gson().toJson(mapCmntObject.post)
+
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost = ${selectedPost}")
-                putExtra("mapCmntObject", selectedPost)
+                putExtra("selectedPost", selectedPost)
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost2222 = ${selectedPost}")
             }
             this.startActivity(intent)
