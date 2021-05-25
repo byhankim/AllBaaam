@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/my_ripple_box"
+    android:padding="15dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:id="@+id/my_ripple_row">
+
+    <TextView
+        android:id="@+id/comment_context_tv"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/ui3"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="우리팀 지금 프로토타입 만들고 있어요 너무 배가 고파서 어떻게 햐용"></TextView>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/category_in_comment_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/category_style_in_article">
+        <TextView
+            android:id="@+id/category_in_comment_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/style1_5"
+            android:textSize="10sp"
+            android:text="#해외 축구"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:padding="3dp"
+            android:gravity="center" />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/content_title_tv"
+        android:layout_marginStart="8dp"
+        android:layout_width="90dp"
+        android:layout_height="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/category_in_comment_layout"
+        android:textColor="@color/ui3"
+        android:textSize="12sp"
+        android:text="한울님 생일 축하"></TextView>
+    <TextView
+        android:layout_alignParentEnd="true"
+        android:id="@+id/comment_date_tv"
+        android:layout_width="54dp"
+        android:layout_height="18dp"
+        android:layout_alignRight="@+id/comment_context_tv"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/ui3"
+        android:textSize="12sp"
+        android:text="20/04/28"></TextView>
+
+
+
+
+
+
+</RelativeLayout>

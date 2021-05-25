@@ -1,6 +1,6 @@
 package com.han.owlmergerprototype.data
 
-import com.han.owlmergerprototype.rest.PostForComm
+import com.han.owlmergerprototype.rest.PostForMy
 
 data class Comment(
         var id: Int,
@@ -11,5 +11,5 @@ data class Comment(
         var isParent: Boolean,
         var recomment: Int?,
         var userId: Int?,
-        var post:PostForComm?=null
+        var post:PostForMy?=null
 )

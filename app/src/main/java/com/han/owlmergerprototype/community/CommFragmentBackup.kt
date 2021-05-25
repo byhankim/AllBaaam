@@ -377,7 +377,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
                     }
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
-                userName.text = when (postEntity.userID) {
+                userName.text = when (postEntity.user.id) {
                     1 -> "떡볶이가 좋은 빙봉"
                     2 -> "배부른 하이에나"
                     3 -> "잠들지 못하는 소크라테스"

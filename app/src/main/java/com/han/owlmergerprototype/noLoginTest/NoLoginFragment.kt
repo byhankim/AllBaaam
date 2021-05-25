@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.BottomNavActivity
-import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.TestUser
 
@@ -52,7 +51,7 @@ class NoLoginFragment : Fragment() {
         loginBTN.setOnClickListener {
             val dialog = Dialog(context!!)
             dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-            dialog.setContentView(R.layout.activity_login)
+            dialog.setContentView(R.layout.dialog_login)
             val cancelBTN: TextView = dialog.findViewById<TextView>(R.id.login_dialog_cancel_btn)
             cancelBTN.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
@@ -60,8 +59,7 @@ class NoLoginFragment : Fragment() {
             val kakaoLoginBTN: TextView = dialog.findViewById<TextView>(R.id.kakao_login_btn)
             kakaoLoginBTN.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
-                TestUser.userName ="떡볶이가 좋은 빙봉"
-                TestUser.userID = 1
+
                 val inte = Intent(context, BottomNavActivity::class.java)
                 startActivity(inte)
                 activity!!.finish()

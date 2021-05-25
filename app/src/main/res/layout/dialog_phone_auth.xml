@@ -118,6 +118,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
                     android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
             </LinearLayout>
             <LinearLayout
@@ -139,7 +141,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:backgroundTint="@color/brand1"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
                     android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
             </LinearLayout>
             <LinearLayout
@@ -159,6 +162,8 @@
                     android:id="@+id/agree_for_gps_info_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
                     android:layout_gravity="center_vertical"></androidx.appcompat.widget.AppCompatCheckBox>
             </LinearLayout>
             <LinearLayout
@@ -174,11 +179,13 @@
                     android:gravity="center_vertical"
                     android:text="@string/agree_for_marketing"
                     android:layout_weight="1"></TextView>
-                <androidx.appcompat.widget.AppCompatCheckBox
+                <CheckBox
                     android:id="@+id/agree_for_marketing_cb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"></androidx.appcompat.widget.AppCompatCheckBox>
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
+                    android:layout_gravity="center_vertical"></CheckBox>
             </LinearLayout>
 
 

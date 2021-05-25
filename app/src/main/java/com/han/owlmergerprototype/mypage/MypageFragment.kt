@@ -14,7 +14,6 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.han.owlmergerprototype.Mypg004Activity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
@@ -96,7 +95,7 @@ class MypageFragment : Fragment() {
         }
         mysavedBTN=view.findViewById(R.id.my_saved_btn)
         mysavedBTN.setOnClickListener {
-            inte = Intent(context, Mypg004Activity::class.java)
+            inte = Intent(context, MyBookmarkActivity::class.java)
             startActivity(inte)
         }
         return view

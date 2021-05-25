@@ -44,7 +44,7 @@ object SharedPrefManager {
             storedContentsList = Gson().fromJson(storedContentsListString, Array<Post>::class.java).toMutableList() as ArrayList<Post>
 
             for(i in storedContentsList){
-                if(i.userID == TestUser.userID) userList.add(i)
+                if(i.user.id == TestUser.userID) userList.add(i)
             }
 
         }

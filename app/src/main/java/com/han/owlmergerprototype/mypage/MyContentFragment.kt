@@ -3,6 +3,7 @@ package com.han.owlmergerprototype.mypage
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.location.Address
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,8 @@ import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.AlarmFragment
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.ADDRESS
+import com.han.owlmergerprototype.common.RetrofitRESTService
 import com.han.owlmergerprototype.data.ArticleEntity
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
@@ -60,12 +63,12 @@ class MyContentFragment:Fragment() {
 
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://d4f88a051f32.ngrok.io/")
+            .baseUrl(ADDRESS)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
 
-        val loginService = retrofit.create(RestService::class.java)
+        val loginService = retrofit.create(RetrofitRESTService::class.java)
         Log.e(TAG, "onCreateView0: 이거먼저")
         loginService.getMyPost(TestUser.token).enqueue(object : Callback<MyPosts> {
             override fun onFailure(call: Call<MyPosts>, t: Throwable) {
@@ -80,7 +83,7 @@ class MyContentFragment:Fragment() {
                 if(response.isSuccessful){
 
                     activity?.runOnUiThread {
-                        MyContentsRecyblerViewSetting(myPosts!!.posts as ArrayList<CommunityPost>)
+                        MyContentsRecyblerViewSetting(myPosts!!.posts)
                     }
 
 
@@ -94,7 +97,7 @@ class MyContentFragment:Fragment() {
     }
 
 
-    private fun MyContentsRecyblerViewSetting(articleList: ArrayList<CommunityPost>){
+    private fun MyContentsRecyblerViewSetting(articleList: ArrayList<PostForMy>){
         myContentRecyclerAdapter = MyContentsRecyclerAdapter(context!!,articleList)
         val myLinearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         myLinearLayoutManager.stackFromEnd = true
