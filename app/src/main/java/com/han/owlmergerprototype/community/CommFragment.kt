@@ -542,7 +542,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
 
-            val likeCount: TextView = itemView.findViewById(R.id.article_favorite_num_btn)
+            val likeCount:TextView = itemView.findViewById(R.id.article_favorite_num_btn)
             val commentCount: TextView = itemView.findViewById(R.id.article_comment_num_btn)
             val isLike:ToggleButton = itemView.findViewById(R.id.article_favorite_btn)
             val isBookmark:ToggleButton = itemView.findViewById(R.id.article_bookmark_btn)
@@ -550,6 +550,9 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             // listener DX
             fun bindListener(item: CommentEntity) {
                 itemView.setOnClickListener { /*itemListener(item)*/ }
+            }
+            fun setText(txt:String){
+                this.isLike.text = txt
             }
         }
 
@@ -569,6 +572,41 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             commPostList = newPostList
 //            Log.e("[Adapter]", "dataset to be changed!")
 //            notifyDataSetChanged()
+        }
+        fun changeLikeTxt(holder:PostHolder,postId:Int){
+            val call: Call<CountLike> = OwlRetrofitManager.OwlRestService.owlRestService.getLikeCount(postId)
+            Log.e("[retrofitCall]", call.request().toString())
+            call.enqueue(object: Callback<CountLike> {
+                override fun onResponse(call: Call<CountLike>, response: Response<CountLike>) {
+                    val count = response.body()!!
+                    if (response.isSuccessful) {
+                        holder.likeCount.text = count.countLike.toString()
+                    }
+
+                }
+                override fun onFailure(call: Call<CountLike>, t: Throwable) {
+                    Log.e("[getCommentsFailure]", "F A I L ${t.toString()}")
+                }
+            })
+
+        }
+        fun changeCommentTxt(postId:Int){
+            val call: Call<CountComment> = OwlRetrofitManager.OwlRestService.owlRestService.getCommentCount(postId)
+            Log.e("[retrofitCall]", call.request().toString())
+            call.enqueue(object: Callback<CountComment> {
+                override fun onResponse(call: Call<CountComment>, response: Response<CountComment>) {
+                    val count = response.body()!!
+                    if (response.isSuccessful) {
+
+//                        binding.articleCommentCountTv.text = count.countComments.toString()
+
+                    }
+                }
+                override fun onFailure(call: Call<CountComment>, t: Throwable) {
+                    Log.e("[getCommentsFailure]", "F A I L ${t.toString()}")
+                }
+            })
+
         }
 
         //데이터 셋팅
@@ -654,6 +692,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
                             if (response.isSuccessful) {
                                 isLike.isChecked = islk!!.isLike
+
                             } else{
                             Log.d(TAG, "onResponse: ")
                         }
@@ -687,6 +726,7 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
 
                             val isbm = response.body()
                             if (response.isSuccessful) {
+                                changeLikeTxt(holder,postEntity.id)
                                 Log.e(TAG,"[retrofitResult]: ${isbm?.isLike}")
 
                             } else{
@@ -719,6 +759,8 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     }
                 })
             }
+
+
         }
 
         //리사이클러뷰의 항목갯수 반환
@@ -775,6 +817,12 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
                     // empty거나 null 이거나 이전에 받아온 모델하고 last post id가 같으면 처리 안함
                     if (postModel.posts.isNullOrEmpty() || mCursorId == postModel.posts.last().id)
                     return
+
+
+
+
+
+
                     postList.addAll(postModel.posts)
                     mCursorId = postModel.posts.last().id
                     Log.e("[new_cursorId]", mCursorId.toString())
@@ -792,6 +840,8 @@ class CommFragment: Fragment() {//인자 넣으면 default생성자 제공안해
             }
         })
     }
+
+
 
 
 

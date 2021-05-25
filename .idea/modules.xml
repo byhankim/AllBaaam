@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/OwlMergerPrototype.iml" filepath="$PROJECT_DIR$/.idea/OwlMergerPrototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OwlMergerPrototype.iml" filepath="$PROJECT_DIR$/.idea/modules/OwlMergerPrototype.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OwlMergerPrototype.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OwlMergerPrototype.app.iml" />
     </modules>
   </component>

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -57,6 +58,7 @@ class ArticleActivity : AppCompatActivity(){
 
     // bookmarks
     private lateinit var dummyBookmarksDataSet: MutableList<BookmarkEntity>
+    private lateinit var drawable : GradientDrawable
 
 
 //    @RequiresApi(Build.VERSION_CODES.O)
@@ -100,23 +102,140 @@ class ArticleActivity : AppCompatActivity(){
         getComments(selectedPost.id)
 
 
+
+
     // POST BODY
-        binding.tvBadge.text = when (selectedPost.category) {
-            "TIP" -> "#꿀팁"
-            "STOCK" -> "#해외주식"
-            "STUDY" -> "#빡공"
-            "SPORTS" -> "#해외 스포츠"
-            "FOOD" -> "#야식"
-            "GAME" -> "#게임"
-            else -> "#고장났어~"
+        when (selectedPost.category){
+            "TIP" ->{
+            binding.tvBadge.text  = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_5, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_5, null))
         }
+        "STOCK" -> {
+            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_4, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_4, null))
+        }
+        "STUDY" -> {
+            binding.tvBadge.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_6, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_6, null))
+        }
+        "SPORTS" -> {
+            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_3, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_3, null))
+        }
+        "FOOD" -> {
+            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_2, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_2, null))
+        }
+        "GAME" -> {
+            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_games))
+            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_7, null))
+            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+            drawable.setStroke(2,this.resources.getColor(R.color.style1_7, null))
+        }
+        else -> binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
+    }
 
         binding.articleTimestampTv.text = selectedPost.createdAt
         binding.articleUname.text = selectedPost.user.userName
-        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+       // binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+        binding.articleCommentCountTv.text = changeCommentTxt(selectedPost.id).toString()
         binding.articleContentTv.text = selectedPost.contents
+       // binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
+       binding.articleFavoriteCountTv.text = changeLikeTxt(selectedPost.id).toString()
+        val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.getIsBookmark(TestUser.token,selectedPost.id)
 
-        binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<IsBookmark> {
+            override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
+
+                val isbm = response.body()
+                if (response.isSuccessful) {
+                    binding.articleBookmarkBtn.isChecked = isbm!!.isBookmark
+                } else{
+                    Log.d(CommFragment.TAG, "onResponse:")
+                }
+
+            }
+            override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+
+        val call2: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.getIsLike(TestUser.token,selectedPost.id)
+        Log.e("[retrofitCall]", call.request().toString())
+        call2.enqueue(object: Callback<IsLike> {
+            override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
+                val islk = response.body()
+
+                if (response.isSuccessful) {
+                    binding.articleFavoriteBtn.isChecked = islk!!.isLike
+                } else{
+                    Log.d(CommFragment.TAG, "onResponse: ")
+                }
+
+            }
+            override fun onFailure(call: Call<IsLike>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+
+    binding.articleBookmarkBtn.setOnClickListener {
+        val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.postBookmark(TestUser.token,selectedPost.id)
+
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<IsBookmark> {
+            override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
+                val isbm = response.body()
+                if (response.isSuccessful) {
+                    Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isBookmark}")
+
+                } else{
+                    Log.d(CommFragment.TAG, "onResponse:")
+                }
+
+            }
+            override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+
+    }
+
+
+
+    // click listener
+    binding.articleFavoriteBtn.setOnClickListener {
+        val call: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.postLike(TestUser.token,selectedPost.id)
+
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<IsLike> {
+            override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
+
+                val isbm = response.body()
+                if (response.isSuccessful) {
+                    changeLikeTxt(selectedPost.id)
+                    Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isLike}")
+
+                } else{
+                    Log.d(CommFragment.TAG, "onResponse:")
+                }
+
+            }
+            override fun onFailure(call: Call<IsLike>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+    }
 //        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
         // time gap in text
 //        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
@@ -168,159 +287,7 @@ class ArticleActivity : AppCompatActivity(){
         }
 
 
-        // fav btn
-        /*with (binding.articleBookmarkBtn) {
-            val dummyBookmarkType = object: TypeToken<MutableList<Bookmark>>() {}.type
-            dummyBookmarksDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_bookmarks_key), ""), dummyBookmarkType)
 
-            // default
-            val currentBookmark = dummyBookmarksDataSet.filter {
-                (it.postID == dummyPostId) && (it.userID == TestUser.userID)
-            }
-            Log.e("[crntBkmrk(single)]", "currentBookmark is empty: ${currentBookmark.isEmpty()}")
-            binding.articleBookmarkBtn.background = if (currentBookmark.isNotEmpty()) {
-                isBookMarked = true
-                getDrawable(R.drawable.outline_bookmark_24)
-            } else {
-                isBookMarked = false
-                getDrawable(R.drawable.outline_bookmark_border_24)
-            }
-
-            // click listener
-            setOnClickListener {
-                isBookMarked = !isBookMarked
-                var index = -1
-
-                // 기존 데이터셋에 중복되어있는지 여부 확인
-                val isBookmarkDuplicate = dummyBookmarksDataSet.filter {
-                    (it.postID == dummyPostId) && (it.userID == TestUser.userID)
-                }
-
-                // 북마크 데이터 중복이 아니면 dataset 리스트에 더해주고
-                // index도 바꿔줌
-                if (isBookMarked) {
-                    if (isBookmarkDuplicate.isEmpty()) {
-                        dummyBookmarksDataSet.add(
-                            Bookmark(
-                                dummyBookmarksDataSet.size + 1,
-                                DateTimeFormatManager.getCurrentDatetime(),
-                                null,
-                                false,
-                                TestUser.userID,
-                                dummyPostId
-                            )
-                        )
-                        index = dummyBookmarksDataSet.size // 이미 하나 늘어났으므로
-                    }
-                } else {
-                    // 리스트에서 제거
-                    dummyBookmarksDataSet = dummyBookmarksDataSet.filterNot {
-                        (it.postID == dummyPostId) && (it.userID == TestUser.userID)
-                    } as MutableList<Bookmark>
-                }
-
-                // 배경 바꾸기
-                background = if (isBookMarked) {
-                    getDrawable(R.drawable.outline_bookmark_24)
-                } else {
-                    getDrawable(R.drawable.outline_bookmark_border_24)
-                }
-                Log.e("[Article_BookmarakBTN]", "length: " + dummyBookmarksDataSet.size.toString())
-
-                // sharedpref에 저장
-                with (myShared.edit()) {
-                    putString(getString(R.string.dummy_bookmarks_key), Gson().toJson(dummyBookmarksDataSet))
-                    commit()
-                }
-
-            }
-        }*/
-
-        // like btn
-        /*with (binding.articleFavoriteBtn) {
-            val dummyLikesType = object: TypeToken<MutableList<Like>>() {}.type
-            dummyLikesDataSet = Gson().fromJson(myShared.getString(getString(R.string.dummy_likes_key),""), dummyLikesType)
-
-            // default
-            val currentLike = dummyLikesDataSet.filter {
-                (it.postID == dummyPostId)
-            }
-
-            // current like count
-            binding.articleFavoriteCountTv.text = if (currentLike.isNotEmpty()) {
-                currentLike.size.toString()
-            } else {
-                "0"
-            }
-            Log.e("[currentLikes]", currentLike.size.toString())
-
-            // did the user press like?
-            val userLike = currentLike.filter {
-                it.userID == TestUser.userID
-            }
-            isLikePressed = userLike.isNotEmpty()
-            Log.e("[userLikesToThisPost]", "${userLike.isNotEmpty()}")
-
-            // default Liked state
-            background = if (isLikePressed) {
-                getDrawable(R.drawable.outline_favorite_24)
-            } else {
-                getDrawable(R.drawable.outline_favorite_border_24)
-            }
-
-            // click listener
-            setOnClickListener {
-                isLikePressed = !isLikePressed
-
-                val isLikeDuplicate = dummyLikesDataSet.filter {
-                    (it.postID == dummyPostId) && (it.userID == TestUser.userID)
-                }
-                if (isLikeDuplicate.isNotEmpty())
-                    Log.e("[like_duplicate:]", isLikeDuplicate.toString())
-
-                // 중복 없다면 더하기
-                if (isLikePressed) {
-                    if (isLikeDuplicate.isEmpty()) {
-                        dummyLikesDataSet.add(Like(
-                            dummyLikesDataSet.size+1,
-                            DateTimeFormatManager.getCurrentDatetime(),
-                            null,
-                            TestUser.userID,
-                            dummyPostId
-                        ))
-                    }
-                } else {
-                    // 좋아요 취소
-                    dummyLikesDataSet = dummyLikesDataSet.filterNot{
-                        // 이 유저가 / 이 글에서 누른 좋아요만 빼기
-                        ((it.userID == TestUser.userID) && (it.postID == dummyPostId))
-                    } as MutableList<Like>
-                    Log.e("[좋아요취소시기존좋아요수]", dummyLikesDataSet.filter {
-                        (it.postID == dummyPostId)
-                    }.size.toString() + ", 전체 데이터셋크기:${dummyLikesDataSet.size.toString()}")
-                }
-
-                // icon exchange
-                background = if (isLikePressed) {
-                    getDrawable(R.drawable.outline_favorite_24)
-                } else {
-                    getDrawable(R.drawable.outline_favorite_border_24)
-                }
-
-                // heart count renew
-                binding.articleFavoriteCountTv.text = dummyLikesDataSet.filter {
-                    (it.postID == dummyPostId)
-                }.size.toString()
-
-                Log.e("[Like]", dummyLikesDataSet.filter { (it.postID == dummyPostId) }.size.toString())
-
-                // save to sharedPreferences
-                with (myShared.edit()) {
-                    putString(getString(R.string.dummy_likes_key), Gson().toJson(dummyLikesDataSet))
-                    commit()
-                }
-            }
-        }*/
 
 
         // share btn
@@ -359,6 +326,13 @@ class ArticleActivity : AppCompatActivity(){
                 inputMng.hideSoftInputFromWindow(binding.replyContentEt.windowToken, 0)
             }
         }*/
+
+
+
+    }
+    fun getCategoryNameInArticle(category: String):String{
+        val cateInArt :String = "#$category"
+        return cateInArt
     }
 
     @SuppressLint("ResourceType")
@@ -437,6 +411,8 @@ class ArticleActivity : AppCompatActivity(){
                     val commentModel = response.body() as CommentRestModel
                     if (commentModel.comments.isNullOrEmpty())
                         return
+
+
                     Log.e("[CommentModelSuccess]", commentModel.comments.toString())
                     cmtAdapter.refreshCommentsDataSet(commentModel.comments)
                     Log.e("[CommentModelRefresh]", "힝")
@@ -456,5 +432,44 @@ class ArticleActivity : AppCompatActivity(){
     private fun addComment(postId: Int, contents: String) {
         val result: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.createComment(
             token, "")
+    }
+
+
+    fun changeLikeTxt(postId:Int){
+        val call: Call<CountLike> = OwlRetrofitManager.OwlRestService.owlRestService.getLikeCount(postId)
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<CountLike> {
+            override fun onResponse(call: Call<CountLike>, response: Response<CountLike>) {
+                val count = response.body()!!
+                if (response.isSuccessful) {
+
+                        binding.articleFavoriteCountTv.text = count.countLike.toString()
+                    }
+
+            }
+            override fun onFailure(call: Call<CountLike>, t: Throwable) {
+                Log.e("[getCommentsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+
+    }
+    fun changeCommentTxt(postId:Int){
+        val call: Call<CountComment> = OwlRetrofitManager.OwlRestService.owlRestService.getCommentCount(postId)
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<CountComment> {
+            override fun onResponse(call: Call<CountComment>, response: Response<CountComment>) {
+                val count = response.body()!!
+                if (response.isSuccessful) {
+
+                    binding.articleCommentCountTv.text = count.countComments.toString()
+
+                    return
+                }
+            }
+            override fun onFailure(call: Call<CountComment>, t: Throwable) {
+                Log.e("[getCommentsFailure]", "F A I L ${t.toString()}")
+            }
+        })
+
     }
 }

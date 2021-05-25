@@ -84,22 +84,31 @@
                     android:text="@string/article_content_tv" />
 
 
-                <TextView
+                <ToggleButton
                     android:id="@+id/article_bookmark_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:textOff=""
+                    android:textOn=""
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/outline_bookmark_border_24" />
+                    android:background="@drawable/bookmark_selector"
+                    />
 
 
                 <!-- 하수런(menu ㄴㄴ) -->
-                <TextView
+                <ToggleButton
                     android:id="@+id/article_favorite_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/favorite_selector"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
                     android:layout_below="@id/article_content_tv"
-                    android:layout_marginTop="@dimen/article_content_tv_paddingtop"
-                    android:background="@drawable/outline_favorite_border_24" />
+                    android:layout_marginTop="21dp"
+                    android:textOff=""
+                    android:textOn=""></ToggleButton>
                 <TextView
                     android:id="@+id/article_favorite_count_tv"
                     android:layout_width="wrap_content"

@@ -125,4 +125,14 @@ interface RetrofitRESTService {
         @Header("token")token: String,
         @Field("postId")postId:Int
     ):Call<IsLike>
+
+    @GET("/posts/like/count/{postId}")
+    fun getLikeCount(
+        @Path("postId")postId:Int
+    ): Call<CountLike>
+
+    @GET("/posts/comment/count/{postId}")
+    fun getCommentCount(
+        @Path("postId")postId:Int
+    ):Call<CountComment>
 }
