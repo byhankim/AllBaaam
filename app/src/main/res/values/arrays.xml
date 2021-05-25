@@ -6,5 +6,9 @@
         <item>개인정보 처리 방침</item>
     </string-array>
 
+    <string-array name="comm_spinner">
+        <item>최신순</item>
+        <item>인기순</item>
+    </string-array>
 
 </resources>
