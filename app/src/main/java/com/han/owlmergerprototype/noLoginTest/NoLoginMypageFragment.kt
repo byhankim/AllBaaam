@@ -15,7 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.SettingActivity
+import com.han.owlmergerprototype.setting.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.mypage.boardActivity.PolicyActivity

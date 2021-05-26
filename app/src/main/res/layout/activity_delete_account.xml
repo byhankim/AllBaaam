@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray7">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/delete_account_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/toolbar_elevation_size"
+        android:background="@color/black">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/delete_account"
+            android:layout_gravity="center"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:layout_marginTop="-10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/do_you_want_quit_owl"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/brand3"
+            android:layout_marginBottom="@dimen/notice_title_margin"
+            android:textStyle="bold"
+            android:textSize="18sp"></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/do_you_want_quit_owl_mention"
+            android:textColor="@color/gray4"
+            android:layout_marginBottom="@dimen/notice_margin"
+            ></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quest_quit_reason"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/brand3"
+            android:layout_marginBottom="@dimen/notice_title_margin"
+            android:textStyle="bold"
+            android:textSize="18sp"></TextView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginBottom="@dimen/notice_margin">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_all_policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete_account_check_list1"
+                    android:layout_weight="1"></TextView>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/agree_all_policy_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
+                    android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_for_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete_account_check_list2"
+                    android:layout_weight="1"></TextView>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/agree_for_service_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
+                    android:checked="false"></androidx.appcompat.widget.AppCompatCheckBox>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_for_gps_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete_account_check_list3"
+                    android:layout_weight="1"></TextView>
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/agree_for_gps_info_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
+                    android:layout_gravity="center_vertical"></androidx.appcompat.widget.AppCompatCheckBox>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_for_marketing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/delete_account_check_list4"
+                    android:layout_weight="1"></TextView>
+                <CheckBox
+                    android:id="@+id/agree_for_marketing_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:background ="@drawable/checkbox_selector"
+                    android:layout_gravity="center_vertical"></CheckBox>
+            </LinearLayout>
+        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/really_delete"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/brand3"
+                android:layout_marginBottom="@dimen/notice_title_margin"
+                android:textStyle="bold"
+                android:textSize="18sp"></TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+                <Button
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/delete_cancel_btn"
+                    android:textColor="@color/brand1"
+                    android:background="@drawable/neon_btn_style"
+                    android:layout_height="match_parent"/>
+
+                <Button
+                    android:background="@drawable/brand1_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/ui1"
+                    android:text="@string/delete_sure_btn"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.SettingActivity
+import com.han.owlmergerprototype.setting.SettingActivity
 import com.han.owlmergerprototype.data.TestUser
 
 

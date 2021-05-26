@@ -36,6 +36,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <activity android:name=".setting.DeleteAccountActivity"/>
+        <activity android:name=".setting.PushAlarmActivity"/>
 
         <activity
             android:name=".map.MapsMainActivity"
@@ -59,7 +61,7 @@
         <activity android:name=".mypage.boardActivity.PolicyActivity" />
         <activity android:name=".mypage.boardActivity.SuggestionActivity" />
         <activity android:name=".mypage.boardActivity.NoticeActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".setting.SettingActivity" />
         <activity android:name=".mypage.MyContentsActivity" />
         <activity
             android:name=".BottomNavActivity"

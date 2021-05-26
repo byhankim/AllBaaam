@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:textColor="@color/ui1"
+        android:textColor="@color/ui3"
         android:text="21/04/28" />
     <TextView
         android:id="@+id/context_tv"
@@ -44,17 +44,51 @@
         android:text="마포구청 근처에 늦게까지 영업하는 맛있는\n반다이크 언제 나오냐 ~"
         android:textColor="@color/ui3"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/background_transparent"
-        android:padding="0dp"
-        android:minHeight="0dp"
-        android:minWidth="40dp"
-        android:text="12"
-        android:textSize="12sp"
-        android:drawableLeft="@drawable/ic_ripple_balloon" />
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentBottom="true">
+
+        <ToggleButton
+            android:id="@+id/article_favorite_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/favorite_selector"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:textOff=""
+            android:textOn=""></ToggleButton>
+        <TextView
+            android:id="@+id/article_favorite_num_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/article_favorite_btn"
+            android:layout_marginStart="8dp"
+            android:text="123"
+            android:backgroundTint="@color/gray1" />
+
+        <TextView
+            android:id="@+id/article_comment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/comm_post_margin_between_like_and_comment"
+            android:layout_toEndOf="@id/article_favorite_num_btn"
+            android:background="@drawable/outline_chat_bubble_outline_24"
+            android:backgroundTint="@color/gray1" />
+        <TextView
+            android:id="@+id/article_comment_num_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/article_comment_btn"
+            android:layout_marginStart="8dp"
+            android:text="123"
+            android:backgroundTint="@color/gray1" />
+
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -14,12 +14,13 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="white_12">#1Fffffff</color>
+    <color name ="switch_off">#8496B3</color>
 
     <!-- Owl Colors -->
     <color name="brand1">#874FE1</color>
     <color name="brand1_12">#1F874FE1</color>
     <color name="brand2">#9F43D1</color>
-    <color name="brand3">#BB86FC</color>
+    <color name="brand3">#D7B6FF</color>
 
     <color name="gray8">#262626</color>
     <color name="gray7">#121212</color>

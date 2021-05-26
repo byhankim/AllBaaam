@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray7">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/setting_alarm_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="@dimen/toolbar_elevation_size"
+        android:background="@color/black">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/setting_push_alarm"
+            android:layout_gravity="center"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_push_alarm"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/brand3"
+            android:layout_marginBottom="@dimen/notice_title_margin"
+            android:textStyle="bold"
+            android:textSize="18sp"></TextView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginBottom="@dimen/notice_margin">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_all_policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/like_alarm"
+                    android:layout_weight="1"></TextView>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:track="@drawable/alarm_switch"
+                    android:thumb="@drawable/alarm_switch_thumb"
+                    android:switchMinWidth="0dp"
+                    android:thumbTextPadding="16dp"
+                    app:switchMinWidth="40dp">
+                </androidx.appcompat.widget.SwitchCompat>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_for_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/comment_alarm"
+                    android:layout_weight="1"></TextView>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:track="@drawable/alarm_switch"
+                    android:thumb="@drawable/alarm_switch_thumb"
+                    app:switchMinWidth="40dp"
+                    android:thumbTextPadding="16dp">
+                </androidx.appcompat.widget.SwitchCompat>   </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/agree_for_gps_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:text="@string/comment_comment_alarm"
+                    android:layout_weight="1"></TextView>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:track="@drawable/alarm_switch"
+                    android:thumb="@drawable/alarm_switch_thumb"
+                    app:switchMinWidth="40dp"
+                    android:thumbTextPadding="16dp">
+                </androidx.appcompat.widget.SwitchCompat>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
