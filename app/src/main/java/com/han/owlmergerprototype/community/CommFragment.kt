@@ -111,6 +111,10 @@ private lateinit var floatBTN: FloatingActionButton
         val view1 = inflater.inflate(R.layout.fragment_comm,container,false)
         val nScrollView: NestedScrollView = view1.findViewById(R.id.comm_post_section_nestedscrollview)
 
+
+
+
+        Log.e("[TestUser-token]", TestUser.userName + TestUser.userName + TestUser.userID)
         // toolbar -> NONE!!!
         // (owner as AppCompatActivity).setSupportActionBar(toolbar)
 

@@ -133,4 +133,11 @@ interface RetrofitRESTService {
     fun getCommentCount(
         @Path("postId")postId:Int
     ):Call<CountComment>
+
+    // Delete
+    @DELETE("/posts/{postId}")
+    fun deletePost(
+        @Path("postId") postId: Int,
+        @Header("token") token: String
+    ):Call<OkFailResult>
 }

@@ -69,6 +69,8 @@ class ArticleActivity : AppCompatActivity(){
         // RETROFIT REST NETWORKING
 //        intent.get
 
+
+
         // shared pref
         val myShared = getSharedPreferences(getString(R.string.owl_shared_preferences_name), MODE_PRIVATE)
         commentsList = mutableListOf()
@@ -357,8 +359,7 @@ class ArticleActivity : AppCompatActivity(){
                 finish()
             }
             R.id.delete_article_btn -> {
-                Toast.makeText(this, "삭제", Toast.LENGTH_SHORT).show()
-                finish()
+                deletePost(selectedPost.id)
             }
             R.id.declaration_btn ->{
                 val dialog = Dialog(this)
@@ -467,6 +468,22 @@ class ArticleActivity : AppCompatActivity(){
             override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
                 Toast.makeText(this@ArticleActivity, t.toString(), Toast.LENGTH_SHORT).show()
                 Log.e("[AddCommentFail]", "$t")
+            }
+        })
+    }
+
+    fun deletePost(postId: Int) {
+        val call: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.deletePost(postId, token)
+        call.enqueue(object: Callback<OkFailResult> {
+            override fun onResponse(call: Call<OkFailResult>, response: Response<OkFailResult>) {
+                Log.e("[delPostSuccess]", "deleted")
+                Toast.makeText(this@ArticleActivity, "글을 삭제합니다", Toast.LENGTH_SHORT).show()
+                this@ArticleActivity.finish()
+            }
+
+            override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
+                Log.e("[delPostFail]", "delete error")
+                Toast.makeText(this@ArticleActivity, "글 삭제에 실패하였습니다", Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -141,9 +141,9 @@ class SplashActivity : AppCompatActivity() {
         // ----------------------------------------------------------------
         //      when fetching from shared preferences
         // ----------------------------------------------------------------
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
-        Log.e("[Splash]", dummyDataSetFromSharedPreferences[0].contents)
+//        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
+//        val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
+//        Log.e("[Splash]", dummyDataSetFromSharedPreferences[0].contents)
 
     }
 }

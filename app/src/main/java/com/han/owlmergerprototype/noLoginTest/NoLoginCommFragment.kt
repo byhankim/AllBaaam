@@ -31,6 +31,7 @@ import com.han.owlmergerprototype.LoginActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.common.ADDRESS
 import com.han.owlmergerprototype.common.RetrofitRESTService
+import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.UserInfo
@@ -123,13 +124,13 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyCommunityPostsList: MutableList<Post> =
-            Gson().fromJson(myShared.getString(
-                getString(R.string.owl_shared_preferences_dummy_comm_posts),
-                ""),
-                dummyCommPostsType
-            )
+//        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
+//        val dummyCommunityPostsList: MutableList<Post> =
+//            Gson().fromJson(myShared.getString(
+//                getString(R.string.owl_shared_preferences_dummy_comm_posts),
+//                ""),
+//                dummyCommPostsType
+//            )
 //        recyclerView = view1.findViewById(R.id.article_rv)
 //        mAdapter = RecyclerAdapter(owner, postModel.posts)
 
@@ -382,7 +383,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     naverLoginBTN.setOnClickListener(View.OnClickListener {
 
                        // val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImlhdCI6MTYyMTc0MzE3N30.kjG4cpKgJc-dlMS8fioznNaQYU9PRNUJpmVi8tX2pNE"
-                       val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
+//                       val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
+                       val sooToken = token
 
                         val retrofit = Retrofit.Builder()
                             .baseUrl(ADDRESS)
@@ -411,8 +413,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                                     val editor = autoLogin.edit()
                                     editor.putString("token",sooToken)
                                     editor.putString("userName",userInfo.userName)
-                                    editor.putInt("userID",userInfo.id)
-                                    editor.putInt("verified",userInfo.id)
+                                    editor.putInt("userId",userInfo.id)
+                                    editor.putBoolean("verified",userInfo.verified)
                                     editor.apply()
 
                                     inte = Intent(context, BottomNavActivity::class.java)
@@ -516,9 +518,6 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
             val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)
         }
-
-
-
     }
 
     // ===========================================================================
