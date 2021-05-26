@@ -37,9 +37,15 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.http.Multipart
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -163,6 +169,8 @@ class CreateArticleActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_PICK // 뭔가 가져오겠다는 뜻
             intent.type = MediaStore.Images.Media.CONTENT_TYPE
             startActivityForResult(intent, PICK_FROM_GALLERY)
+
+
         }
 
         // count text
@@ -249,9 +257,14 @@ class CreateArticleActivity : AppCompatActivity() {
 
     private fun fildUploadAsync(queryString: String) {
         Thread {
-            val uploadFile = File(fileLocation)
-            var response: Response? = null
-        }
+            try {
+                Log.e("[entered]", "fileUploadAsync")
+                uploadImage(queryString)
+                Log.e("[exited]", "fileUploadAsync")
+            } catch (e: Exception) {
+                Log.e("[ImageUpException]", "image upload error!: $e")
+            }
+        }.start()
     }
 
     override fun onResume() {
@@ -268,6 +281,7 @@ class CreateArticleActivity : AppCompatActivity() {
                     File(Environment.getExternalStorageDirectory().absolutePath, "uploadImage")
                 }
                 checkSDCardPermission()
+                Log.e("[AHHHH]", myImageDir.absolutePath + myImageDir.name)
             } else {
                 myImageDir = File(
                         Environment.getExternalStorageDirectory().absolutePath, "uploadIamge"
@@ -326,9 +340,13 @@ class CreateArticleActivity : AppCompatActivity() {
                     // 업로드 가능하게 절대 주소 알아내기
                     if (findImageFileNameFromUri(returnedImgURI)) {
                         Log.e("[PICK_FROM_GALLERY]", "갤러리에서 절대주소 획득 성공: $returnedImgURI")
+
+                        // file upload
+                        fildUploadAsync(returnedImgURI.toString())
                     } else {
                         Log.e("[PICK_FROM_GALLERY]", "갤러리에서 절대주소 획득 실패")
                     }
+
                 } else {
                     val extras = data?.extras
                     val returnedBitmap = extras!!["data"] as Bitmap?
@@ -401,6 +419,50 @@ class CreateArticleActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    // RETROFIT upload image
+    private fun uploadImage(path: String = ""): Int? {
+        var imageId: Int? = null
+        if (path.isEmpty())
+            return null
+        val uploadImageService = OwlRetrofitManager.OwlRestService.owlRestService
+
+        val file = File(path)
+//        val fileUploadBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        /*
+        MultipartBody.Part.createFormData(
+            name = key,
+            filename = file.name,
+            body = file.asRequestBody("image/ *".toMediaType())
+        )
+        */
+        val multipartBody = MultipartBody.Part.createFormData(
+            "file", file.name, file.asRequestBody("image/*".toMediaTypeOrNull())
+        )
+
+
+        val call: Call<ImageRESTEntity> = uploadImageService.uploadImage(  multipartBody, token )
+        Log.e("[imgCall]", call.execute().toString())
+        call.enqueue(object: Callback<ImageRESTEntity> {
+            override fun onResponse(
+                call: Call<ImageRESTEntity>,
+                response: retrofit2.Response<ImageRESTEntity>
+            ) {
+                if (response.isSuccessful) {
+                    val imgRESTEntity = response.body() as ImageRESTEntity
+                    Toast.makeText(this@CreateArticleActivity, "이미지를 서버에 저장했습니다", Toast.LENGTH_SHORT).show()
+                    Log.e("[imgUpSuccess]", "이미지 업로드 성공! res body: ${response.body()}")
+                    imageId = imgRESTEntity.imageId
+                }
+            }
+
+            override fun onFailure(call: Call<ImageRESTEntity>, t: Throwable) {
+                imageId = null
+                Log.e("[imgUpFail]", "이미지 업로드 실패! $t")
+            }
+        })
+        return imageId
     }
 
     private fun createPost() {

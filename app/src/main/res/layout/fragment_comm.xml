@@ -37,14 +37,14 @@
                 android:layout_marginTop="@dimen/comment_sort_indicating_circle_martintop"
                 android:layout_marginStart="@dimen/comment_sort_indicating_circle_marginstart"/>
             <TextView
-                android:id="@+id/comment_sort_by_time_btn"
+                android:id="@+id/comm_sort_by_time_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/comment_sort_btn_marginstart"
                 android:text="@string/comment_sort_by_time_btn_text"
                 android:textSize="@dimen/comment_sort_btn_text_size"/>
             <TextView
-                android:id="@+id/comment_sort_by_popularity_btn"
+                android:id="@+id/comm_sort_by_popularity_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/comment_sort_pop_btn_marginstart"

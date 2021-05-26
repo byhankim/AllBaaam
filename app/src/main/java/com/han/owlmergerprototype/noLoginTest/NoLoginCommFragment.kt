@@ -31,6 +31,7 @@ import com.han.owlmergerprototype.LoginActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.common.ADDRESS
 import com.han.owlmergerprototype.common.RetrofitRESTService
+import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.UserInfo
@@ -42,8 +43,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+enum class sortBy {
+    LATEST, POPULARITY
+}
+
 @Suppress("DEPRECATION")
 class NoLoginCommFragment(var owner: Activity): Fragment() {
+
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
     private lateinit var themeSelectorRv: RecyclerView
@@ -56,11 +62,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     private lateinit var mAdapter: RecyclerAdapter
 
     private lateinit var autoLogin :SharedPreferences
-    // category selection
-    private var mCatetoryId: Int? = null
 
-    // category selection
     private var catetoryId: Int? = null
+    private var sortByFlag = sortBy.LATEST
 
 
     companion object{
@@ -226,6 +230,32 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         }
 
 
+        // ---------------------------------------------------------------------
+        //  인기순 받아오기
+        // ---------------------------------------------------------------------
+        val popularSortBtn = view1.findViewById<TextView>(R.id.comm_sort_by_popularity_btn)//comment_sort_by_popularity_btn
+        popularSortBtn.setOnClickListener {
+            if (sortByFlag != sortBy.POPULARITY) {
+                postList.clear()
+                getPostsByPopularity()
+                sortByFlag = sortBy.POPULARITY
+            }
+        }
+
+
+        // ---------------------------------------------------------------------
+        //  최신순 받아오기
+        // ---------------------------------------------------------------------
+        val latestSortBtn = view1.findViewById<TextView>(R.id.comm_sort_by_time_btn)
+        latestSortBtn.setOnClickListener {
+            if (sortByFlag != sortBy.LATEST) {
+                postList.clear()
+                getPosts(null)
+                sortByFlag = sortBy.LATEST
+            }
+        }
+
+
 
         return view1
     }
@@ -382,7 +412,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     naverLoginBTN.setOnClickListener(View.OnClickListener {
 
                        // val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjcsImlhdCI6MTYyMTc0MzE3N30.kjG4cpKgJc-dlMS8fioznNaQYU9PRNUJpmVi8tX2pNE"
-                       val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
+//                       val sooToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsImlhdCI6MTYyMTU2MzcxOH0.rg5p-xV0b7sRRkg6kZR5wLxOl6fDGqZtKKd0X1klxUA"
+                       val sooToken = token
 
                         val retrofit = Retrofit.Builder()
                             .baseUrl(ADDRESS)
@@ -411,8 +442,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                                     val editor = autoLogin.edit()
                                     editor.putString("token",sooToken)
                                     editor.putString("userName",userInfo.userName)
-                                    editor.putInt("userID",userInfo.id)
-                                    editor.putInt("verified",userInfo.id)
+                                    editor.putInt("userId",userInfo.id)
+                                    editor.putBoolean("verified",userInfo.verified)
                                     editor.apply()
 
                                     inte = Intent(context, BottomNavActivity::class.java)
@@ -516,9 +547,6 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
             val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)
         }
-
-
-
     }
 
     // ===========================================================================
@@ -544,6 +572,32 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             }
             override fun onFailure(call: Call<PostModel>, t: Throwable) {
                 Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                postModel = PostModel("error", mutableListOf(PostEntity()))
+            }
+        })
+    }
+
+    private fun getPostsByPopularity() {
+        val call: Call<PopularPostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPopularPosts()
+
+        call.enqueue(object: Callback<PopularPostModel> {
+            override fun onResponse(
+                call: Call<PopularPostModel>,
+                response: Response<PopularPostModel>
+            ) {
+                val popularPostModel = response.body() as PopularPostModel
+
+                if (popularPostModel.posts.isNullOrEmpty()) return
+                postList = popularPostModel.posts
+
+                mAdapter.reloadDataWithRetrofitResponse(postList)
+                activity!!.runOnUiThread {
+                    mAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<PopularPostModel>, t: Throwable) {
+                Log.e("[popPostsFailure]", "F A I L $t")
                 postModel = PostModel("error", mutableListOf(PostEntity()))
             }
         })

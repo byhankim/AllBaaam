@@ -2,6 +2,8 @@ package com.han.owlmergerprototype.common
 
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -30,7 +32,7 @@ interface RetrofitRESTService {
 
     // sort by popularity
     @GET("/posts/popular")
-    fun getPopularPosts(@Query("cursor_id") key: Int?): Call<PopularPostModel>
+    fun getPopularPosts(): Call<PopularPostModel>
 
     // map
     @GET("/posts/map")
@@ -133,4 +135,34 @@ interface RetrofitRESTService {
     fun getCommentCount(
         @Path("postId")postId:Int
     ):Call<CountComment>
+
+    // Delete
+    @DELETE("/posts/{postId}")
+    fun deletePost(
+        @Path("postId") postId: Int,
+        @Header("token") token: String
+    ):Call<OkFailResult>
+
+    @DELETE("/posts/comment/{commentId}")
+    fun deleteComment(
+        @Path("commentId") commentId: Int,
+        @Header("token") token: String
+    ):Call<OkFailResult>
+
+
+    /*
+    @POST("/posts")
+    @Headers("Content-Type: application/json")
+    fun createPost(
+        @Header("token") token: String,
+        @Body body: String
+    ): Call<OkFailResult>
+    */
+    // image
+    @Multipart
+    @POST("/posts/image")
+    fun uploadImage(
+        @Part file: MultipartBody.Part,
+        @Header("token") token: String
+    ):Call<ImageRESTEntity>
 }

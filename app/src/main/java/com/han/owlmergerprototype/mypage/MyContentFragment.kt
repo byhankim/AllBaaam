@@ -81,7 +81,7 @@ class MyContentFragment:Fragment() {
                 val myPosts = response.body()
 
                 if(response.isSuccessful){
-
+                    Log.e("[myContentFrag]", "onresponse - getMyPost, ${TestUser.userName}")
                     activity?.runOnUiThread {
                         MyContentsRecyblerViewSetting(myPosts!!.posts)
                     }
