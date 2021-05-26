@@ -2,6 +2,8 @@ package com.han.owlmergerprototype.common
 
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -146,4 +148,21 @@ interface RetrofitRESTService {
         @Path("commentId") commentId: Int,
         @Header("token") token: String
     ):Call<OkFailResult>
+
+
+    /*
+    @POST("/posts")
+    @Headers("Content-Type: application/json")
+    fun createPost(
+        @Header("token") token: String,
+        @Body body: String
+    ): Call<OkFailResult>
+    */
+    // image
+    @Multipart
+    @POST("/posts/image")
+    fun uploadImage(
+        @Part file: MultipartBody.Part,
+        @Header("token") token: String
+    ):Call<ImageRESTEntity>
 }

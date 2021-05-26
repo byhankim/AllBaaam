@@ -80,7 +80,7 @@
     <string name="reply_add_btn_text">입력</string>
     <string name="create_article_current_text_count_dummy_count">0</string>
     <string name="text_limit_indicator_dummy_text">/180</string>
-    <string name="create_article_photo_upload_hint_text">이미지는 어떤 내용인지 설명해 주세요!</string>
+    <string name="create_article_photo_upload_hint_text">이미지가 어떤 내용인지 설명해 주세요!</string>
     <string name="create_article_et_text_maxlength">180</string>
     <string name="comm_write_article_et_max_text_length">180</string>
     <string name="dummy_uid_1">1</string>
