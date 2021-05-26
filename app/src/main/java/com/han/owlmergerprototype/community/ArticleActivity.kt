@@ -100,13 +100,15 @@ class ArticleActivity : AppCompatActivity(){
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
 
             adapter = cmtAdapter
+
+            commentCount = commentsList.size
         }
         getComments(selectedPost.id)
 
 
 
 
-    // POST BODY
+        // POST BODY
         when (selectedPost.category){
             "TIP" ->{
             binding.tvBadge.text  = getCategoryNameInArticle(getString(R.string.comm_honey_tip))
@@ -245,35 +247,16 @@ class ArticleActivity : AppCompatActivity(){
 
 
         // RV
-        val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        /*val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         with (binding.commentsRv) {
             layoutManager = manager
             DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-
-            // get comment data from shared preferences
-            // (opt) where article id == current post id
-            val sharedCommentsKey = getString(R.string.dummy_comments_key)
-
-            val dummyCommentsType = object: TypeToken<MutableList<CommentRESTEntity>>() {}.type
-
-            // NOT HERE!!!!
-//            commentsList = selectedPost.comments as MutableList<CommentRESTEntity>
-            // filter by postID!!
-
-            adapter = CommentRecyclerAdapter(
-                commentsList,
-                this@ArticleActivity
-            ) {
-//                 setOnClickListener {}
-            }
-
-//            Log.e("[ArticleActivity]", dummyCommentsDataSet.size.toString())
-            commentCount = commentsList.size
+            adapter = CommentRecyclerAdapter(commentsList, this@ArticleActivity) {}
         }
 
         // comment count
-        binding.articleCommentCountTv.text = commentsList.size.toString()
+        binding.articleCommentCountTv.text = commentsList.size.toString()*/
 
 
         // ------------------------------------------------------------------------------
@@ -476,14 +459,35 @@ class ArticleActivity : AppCompatActivity(){
         val call: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.deletePost(postId, token)
         call.enqueue(object: Callback<OkFailResult> {
             override fun onResponse(call: Call<OkFailResult>, response: Response<OkFailResult>) {
-                Log.e("[delPostSuccess]", "deleted")
-                Toast.makeText(this@ArticleActivity, "글을 삭제합니다", Toast.LENGTH_SHORT).show()
-                this@ArticleActivity.finish()
+                if (response.isSuccessful) {
+                    Log.e("[delPostSuccess]", "deleted")
+                    Toast.makeText(this@ArticleActivity, "글을 삭제합니다", Toast.LENGTH_SHORT).show()
+                    this@ArticleActivity.finish()
+                }
             }
 
             override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
                 Log.e("[delPostFail]", "delete error")
                 Toast.makeText(this@ArticleActivity, "글 삭제에 실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun deleteComment(commentId: Int) {
+        val result: Call<OkFailResult> = OwlRetrofitManager.OwlRestService.owlRestService.deleteComment(commentId, token)
+
+        result.enqueue(object: Callback<OkFailResult>{
+            override fun onResponse(call: Call<OkFailResult>, response: Response<OkFailResult>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@ArticleActivity, "댓글을 삭제합니다", Toast.LENGTH_SHORT).show()
+                    Log.e("[delCommentSuccess]", "deleted")
+                    getComments(selectedPost.id)
+                }
+            }
+
+            override fun onFailure(call: Call<OkFailResult>, t: Throwable) {
+                Log.e("[delCommentFail]", "fail")
+                Toast.makeText(this@ArticleActivity, "댓글 작세에 실패했수다! ${t.toString()}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -496,7 +500,6 @@ class ArticleActivity : AppCompatActivity(){
             override fun onResponse(call: Call<CountLike>, response: Response<CountLike>) {
                 val count = response.body()!!
                 if (response.isSuccessful) {
-
                         binding.articleFavoriteCountTv.text = count.countLike.toString()
                     }
 

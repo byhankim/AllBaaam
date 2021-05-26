@@ -1,66 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/comment_item_rl"
+    android:id="@+id/comment_view_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/comments_rv_marginend"
     android:layout_marginEnd="@dimen/comments_rv_marginend"
     android:layout_marginTop="@dimen/comment_rv_margintop"
     android:layout_alignStart="@id/comment_sort_by_time_btn">
-    <TextView
-        android:id="@+id/comment_depth_dummy_tv"
-        android:layout_width="@dimen/comment_item_depth_margin"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        />
     <RelativeLayout
-        android:layout_toEndOf="@id/comment_depth_dummy_tv"
+        android:id="@+id/comment_section_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/comment_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cmt_uname"
-        android:textSize="@dimen/comment_username_size"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/comment_time_passed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_username"
-        android:layout_marginTop="@dimen/comment_time_passed_margintop"
-        android:text="@string/cmt_timepassed"
-        android:textSize="@dimen/comment_time_passed_size"/>
-    <TextView
-        android:id="@+id/comment_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_time_passed"
-        android:layout_marginTop="@dimen/comment_content_margintop"
-        android:text="@string/random_cmt"/>
-    <TextView
-        android:id="@+id/comment_fav_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_content"
-        android:layout_marginTop="@dimen/comment_fav_btn_margintop"
-        android:text="@string/comment_fav_btn_text"
-        android:textSize="@dimen/comment_fav_btn_text_size"
-        android:textColor="@color/style1_8"
-        android:textStyle="bold"/>
-    <TextView
-        android:id="@+id/comment_reply_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/comment_content"
-        android:layout_toEndOf="@id/comment_fav_btn"
-        android:layout_marginTop="@dimen/comment_fav_btn_margintop"
-        android:layout_marginStart="@dimen/comment_reply_btn_marginstart"
-        android:text="@string/comment_reply_btn_text"
-        android:textSize="@dimen/comment_reply_btn_text_size"
-        android:textColor="@color/style1_8"
-        android:textStyle="bold"
-        android:layout_marginBottom="@dimen/comment_marginbottom"/>
+        <TextView
+            android:id="@+id/comment_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cmt_uname"
+            android:textSize="@dimen/comment_username_size"
+            android:textStyle="bold"
+            android:textColor="@color/brand3"/>
+        <TextView
+            android:id="@+id/comment_time_passed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/comment_time_passed_margintop"
+            android:layout_marginEnd="@dimen/comment_time_passed_marginend"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/comment_username"
+            android:text="@string/cmt_timepassed"
+            android:textSize="@dimen/comment_time_passed_size"/>
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comment_username"
+            android:layout_marginTop="@dimen/comment_content_margintop"
+            android:layout_marginEnd="@dimen/comment_content_margin_end"
+            android:text="@string/random_cmt"
+            android:textSize="@dimen/comment_content_text_size"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/comment_fav_btn"
+            android:layout_width="@dimen/comment_fav_btn_width"
+            android:layout_height="@dimen/comment_fav_btn_height"
+            android:layout_below="@id/comment_content"
+            android:layout_marginTop="@dimen/comment_fav_btn_margintop"
+            android:layout_marginStart="@dimen/comment_fav_btn_margin_start"
+            android:background="@drawable/outline_favorite_border_24"/>
+        <TextView
+            android:id="@+id/comment_reply_btn"
+            android:layout_width="@dimen/comment_reply_btn_width"
+            android:layout_height="@dimen/comment_reply_btn_height"
+            android:layout_below="@id/comment_content"
+            android:layout_toEndOf="@id/comment_fav_btn"
+            android:layout_marginTop="@dimen/comment_reply_btn_margintop"
+            android:layout_marginStart="@dimen/comment_reply_btn_marginstart"
+            android:background="@drawable/outline_chat_bubble_outline_24"/>
+        <TextView
+            android:id="@+id/comment_delete_btn"
+            android:layout_width="@dimen/comment_delete_btn_size"
+            android:layout_height="@dimen/comment_delete_btn_size"
+            android:background="@drawable/ic_delete"
+            android:layout_alignBaseline="@id/comment_fav_btn"
+            android:layout_alignEnd="@id/comment_time_passed"
+            android:visibility="gone"/>
+
+
+
+        <RelativeLayout
+            android:id="@+id/recomment_section_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comment_reply_btn"
+            android:layout_marginTop="@dimen/comment_re_section_margin_top"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/recomment_intent_border"
+                android:layout_width="@dimen/recomment_intent_border_width"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/recomment_intent_left_width"
+                android:layout_marginEnd="@dimen/recomment_intent_right_width"
+                android:layout_alignTop="@id/recomment_rv"
+                android:layout_alignBottom="@id/recomment_rv"
+                android:background="@color/gray4"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recomment_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/recomment_intent_border"
+                android:overScrollMode="never"/>
+        </RelativeLayout>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/comment_section_margin_bottom_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/comment_section_margin_bottom"
+        android:layout_below="@id/comment_section_rl" />
 </RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/comment_re_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cmt_uname"
+        android:textSize="@dimen/comment_username_size"
+        android:textStyle="bold"
+        android:textColor="@color/brand3" />
+
+    <TextView
+        android:id="@+id/comment_re_time_passed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/comment_re_time_passed_margin_start"
+        android:layout_toEndOf="@id/comment_re_username"
+        android:layout_alignBaseline="@id/comment_re_username"
+        android:text="@string/cmt_timepassed"
+        android:textSize="@dimen/comment_time_passed_size"/>
+    <TextView
+        android:id="@+id/comment_re_fav_btn"
+        android:layout_width="@dimen/comment_re_fav_btn_width"
+        android:layout_height="@dimen/comment_re_fav_btn_height"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/outline_favorite_border_24"/>
+    <TextView
+        android:id="@+id/comment_re_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_re_username"
+        android:layout_marginTop="@dimen/comment_content_margintop"
+        android:layout_marginEnd="@dimen/comment_content_re_margin_end"
+        android:text="@string/random_cmt"
+        android:textSize="@dimen/comment_content_text_size"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/comment_re_delete_btn"
+        android:layout_width="@dimen/comment_re_fav_btn_width"
+        android:layout_height="@dimen/comment_re_fav_btn_width"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/comment_re_content"
+        android:background="@drawable/ic_delete"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/comment_re_section_margin_bottom_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/comment_re_section_margin_bottom"
+        android:layout_below="@id/comment_re_content"
+        android:visibility="visible"/>
+</RelativeLayout>

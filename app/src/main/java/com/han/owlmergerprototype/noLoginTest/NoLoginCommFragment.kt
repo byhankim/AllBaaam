@@ -43,8 +43,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+enum class sortBy {
+    LATEST, POPULARITY
+}
+
 @Suppress("DEPRECATION")
 class NoLoginCommFragment(var owner: Activity): Fragment() {
+
     private lateinit var floatBTN: FloatingActionButton
     private lateinit var inte: Intent
     private lateinit var themeSelectorRv: RecyclerView
@@ -57,11 +62,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     private lateinit var mAdapter: RecyclerAdapter
 
     private lateinit var autoLogin :SharedPreferences
-    // category selection
-    private var mCatetoryId: Int? = null
 
-    // category selection
     private var catetoryId: Int? = null
+    private var sortByFlag = sortBy.LATEST
 
 
     companion object{
@@ -224,6 +227,32 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 owner,
                 true
             )
+        }
+
+
+        // ---------------------------------------------------------------------
+        //  인기순 받아오기
+        // ---------------------------------------------------------------------
+        val popularSortBtn = view1.findViewById<TextView>(R.id.comm_sort_by_popularity_btn)//comment_sort_by_popularity_btn
+        popularSortBtn.setOnClickListener {
+            if (sortByFlag != sortBy.POPULARITY) {
+                postList.clear()
+                getPostsByPopularity()
+                sortByFlag = sortBy.POPULARITY
+            }
+        }
+
+
+        // ---------------------------------------------------------------------
+        //  최신순 받아오기
+        // ---------------------------------------------------------------------
+        val latestSortBtn = view1.findViewById<TextView>(R.id.comm_sort_by_time_btn)
+        latestSortBtn.setOnClickListener {
+            if (sortByFlag != sortBy.LATEST) {
+                postList.clear()
+                getPosts(null)
+                sortByFlag = sortBy.LATEST
+            }
         }
 
 
@@ -543,6 +572,32 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             }
             override fun onFailure(call: Call<PostModel>, t: Throwable) {
                 Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                postModel = PostModel("error", mutableListOf(PostEntity()))
+            }
+        })
+    }
+
+    private fun getPostsByPopularity() {
+        val call: Call<PopularPostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPopularPosts()
+
+        call.enqueue(object: Callback<PopularPostModel> {
+            override fun onResponse(
+                call: Call<PopularPostModel>,
+                response: Response<PopularPostModel>
+            ) {
+                val popularPostModel = response.body() as PopularPostModel
+
+                if (popularPostModel.posts.isNullOrEmpty()) return
+                postList = popularPostModel.posts
+
+                mAdapter.reloadDataWithRetrofitResponse(postList)
+                activity!!.runOnUiThread {
+                    mAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<PopularPostModel>, t: Throwable) {
+                Log.e("[popPostsFailure]", "F A I L $t")
                 postModel = PostModel("error", mutableListOf(PostEntity()))
             }
         })

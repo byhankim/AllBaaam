@@ -24,5 +24,5 @@ data class CommentRESTEntity(
     var user: UserNameEntity = UserNameEntity(),
     var postId: Int = -1,
     var isParent: Boolean = true,
-    var reComments: MutableList<CommentRESTEntity> = mutableListOf()
+    var reComments: MutableList<RecommentRESTEntity> = mutableListOf()
 )

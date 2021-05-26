@@ -30,7 +30,7 @@ interface RetrofitRESTService {
 
     // sort by popularity
     @GET("/posts/popular")
-    fun getPopularPosts(@Query("cursor_id") key: Int?): Call<PopularPostModel>
+    fun getPopularPosts(): Call<PopularPostModel>
 
     // map
     @GET("/posts/map")
@@ -138,6 +138,12 @@ interface RetrofitRESTService {
     @DELETE("/posts/{postId}")
     fun deletePost(
         @Path("postId") postId: Int,
+        @Header("token") token: String
+    ):Call<OkFailResult>
+
+    @DELETE("/posts/comment/{commentId}")
+    fun deleteComment(
+        @Path("commentId") commentId: Int,
         @Header("token") token: String
     ):Call<OkFailResult>
 }

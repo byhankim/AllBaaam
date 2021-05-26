@@ -32,6 +32,7 @@ data class PostEntity(
     var images: List<ImageEntity> = listOf(ImageEntity()), // id, url
     var comments: List<CommentRESTEntity> = listOf(CommentRESTEntity()),
     var like: List<BookmarkInPostEntity> = listOf(BookmarkInPostEntity()), // temporary
-    var bookmark: List<BookmarkInPostEntity> = listOf(BookmarkInPostEntity())
+    var bookmark: List<BookmarkInPostEntity> = listOf(BookmarkInPostEntity()),
+    var popular: Int? = -1 // 될랑가 모르겠다
 
 )
