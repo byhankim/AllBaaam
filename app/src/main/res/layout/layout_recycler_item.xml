@@ -150,10 +150,9 @@
                 android:id="@+id/article_comment_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/article_content_padding_horizontal"
+                android:layout_marginStart="@dimen/comm_post_margin_between_like_and_comment"
                 android:layout_toEndOf="@id/article_favorite_num_btn"
-                android:background="@drawable/outline_chat_bubble_outline_24"
-                android:backgroundTint="@color/gray1" />
+                android:background="@drawable/outline_chat_bubble_outline_24" />
             <TextView
                 android:id="@+id/article_comment_num_btn"
                 android:layout_width="wrap_content"

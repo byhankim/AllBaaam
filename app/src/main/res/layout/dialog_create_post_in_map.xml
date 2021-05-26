@@ -11,42 +11,36 @@
         android:background="@color/white_12"
         android:padding="@dimen/dialog_padding">
         <TextView
-            android:id="@+id/logout_cancel_x_btn"
+            android:id="@+id/dialog_cancel_x_btn"
             android:layout_width="@dimen/delete_x_size"
             android:layout_height="@dimen/delete_x_size"
             android:background="@drawable/ic_deletex"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"/>
-        <TextView
-            android:id="@+id/wait_a_minute_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="잠깐!"
-            android:layout_marginBottom="6dp"
-            android:layout_above="@+id/logout_btn_layout"></TextView>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="정말 로그아웃 하시나요?"
-            android:layout_marginBottom="16dp"
+            android:text="이 장소에 글을 등록하시겠습니까?"
+            android:layout_marginTop="16dp"
             android:layout_below="@+id/wait_a_minute_tv"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/logout_btn_layout"
             android:layout_alignParentLeft="true"></TextView>
 
         <Button
-            android:id="@+id/logout_cancel_btn"
+            android:id="@+id/dialog_cancel_btn"
             android:layout_width="50dp"
             android:layout_height="28dp"
             android:text="취소"
-            android:layout_toLeftOf="@+id/logout_ok_btn"
+            android:layout_toLeftOf="@+id/dialog_ok_btn"
             android:layout_alignParentBottom="true"
             android:background="@drawable/neon_cancel_btn_style"
             android:textColor="@color/gray4"/>
 
         <Button
-            android:id="@+id/logout_ok_btn"
+            android:id="@+id/dialog_ok_btn"
             android:layout_width="50dp"
             android:layout_height="28dp"
             android:text="확인"

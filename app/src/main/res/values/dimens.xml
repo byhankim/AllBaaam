@@ -71,6 +71,7 @@
     <dimen name="comm_post_item_save_btn_width">16dp</dimen>
     <dimen name="comm_post_item_save_btn_height">24dp</dimen>
     <dimen name="comm_post_date_created_tv_text_size">12sp</dimen>
+    <dimen name="comm_post_margin_between_like_and_comment">26dp</dimen>
     <dimen name="reply_section_height">74dp</dimen>
     <dimen name="reply_add_section_height">74dp</dimen>
     <dimen name="reply_add_section_et_width">260dp</dimen>
@@ -118,4 +119,7 @@
     <dimen name="comment_delete_btn_size">22dp</dimen>
     <dimen name="comment_section_margin_bottom">20dp</dimen>
     <dimen name="comment_re_section_margin_top">16dp</dimen>
+    <dimen name="notice_margin">40dp</dimen>
+    <dimen name="notice_check_list_margin">40dp</dimen>
+    <dimen name="notice_title_margin">12dp</dimen>
 </resources>

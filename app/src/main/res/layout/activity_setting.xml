@@ -32,13 +32,14 @@
             android:layout_height="wrap_content"
             android:text="알림 설정"
             android:padding="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/brand3"
             android:textStyle="bold"
             android:textSize="16sp"></TextView>
         <TextView
+            android:id="@+id/setting_push_alarm_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="푸쉬 알림 설정"
+            android:text="@string/setting_push_alarm"
             android:textColor="@color/white"
             android:padding="8dp"></TextView>
 
@@ -60,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="사용자 설정"
             android:padding="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/brand3"
             android:textStyle="bold"
             android:textSize="16sp"></TextView>
         <TextView
@@ -88,7 +89,7 @@
             android:layout_height="wrap_content"
             android:text="기타"
             android:padding="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/brand3"
             android:textStyle="bold"
             android:textSize="16sp"></TextView>
         <TextView
@@ -105,6 +106,7 @@
             android:textColor="@color/white"
             android:padding="8dp"></TextView>
         <TextView
+            android:id="@+id/delete_account_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="탈퇴하기"

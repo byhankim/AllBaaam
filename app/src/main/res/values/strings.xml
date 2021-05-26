@@ -44,6 +44,14 @@
     <string name="test_bottom_nav_notice">알림</string>
     <string name="test_bottom_nav_mypage">마이페이지</string>
     <string name="go_to_setting">설정</string>
+    <string name="delete_account">탈퇴하기</string>
+    <string name="notice_board">공지사항</string>
+
+    <string name="setting_push_alarm">푸쉬 알림 설정</string>
+    <string name="like_alarm">공감 알림</string>
+    <string name="comment_alarm">댓글 알림</string>
+    <string name="comment_comment_alarm">대댓글 알림</string>
+
 
     <!-- shared pref 관련 -->
     <string name="owl_shared_preferences_name">owltest</string>
@@ -97,4 +105,17 @@
     <string name="set_location_btn_tooltip_text">위치를 지정하여 글을 올려보세요!</string>
     <string name="u_have_to_login">회원가입/로그인 해야 볼 수 있어요!</string>
 
+
+    <!--탈 퇴 -->
+    <string name="do_you_want_quit_owl">올빼미 서비스를 탈퇴하시나요?</string>
+    <string name="do_you_want_quit_owl_mention">계정을 삭제하면 작성한 글, 공감, 저장한 글 등 모든 활동 정보가 삭제됩니다. 계정 삭제 후 10일간 다시 가입할 수 없어요.</string>
+    <string name="quest_quit_reason">탈퇴하려는 이유가 궁금해요.</string>
+    <string name="delete_account_check_list1">너무 많이 이용해요</string>
+    <string name="delete_account_check_list2">비매너 올빼미를 만났어요</string>
+    <string name="delete_account_check_list3">원하는 정보가 없어요</string>
+    <string name="delete_account_check_list4">새로운 올빼미 계정을 만들고 싶어요</string>
+    <string name="really_delete">정말 탈퇴하시나요?</string>
+
+    <string name="delete_cancel_btn">더 사용할래요</string>
+    <string name="delete_sure_btn">네. 탈퇴할게요</string>
 </resources>
