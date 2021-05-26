@@ -11,10 +11,13 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.han.owlmergerprototype.community.CommFragment
 import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.map.MapsMainFragment
+import com.han.owlmergerprototype.map.MapsMainNoLoginFragment
 import com.han.owlmergerprototype.mypage.MypageFragment
 
 class BottomNavActivity : AppCompatActivity() {
 
+    private lateinit var mapsMainFragment: MapsMainFragment
     private lateinit var mapFragment: MapFragment
     private lateinit var alarmFragment: AlarmFragment
     private lateinit var mypageFragment: MypageFragment
@@ -22,7 +25,7 @@ class BottomNavActivity : AppCompatActivity() {
     private lateinit var nav:BottomNavigationView
     private lateinit var switch:SwitchCompat
     private lateinit var fragmentManager : FragmentManager
-    private
+    private lateinit var inte: Intent
 
 
     companion object{
@@ -47,7 +50,10 @@ class BottomNavActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
 
         commFragment = CommFragment.newInstance(this)
-        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, commFragment).commit()
+//        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, commFragment).commit()
+
+        mapsMainFragment = MapsMainFragment.newInstance()
+        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, mapsMainFragment).commit()
 
 
 
@@ -62,16 +68,29 @@ class BottomNavActivity : AppCompatActivity() {
             if (isChecked) {
                 Log.d(TAG, "BottomNavActivity - onCreate() MAP isChecked called")
 
-                val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
-                startActivity(intent)
+                commFragment = CommFragment.newInstance(this)
+                supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
+
+//
+//                val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
+//                startActivity(intent)
 
 //                    mapFragment = MapFragment.newInstance()
 //                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
 
             } else {
                Log.d(TAG, "BottomNavActivity - onCreate() MAP !isChecked! called")
-                commFragment = CommFragment.newInstance(this)
-                supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
+
+
+                mapsMainFragment = MapsMainFragment.newInstance()
+                if(fragmentManager.backStackEntryCount !=0){
+                    fragmentManager.popBackStack()
+                }
+                fragmentManager.beginTransaction()
+                    .add(R.id.fragments_frame,mapsMainFragment)
+                    .addToBackStack(null)
+                    .commit()
+
             }
         }
     }

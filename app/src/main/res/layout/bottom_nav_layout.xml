@@ -11,7 +11,30 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/brand3" />
+        android:background="@color/brand3"
+        >
+
+        <!--fragment
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:clickable="false"
+            />
+
+        <Button
+            android:id="@+id/btn_draw_State"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="right|top"
+            android:background="@drawable/zzang"
+            android:layout_marginTop="470dp"
+            android:layout_marginRight="8dp"
+            android:visibility="invisible"
+            android:clickable="false"
+            /-->
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
