@@ -66,12 +66,11 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-
+        // check Permission
         requestPermissions(permission_list, 0)
     }
 
     //check Permission
-
     @SuppressLint("ServiceCast")
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -153,8 +152,21 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.setOnMarkerClickListener { marker ->
 
+            if (marker.title.isNullOrEmpty()) {
+                Toast.makeText(this,
+                    "커뮤니티 데이터가 없습니다. \n다른 올빼미 마커를 클릭해주세요",
+                    Toast.LENGTH_LONG)
+                    .show()
+                // alertDialog로 넘기기
+
+
+                return@setOnMarkerClickListener  true
+            }
             Log.d(TAG, "MapsMainActivity - onMapReady() called / marker.title = ${marker.title}")
             Log.d(TAG, "MapsMainActivity - onMapReady() called / marker.tag = ${marker.tag}")
+
+
+            Log.e(TAG, "MapsMainActivity - onMapReady() called / isNullOrEmpty 333")
             val mapCmntObject = marker.tag as Map
 
             //mapCmntObject.
@@ -238,15 +250,45 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
             mOptions.position(LatLng(latitude, longitude))
                 .draggable(true)
 
-            // 마커(핀) 추가
-            googleMap.addMarker(mOptions)
-
-
             // 팝업 호출
             var name: String? = null
             // 값이 비어있으면 ""을 넣는다
             // unwrapping
-            alertDialog(latitude, longitude)
+            //alertDialog(latitude, longitude)
+
+            AlertDialog.Builder(this)
+//                .setTitle(title)
+//                .setMessage("$title 와 함께하는 빡코딩! :)")
+                .setMessage("이 장소에 글을 등록하시겠습니까?")
+                .setPositiveButton("확인") { dialog, id ->
+                    Log.d(TAG, "MainActivity - 다이얼로그 확인 버튼 클릭했음")
+
+                    // 마커(핀) 추가
+                    googleMap.addMarker(mOptions)
+
+                    // 기존 Activity 새로고침
+//                    finish()
+//                    startActivity(intent)
+
+                    // 글쓰기 Activity 연결
+                    val intent = Intent(this, CreateArticleActivity::class.java)
+                    intent.putExtra("latitude", "$latitude")
+                    intent.putExtra("longitude", "$longitude")
+                    Log.d(TAG, "MapsMainActivity - onMapReady() 위도: $latitude 경도: $longitude  called")
+
+                    startActivity(intent)
+
+                }
+                .setNegativeButton("취소")  { dialog, id ->
+                    Log.d(TAG, "MainActivity - 다이얼로그 취소 버튼 클릭했음")
+
+                    // 새로고침
+//                    finish()
+//                    startActivity(intent)
+                }
+                .show()
+
+
 
 
             // fragment 같이 띄우는 코드 작성
@@ -267,7 +309,7 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.d(TAG, "MapsMainActivity - onMapReady() called / else 000 /nowLatitude ${nowLatitude}, nowLongitude${nowLongitude}")
 
         val LATLNG = LatLng(37.54547677189177, 126.95253576863207)
-        val descriptor = getDescriptorFromDrawable(R.drawable.marker)
+        val descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
 
         val markerOptions = MarkerOptions()
             .position(LATLNG)
@@ -346,9 +388,9 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // bitmap 크기 변환
-        var scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 66, 172, false)
-        if(drawableId == R.drawable.marker) {
-            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 66, 112, false)
+        var scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 132, 222, false)
+        if(drawableId == R.drawable.p_merged) {
+            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 62, 108, false)
         }
 
         return BitmapDescriptorFactory.fromBitmap(scaledBitmap)
@@ -378,14 +420,25 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun showCmnt(cmnties: MapCmnt?) {
 
-        var descriptor = getDescriptorFromDrawable(R.drawable.marker)
-        val m_merged_blue = getDescriptorFromDrawable(R.drawable.m_merged_blue)
-        val m_merged_green = getDescriptorFromDrawable(R.drawable.m_merged_green)
-        val m_merged_orange = getDescriptorFromDrawable(R.drawable.m_merged_orange)
-        val m_merged_pink = getDescriptorFromDrawable(R.drawable.m_merged_pink)
-        val m_merged_purple = getDescriptorFromDrawable(R.drawable.m_merged_purple)
-        val m_merged_red = getDescriptorFromDrawable(R.drawable.m_merged_red)
-        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.m_merged_yellow)
+//        var descriptor = getDescriptorFromDrawable(R.drawable.marker)
+//        val m_merged_blue = getDescriptorFromDrawable(R.drawable.m_merged_blue)
+//        val m_merged_green = getDescriptorFromDrawable(R.drawable.m_merged_green)
+//        val m_merged_orange = getDescriptorFromDrawable(R.drawable.m_merged_orange)
+//        val m_merged_pink = getDescriptorFromDrawable(R.drawable.m_merged_pink)
+//        val m_merged_purple = getDescriptorFromDrawable(R.drawable.m_merged_purple)
+//        val m_merged_red = getDescriptorFromDrawable(R.drawable.m_merged_red)
+//        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.m_merged_yellow)
+
+        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
+
+        val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
+        val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
+        val m_merged_orange = getDescriptorFromDrawable(R.drawable.p_merged_orange)
+        val m_merged_pink = getDescriptorFromDrawable(R.drawable.p_merged_pink)
+        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
+        val m_merged_red = getDescriptorFromDrawable(R.drawable.p_merged_red)
+        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.p_merged_yellow)
+
 
         val latLngBounds = LatLngBounds.Builder()
 
@@ -527,7 +580,7 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
             var position = LatLng(nowLatitude.toDouble(), nowLongitude.toDouble())
 
-            val descriptor = getDescriptorFromDrawable(R.drawable.m_merged_blue)
+            val descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
 
             val marker = MarkerOptions()
                 .position(position)

@@ -18,11 +18,15 @@ import com.han.owlmergerprototype.MapFragment
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.map.MapsMainFragment
+import com.han.owlmergerprototype.map.MapsMainNoLoginFragment
 import com.han.owlmergerprototype.mypage.MypageFragment
 import com.kakao.sdk.common.KakaoSdk
 
 class NoLoginBottomNavActivity : AppCompatActivity() {
 
+    private lateinit var mapsMainNoLoginFragment: MapsMainNoLoginFragment
+    private lateinit var mapsMainFragment: MapsMainFragment
     private lateinit var mapFragment: MapFragment
     private lateinit var commFragment: CommFragment
     private lateinit var noLoginCommFragment: NoLoginCommFragment
@@ -73,8 +77,13 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
         noLoginCommFragment = NoLoginCommFragment.newInstance(this)
-        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
+//        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
 
+//        mapsMainFragment = MapsMainFragment.newInstance()
+//        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, mapsMainFragment).commit()
+
+        mapsMainNoLoginFragment = MapsMainNoLoginFragment.newInstance()
+        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, mapsMainNoLoginFragment).commit()
 
 
         switch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -88,19 +97,30 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                 if (isChecked) {
 //                    Log.d(TAG, "BottomActivity - switch map")
                     Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /isChecked /called")
-                    val intent = Intent(this, MapsMainActivity::class.java)
-                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /isChecked /called222")
 //                    val intent = Intent(this, MapsMainActivity::class.java)
-                    startActivity(intent)
+//                    startActivity(intent)
 
 //                    mapFragment = MapFragment.newInstance()
 //                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapFragment).commit()
 
 
-                } else {
-                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
+                    //mapfragment 시도
+//                    mapsMainFragment = MapsMainFragment.newInstance(this)
+//                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, mapsMainFragment).commit()
+
                     noLoginCommFragment = NoLoginCommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
+                } else {
+                    Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
+                    mapsMainNoLoginFragment = MapsMainNoLoginFragment.newInstance()
+                    if(fragmentManager.backStackEntryCount !=0){
+                        fragmentManager.popBackStack()
+                    }
+                    fragmentManager.beginTransaction()
+                        .add(R.id.fragments_frame,mapsMainNoLoginFragment)
+                        .addToBackStack(null)
+                        .commit()
+
                 }
         }
     }

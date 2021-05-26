@@ -123,13 +123,13 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyCommunityPostsList: MutableList<Post> =
-            Gson().fromJson(myShared.getString(
-                getString(R.string.owl_shared_preferences_dummy_comm_posts),
-                ""),
-                dummyCommPostsType
-            )
+//        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
+//        val dummyCommunityPostsList: MutableList<Post> =
+//            Gson().fromJson(myShared.getString(
+//                getString(R.string.owl_shared_preferences_dummy_comm_posts),
+//                ""),
+//                dummyCommPostsType
+//            )
 //        recyclerView = view1.findViewById(R.id.article_rv)
 //        mAdapter = RecyclerAdapter(owner, postModel.posts)
 
