@@ -5,7 +5,7 @@ data class Noti (
     var createdAt: String,
     var userId: Int,
     var postId : Int,
-    var post:Post,
+    var postSaebaeEvent:PostSaebaeEvent,
     var commentId : Int,
     var likeId : Int,
     var isRead : Boolean,

@@ -84,8 +84,9 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
-
         noLoginCommFragment = NoLoginCommFragment.newInstance(this)
+
+//        noLoginCommFragment = NoLoginCommFragment.newInstance(this)
 //        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
 
 //        mapsMainFragment = MapsMainFragment.newInstance()
@@ -123,6 +124,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                     nav.background= getDrawable(R.drawable.comm_bottom_nav_bg)
                 } else {
                     Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
+                    //mapfragment 시도 else : com
                     mapsMainNoLoginFragment = MapsMainNoLoginFragment.newInstance()
                     if(fragmentManager.backStackEntryCount !=0){
                         fragmentManager.popBackStack()
@@ -134,6 +136,10 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
 
                     fakeTrack.background = getDrawable(R.drawable.map_toggle_backgroud)
                     nav.background = getDrawable(R.drawable.map_bottom_nav_bg)
+
+                    // 원래 커뮤니티 바로노출
+                    noLoginCommFragment = NoLoginCommFragment.newInstance(this)
+                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
 
                 }
         }

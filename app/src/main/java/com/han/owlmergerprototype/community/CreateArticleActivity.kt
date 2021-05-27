@@ -1,7 +1,6 @@
 package com.han.owlmergerprototype.community
 
 import android.Manifest
-import android.app.Dialog
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,39 +18,28 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.common.ADDRESS
-import com.han.owlmergerprototype.common.ADDRESS_IMAGE
 import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import java.util.*
-import kotlin.collections.ArrayList
-import com.han.owlmergerprototype.data.Post
-import com.han.owlmergerprototype.data.TestUser
-import com.han.owlmergerprototype.map.MapsMainActivity
-import com.han.owlmergerprototype.utils.DateTimeFormatManager
+import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.Multipart
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.concurrent.TimeUnit
 
 // for Image upload
 private const val PICK_FROM_GALLERY = 100
@@ -106,11 +94,11 @@ class CreateArticleActivity : AppCompatActivity() {
             latlng_text.text = "위도 : $latitude, 경도 : $longitude"
         } else {
             latlng_img.setOnClickListener {
-                val intent = Intent(this, MapsMainActivity::class.java)
+                val intent = Intent(this, NoLoginBottomNavActivity::class.java)
                 startActivity(intent)
             }
             latlng_text.setOnClickListener {
-                val intent = Intent(this, MapsMainActivity::class.java)
+                val intent = Intent(this, NoLoginBottomNavActivity::class.java)
                 startActivity(intent)
             }
 

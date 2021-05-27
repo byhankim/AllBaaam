@@ -1,10 +1,10 @@
 package com.han.owlmergerprototype.dataMapCmnt
 
-data class Map(
-    val createdAt: String,
+data class mMap(
     val id: Int,
+    val createdAt: String,
     val latitude: Double,
     val longitude: Double,
-    val post: Post,
+    val post: mPost,
     val postId: Int
 )

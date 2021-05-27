@@ -1,6 +1,5 @@
 package com.han.owlmergerprototype
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.han.owlmergerprototype.data.Bookmark
 import com.han.owlmergerprototype.data.Comment
-import com.han.owlmergerprototype.data.Like
-import com.han.owlmergerprototype.data.Post
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 const val DUMMY_USER_ID = 1

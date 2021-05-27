@@ -40,7 +40,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
     private lateinit var themeSelectorRv: RecyclerView
 
     // dummy post dataset
-    private lateinit var dummyCommPostDatasets: MutableList<Post>
+    private lateinit var dummyCommPostSaebaeEventDatasets: MutableList<PostSaebaeEvent>
 
     // rest post dataset
     private lateinit var postModel: PostModel
@@ -92,8 +92,8 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyCommunityPostsList: MutableList<Post> =
+        val dummyCommPostsType = object: TypeToken<MutableList<PostSaebaeEvent>>() {}.type
+        val dummyCommunityPostsList: MutableList<PostSaebaeEvent> =
             Gson().fromJson(myShared.getString(
                 getString(R.string.owl_shared_preferences_dummy_comm_posts),
                 ""),
@@ -302,7 +302,7 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
 
     inner class RecyclerAdapter(
         private val owner: Activity,
-        private val dummyPostsList: MutableList<Post> /*, private val itemListener: (CommentEntity) -> Unit */
+        private val dummyPostsList: MutableList<PostSaebaeEvent> /*, private val itemListener: (CommentEntity) -> Unit */
     ): RecyclerView.Adapter<RecyclerAdapter.PostHolder>(){
 
         inner class PostHolder(itemView: View/*, itemListener: (Post) -> Unit*/): RecyclerView.ViewHolder(itemView) {
@@ -422,8 +422,8 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
             Context.MODE_PRIVATE
         )
 
-        val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-        val dummyCommunityPostsList: MutableList<Post> =
+        val dummyCommPostsType = object: TypeToken<MutableList<PostSaebaeEvent>>() {}.type
+        val dummyCommunityPostsList: MutableList<PostSaebaeEvent> =
             Gson().fromJson(myShared.getString(
                 getString(R.string.owl_shared_preferences_dummy_comm_posts),
                 ""),

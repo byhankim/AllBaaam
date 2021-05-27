@@ -120,10 +120,10 @@ class AlarmFragment : Fragment() {
                 "COMMENT" -> "[댓글알림]"
                 else -> "[그냥알림]"
             }
-            if(articleList[position].post.contents==null){
+            if(articleList[position].postSaebaeEvent.contents==null){
                 holder.alarmTitleTV.text = null
             }else{
-                holder.alarmTitleTV.text =articleList[position].post.contents
+                holder.alarmTitleTV.text =articleList[position].postSaebaeEvent.contents
             }
 
         }

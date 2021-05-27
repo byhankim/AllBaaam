@@ -1,14 +1,9 @@
 package com.han.owlmergerprototype.sharedTest
 
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.han.owlmergerprototype.App
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.data.ArticleEntity
-import com.han.owlmergerprototype.data.Post
 
 class MyBookmarkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val rootView = itemView

@@ -2,7 +2,6 @@ package com.han.owlmergerprototype.community
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -20,7 +19,6 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.view.isVisible
 import android.widget.TextView
-import androidx.core.os.HandlerCompat.postDelayed
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,21 +27,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.common.ADDRESS
 import com.han.owlmergerprototype.common.Constants
 import com.han.owlmergerprototype.common.RetrofitRESTService
 import com.han.owlmergerprototype.data.CommentEntity
-import com.han.owlmergerprototype.data.Post
+import com.han.owlmergerprototype.data.PostSaebaeEvent
 import com.han.owlmergerprototype.data.TestUser
-import com.han.owlmergerprototype.data.ThemeEntity
-import com.han.owlmergerprototype.rest.Ok
 import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
-import com.han.owlmergerprototype.map.MapsMainActivity
-import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
-import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
@@ -70,7 +62,7 @@ private lateinit var floatBTN: FloatingActionButton
 
 
     // dummy post dataset
-    private lateinit var dummyCommPostDatasets: MutableList<Post>
+    private lateinit var dummyCommPostSaebaeEventDatasets: MutableList<PostSaebaeEvent>
     private lateinit var autoLogin : SharedPreferences
 //    private lateinit var dummyCommPostDatasets: MutableList<Post>
 

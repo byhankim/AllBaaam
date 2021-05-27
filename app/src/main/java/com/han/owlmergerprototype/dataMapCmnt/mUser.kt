@@ -1,5 +1,5 @@
 package com.han.owlmergerprototype.dataMapCmnt
 
-data class User(
+data class mUser(
     val userName: String
 )

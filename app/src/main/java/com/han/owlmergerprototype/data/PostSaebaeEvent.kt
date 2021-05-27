@@ -2,7 +2,7 @@ package com.han.owlmergerprototype.data
 
 import com.han.owlmergerprototype.rest.Image
 
-data class Post(
+data class PostSaebaeEvent(
         var id: Int = -1,
         var createdAt: String = "",
         var updatedAt: String = "",

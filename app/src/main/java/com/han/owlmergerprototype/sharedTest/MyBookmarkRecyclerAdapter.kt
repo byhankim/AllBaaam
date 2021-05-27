@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
-import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.rest.PostForMy
 
 class MyBookmarkRecyclerAdapter(val context: Context, val articleList: ArrayList<PostForMy>): RecyclerView.Adapter<MyBookmarkViewHolder>() {

@@ -27,9 +27,8 @@ import com.google.gson.Gson
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
-import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.Post
+import com.han.owlmergerprototype.dataMapCmnt.mMap
 import com.han.owlmergerprototype.dataMapLibrary.Library
 import retrofit2.Call
 import retrofit2.Callback
@@ -167,7 +166,7 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             Log.e(TAG, "MapsMainActivity - onMapReady() called / isNullOrEmpty 333")
-            val mapCmntObject = marker.tag as Map
+            val mapCmntObject = marker.tag as mMap
 
             //mapCmntObject.
 //            val intent = Intent(this, CreateArticleActivity::class.java)
@@ -447,7 +446,7 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.d(TAG, "MapsMainActivity - showCmnt() called / cmnt.latitude = ${cmnt.latitude}, cmnt.longitude = ${cmnt.longitude}")
             val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
 
-            val m_merged: String = cmnt.post.category.toString()
+            val m_merged: String = cmnt.postDoobaeEvent?.category.toString()
             if (m_merged == "TIP") {
                 descriptor = m_merged_blue
             } else if (m_merged == "STOCK") {
@@ -464,12 +463,12 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val marker = MarkerOptions()
 //                .title(lib.LBRRY_NAME)
-                .snippet("${cmnt.post.toString()}")
+                .snippet("${cmnt.postDoobaeEvent?.toString()}")
                 .position(position)
                 .icon(descriptor)
 
             val markerObject = mMap.addMarker(marker)
-            markerObject.title = cmnt.post.category
+            markerObject.title = cmnt.postDoobaeEvent?.category
             markerObject.tag = cmnt
 
             var tag = Gson().toJson(markerObject.tag)

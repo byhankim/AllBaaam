@@ -3,12 +3,10 @@ package com.han.owlmergerprototype.sharedTest
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.han.owlmergerprototype.App
-import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.ArticleEntity
-import com.han.owlmergerprototype.data.Post
+import com.han.owlmergerprototype.data.PostSaebaeEvent
 import com.han.owlmergerprototype.data.TestUser
 
 object SharedPrefManager {
@@ -31,17 +29,17 @@ object SharedPrefManager {
         editor.commit()
     }
 
-    fun getUserContentsList():MutableList<Post>{
-        val userList = ArrayList<Post>()
+    fun getUserContentsList():MutableList<PostSaebaeEvent>{
+        val userList = ArrayList<PostSaebaeEvent>()
         val shared :SharedPreferences = App.instance.getSharedPreferences(SHARED_MYCONTENTS,
             Context.MODE_PRIVATE)
 
         val storedContentsListString:String = shared.getString(KEY_NAME,"")!!
 
-        var storedContentsList = ArrayList<Post>()
+        var storedContentsList = ArrayList<PostSaebaeEvent>()
 
         if(storedContentsListString.isNotEmpty()){
-            storedContentsList = Gson().fromJson(storedContentsListString, Array<Post>::class.java).toMutableList() as ArrayList<Post>
+            storedContentsList = Gson().fromJson(storedContentsListString, Array<PostSaebaeEvent>::class.java).toMutableList() as ArrayList<PostSaebaeEvent>
 
             for(i in storedContentsList){
                 if(i.user.id == TestUser.userID) userList.add(i)
