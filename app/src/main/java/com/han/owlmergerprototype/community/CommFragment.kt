@@ -44,6 +44,7 @@ import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
@@ -636,7 +637,7 @@ private lateinit var floatBTN: FloatingActionButton
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = postEntity.user.userName
-                datetime.text = postEntity.createdAt
+                datetime.text = DateTimeFormatManager.getTimeGapFromNow(postEntity.createdAt)
                 content.text = postEntity.contents
 
                 likeCount.text = postEntity.like.size.toString()

@@ -163,7 +163,7 @@ class ArticleActivity : AppCompatActivity(){
         else -> binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
     }
 
-        binding.articleTimestampTv.text = selectedPost.createdAt
+        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(selectedPost.createdAt)
         binding.articleUname.text = selectedPost.user.userName
        // binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
         binding.articleCommentCountTv.text = changeCommentTxt(selectedPost.id).toString()

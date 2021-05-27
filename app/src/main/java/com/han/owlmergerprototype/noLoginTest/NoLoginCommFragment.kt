@@ -36,6 +36,7 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
@@ -323,7 +324,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = postEntity.user.userName
-                datetime.text = postEntity.createdAt
+                datetime.text = DateTimeFormatManager.getTimeGapFromNow(postEntity.createdAt)
                 content.text = postEntity.contents
             }
             if(position==3){

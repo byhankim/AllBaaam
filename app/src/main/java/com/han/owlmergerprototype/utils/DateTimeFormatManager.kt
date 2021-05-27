@@ -5,6 +5,8 @@ import android.os.Build
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -23,17 +25,25 @@ class DateTimeFormatManager {
         }
 
         fun getTimeGapFromNow(datetime: String): String {
+            var old: Long = 0
+            var now: Long = 0
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val current = LocalDateTime.now()
-                val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+                now = ZonedDateTime.of(LocalDateTime.now(),
+                    ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+                val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                old = LocalDateTime.parse(datetime, dtf)
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() + 32400000
+            } else {
+                now = Date().time
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                val date = sdf.parse(datetime)
+                old = date?.time?.plus(32400000) ?: 0 // 9 hr supp
             }
-            val date = Date()
-            val formatter = SimpleDateFormat("yyyyMMddHHmmss")
 
-
-
-            val gap = getCurrentDatetime().toLong() - datetime.toLong()
+            val gap = (now - old) / 1000
             return when {
                 gap < 60 -> "${gap}초 전"
                 gap in 60..3599 -> "${gap/60}분 전"

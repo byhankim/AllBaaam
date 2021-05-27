@@ -140,13 +140,22 @@ class CreateArticleActivity : AppCompatActivity() {
         with (binding.themeSelectorRecyclerview) {
             layoutManager = manager
             DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
-
+/*
+val category = when (selectedCategory) {
+            0 -> "TIP"
+            1 -> "STOCK"
+            2 -> "STUDY"
+            3 -> "SPORTS"
+            4 -> "FOOD"
+            5 -> "GAME"
+            else -> "NOCATEGORY"
+ */
             val testList = mutableListOf<ThemeEntity>()
             testList.add(ThemeEntity(getString(R.string.comm_honey_tip), R.drawable.ic_idea2, R.color.style1_5_20,R.color.style2_5,R.color.style1_5, 1, false))
             testList.add(ThemeEntity(getString(R.string.comm_stocks_overseas), R.drawable.ic_graph2, R.color.style1_4_20,R.color.style2_4,R.color.style1_4, 2, false))
-            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.ic_sport2, R.color.style1_3_20,R.color.style2_3, R.color.style1_3, 3, false))
-            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.ic_chicken2, R.color.style1_2_20,R.color.style2_2, R.color.style1_2, 4, false))
-            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.ic_book2, R.color.style1_6_20,R.color.style2_6, R.color.style1_6, 5, false))
+            testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.ic_book2, R.color.style1_6_20,R.color.style2_6, R.color.style1_6, 3, false))
+            testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.ic_sport2, R.color.style1_3_20,R.color.style2_3, R.color.style1_3, 4, false))
+            testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.ic_chicken2, R.color.style1_2_20,R.color.style2_2, R.color.style1_2, 5, false))
             testList.add(ThemeEntity(getString(R.string.comm_games), R.drawable.ic_game2, R.color.style1_7_20,R.color.style2_7, R.color.style1_7, 6, false))
             mAdapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
@@ -501,8 +510,14 @@ class CreateArticleActivity : AppCompatActivity() {
     private fun createPost() {
         //getMapCommunity
         val createPostService = OwlRetrofitManager.OwlRestService.owlRestService
-        val cateNum = when (selectedCategory) {
-            
+        val category = when (selectedCategory) {
+            0 -> "TIP"
+            1 -> "STOCK"
+            2 -> "STUDY"
+            3 -> "SPORTS"
+            4 -> "FOOD"
+            5 -> "GAME"
+            else -> "NOCATEGORY"
         }
 
         val myJson = if (imageId != null && latitude != null) {
@@ -510,7 +525,7 @@ class CreateArticleActivity : AppCompatActivity() {
             Log.e("[죄다보냅니다!]", "a")
             Gson().toJson(CreatePostEntityFull(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD",
+                category,
                 imageId,
                 latitude,
                 longitude
@@ -519,7 +534,7 @@ class CreateArticleActivity : AppCompatActivity() {
             Log.e("[위경도만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityLocation(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD",
+                category,
                 latitude,
                 longitude
             ))
@@ -527,14 +542,14 @@ class CreateArticleActivity : AppCompatActivity() {
             Log.e("[이미지만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityImage(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD",
+                category,
                 imageId
             ))
         } else {
             Log.e("[글만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityMinimal(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD"
+                category
             ))
         }
 
