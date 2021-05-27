@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.FragmentManager
@@ -36,6 +37,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
     private lateinit var noLoginFragment:NoLoginFragment
     private lateinit var autoLogin : SharedPreferences
     private lateinit var inte: Intent
+    private lateinit var fakeTrack: TextView
 
 
     companion object{
@@ -76,6 +78,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
+
         noLoginCommFragment = NoLoginCommFragment.newInstance(this)
 //        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
 
@@ -110,6 +113,8 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
 
                     noLoginCommFragment = NoLoginCommFragment.newInstance(this)
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
+                    fakeTrack.background = getDrawable(R.drawable.comm_toggle_backgroud)
+                    nav.background= getDrawable(R.drawable.comm_bottom_nav_bg)
                 } else {
                     Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
                     mapsMainNoLoginFragment = MapsMainNoLoginFragment.newInstance()
@@ -120,6 +125,9 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,mapsMainNoLoginFragment)
                         .addToBackStack(null)
                         .commit()
+
+                    fakeTrack.background = getDrawable(R.drawable.map_toggle_backgroud)
+                    nav.background = getDrawable(R.drawable.map_bottom_nav_bg)
 
                 }
         }

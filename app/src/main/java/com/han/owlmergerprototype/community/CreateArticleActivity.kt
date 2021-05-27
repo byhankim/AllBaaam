@@ -151,14 +151,24 @@ class CreateArticleActivity : AppCompatActivity() {
             mAdapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
             }*/
+
+
+            mAdapter.setItemClickListener(object : ThemeSelectorRecyclerAdapter.ItemClickListener {
+                override fun onClick(view: View, position: Int) {
+                    Log.d(TAG, "onClick: ${position}")
+                    selectedCategory = position
+                }
+            })
+
             adapter = mAdapter
 //            selectedCategory
 
-            setOnClickListener {
-                selectedCategory = mAdapter.ThemeHolder(this).absoluteAdapterPosition
-                Toast.makeText(this@CreateArticleActivity, "selectedCategory: $selectedCategory", Toast.LENGTH_SHORT).show()
-            }
+
+
         }
+
+
+
 
         // test selectedCategory
 //        binding.commWriteArticleSetLocationTipTv.setOnClickListener {
@@ -228,8 +238,21 @@ class CreateArticleActivity : AppCompatActivity() {
                     commit()
                 }
                 */
+
+                Log.d(TAG, "selectedCategory: ${selectedCategory} ")
+                val cate: String = when (selectedCategory) {
+                    0 -> "TIP"
+                    1 -> "STOCK"
+                    2 -> "STUDY"
+                    3 -> "SPORTS"
+                    4 -> "FOOD"
+                    5 -> "GAME"
+                    else -> "TIP"
+                }
+
+                Log.d(TAG, "cate: ${cate} ")
                 if (checkValidate()) {
-                    createPost()
+                    createPost(cate)
                 }
 
                 // Activity back stack flush
@@ -465,7 +488,7 @@ class CreateArticleActivity : AppCompatActivity() {
         return imageId
     }
 
-    private fun createPost() {
+    private fun createPost(category:String) {
         //getMapCommunity
         val createPostService = OwlRetrofitManager.OwlRestService.owlRestService
 
@@ -481,20 +504,20 @@ class CreateArticleActivity : AppCompatActivity() {
         } else if (imageId == null && latitude != null) {
             Gson().toJson(CreatePostEntityLocation(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD",
+                category,
                 latitude,
                 longitude
             ))
         } else if (imageId != null && latitude == null) {
             Gson().toJson(CreatePostEntityImage(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD",
+                category,
                 imageId
             ))
         } else {
             Gson().toJson(CreatePostEntityMinimal(
                 binding.commWriteArticleContentEt.text.toString(),
-                "FOOD"
+                category
             ))
         }
 

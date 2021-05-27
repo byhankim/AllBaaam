@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/black"
+        android:background="@drawable/map_bottom_nav_bg"
         android:visibility="visible"
         app:itemIconSize="20dp"
         app:labelVisibilityMode="unlabeled"

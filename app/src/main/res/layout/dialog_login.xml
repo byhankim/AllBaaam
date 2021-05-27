@@ -6,7 +6,8 @@
     android:layout_height="250dp"
     android:background="@color/gray8"
     android:padding="15dp"
-    android:layout_centerInParent="true">
+    android:layout_centerInParent="true"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/login_dialog_cancel_btn"
@@ -23,21 +24,26 @@
         android:layout_centerHorizontal="true"
         android:textSize="15dp"
         android:text="간편한 소셜 로그인으로\n더 많은 콘텐츠를 만나볼 수 있어요!"/>
+
+
     <Button
         android:id="@+id/kakao_login_btn"
-        android:layout_width="237dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_above="@+id/naver_login_btn"
-        android:text="카카오톡 로그인"/>
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/kakao_login"
+        android:layout_centerHorizontal="true" />
+
     <Button
         android:id="@+id/naver_login_btn"
-        android:layout_width="237dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-
-        android:text="네이버 로그인"/>
+        android:background="@drawable/naver_background"
+        android:text="     네이버 로그인"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
 

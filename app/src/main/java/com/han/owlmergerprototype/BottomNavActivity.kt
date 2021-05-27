@@ -75,6 +75,7 @@ class BottomNavActivity : AppCompatActivity() {
                 commFragment = CommFragment.newInstance(this)
                 supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
                 fakeTrack.background = getDrawable(R.drawable.comm_toggle_backgroud)
+                nav.background= getDrawable(R.drawable.comm_bottom_nav_bg)
 
 
 //
@@ -95,6 +96,7 @@ class BottomNavActivity : AppCompatActivity() {
                     .add(R.id.fragments_frame,mapsMainFragment)
                     .addToBackStack(null)
                     .commit()
+                nav.background= getDrawable(R.drawable.map_bottom_nav_bg)
 
             }
         }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="@dimen/dialog_declaration_width"
+    android:layout_height="130dp"
+    android:background="@color/gray7"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:elevation="24dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_12"
+        android:padding="@dimen/dialog_padding">
+
+        <TextView
+            android:id="@+id/wait_a_minute_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="잠깐!"
+            android:layout_marginBottom="6dp"
+            android:layout_above="@+id/logout_btn_layout"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="소식의 카테고리를 지정해주세요"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/wait_a_minute_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/logout_btn_layout"
+            android:layout_alignParentLeft="true"></TextView>
+
+
+
+        <Button
+            android:id="@+id/logout_ok_btn"
+            android:layout_width="50dp"
+            android:layout_height="28dp"
+            android:text="확인"
+            android:layout_marginStart="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/neon_ok_btn_style"
+            android:textColor="@color/brand1"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

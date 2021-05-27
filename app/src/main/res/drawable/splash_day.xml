@@ -5,7 +5,8 @@
         <bitmap android:src="@drawable/sleeping_owl">
         </bitmap>
     </item>
-    <item android:gravity="center">
+    <item android:bottom="80dp"
+        android:gravity="center_horizontal|bottom">
         <bitmap android:src="@drawable/all_baaam"></bitmap>
 
     </item>

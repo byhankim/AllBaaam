@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,7 @@ class ThemeSelectorRecyclerAdapter(
 
 //            themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, R.color.error2_1))//themeEntity.themeColor))
 //            themeSelectorCv.setBackgroundColor(ContextCompat.getColor(owner, themeEntity.themeColor))
-            themeSelectorCv.setOnClickListener {
+            holder.themeSelectorCv.setOnClickListener {
                 if (themeEntity.toggleClicked) {
                     themeEntity.toggleClicked = false
                     selectedPos = -1
@@ -71,6 +72,10 @@ class ThemeSelectorRecyclerAdapter(
                     themeEntity.toggleClicked = true
                     selectedPos = position
                     pos = position
+                    Log.d("TAG", "onBindViewHolder: ${position}")
+
+                        itemClickListner.onClick(it, position)
+
 
                     // ((INEFFECTIVE!!)) if newly clicked, reset all other toggle values
                     for (i in 0 until themesList.size) {
@@ -112,4 +117,18 @@ class ThemeSelectorRecyclerAdapter(
     override fun getItemCount() = themesList.size
 
     private fun getSelectedIndex() = selectedPos
+
+    interface ItemClickListener {
+        fun onClick(view: View, position: Int)
+    }
+
+    //클릭리스너 선언
+    private lateinit var itemClickListner: ItemClickListener
+
+    //클릭리스너 등록 매소드
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListner = itemClickListener
+    }
+
+
 }

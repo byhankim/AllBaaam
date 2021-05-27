@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        if(str_date.toInt()%2 ==0){
+        if(str_date.toInt()%3 ==0){
             Handler().postDelayed({
 //            startActivity(Intent(this, CommunityMainActivity::class.java))
 
