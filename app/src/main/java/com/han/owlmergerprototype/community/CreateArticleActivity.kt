@@ -27,6 +27,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.ADDRESS
+import com.han.owlmergerprototype.common.ADDRESS_IMAGE
 import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.databinding.ActivityCreateArticleBinding
@@ -37,18 +39,16 @@ import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
-import okhttp3.MediaType
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.Multipart
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 // for Image upload
 private const val PICK_FROM_GALLERY = 100
@@ -257,13 +257,44 @@ class CreateArticleActivity : AppCompatActivity() {
 
     private fun fildUploadAsync(queryString: String) {
         Thread {
+            val uploadFile = File(queryString)
+            /*var response: Response? = null
             try {
                 Log.e("[entered]", "fileUploadAsync")
-                uploadImage(queryString)
-                Log.e("[exited]", "fileUploadAsync")
+
+                val toServer: OkHttpClient = OkHttpClient.Builder()
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .build()
+
+                val fileUploadBody: RequestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", uploadFile.name,
+                        RequestBody.create("image/ *".toMediaTypeOrNull(), uploadFile))
+                    .build()
+
+                // request setting
+                val request: Request = Request.Builder()
+                    .url(ADDRESS_IMAGE)
+                    .post(fileUploadBody)
+                    .addHeader("token", token)
+                    .build()
+                response = toServer.newCall(request).execute()
+//                val imgId = Gson().toJson(response.toString()) as
+                if (response.isSuccessful) {
+                    Log.e("[ImageIdSuccess]", response.toString() + "---" + response.message)
+                }
+
+
             } catch (e: Exception) {
                 Log.e("[ImageUpException]", "image upload error!: $e")
+            } finally {
+                response?.close()
             }
+             */
+            imageId = uploadImage(queryString)
+            Log.e("[myImageId]", "$imageId")
         }.start()
     }
 
@@ -339,10 +370,10 @@ class CreateArticleActivity : AppCompatActivity() {
 
                     // 업로드 가능하게 절대 주소 알아내기
                     if (findImageFileNameFromUri(returnedImgURI)) {
-                        Log.e("[PICK_FROM_GALLERY]", "갤러리에서 절대주소 획득 성공: $returnedImgURI")
+                        Log.e("[PICK_FROM_GALLERY]", "갤러리에서 절대주소 획득 성공: $fileLocation")
 
                         // file upload
-                        fildUploadAsync(returnedImgURI.toString())
+                        fildUploadAsync(fileLocation)
                     } else {
                         Log.e("[PICK_FROM_GALLERY]", "갤러리에서 절대주소 획득 실패")
                     }
@@ -423,7 +454,7 @@ class CreateArticleActivity : AppCompatActivity() {
 
     // RETROFIT upload image
     private fun uploadImage(path: String = ""): Int? {
-        var imageId: Int? = null
+        var imgId: Int? = null
         if (path.isEmpty())
             return null
         val uploadImageService = OwlRetrofitManager.OwlRestService.owlRestService
@@ -443,7 +474,7 @@ class CreateArticleActivity : AppCompatActivity() {
 
 
         val call: Call<ImageRESTEntity> = uploadImageService.uploadImage(  multipartBody, token )
-        Log.e("[imgCall]", call.execute().toString())
+//        Log.e("[imgCall]", call.execute().toString())
         call.enqueue(object: Callback<ImageRESTEntity> {
             override fun onResponse(
                 call: Call<ImageRESTEntity>,
@@ -452,17 +483,19 @@ class CreateArticleActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val imgRESTEntity = response.body() as ImageRESTEntity
                     Toast.makeText(this@CreateArticleActivity, "이미지를 서버에 저장했습니다", Toast.LENGTH_SHORT).show()
-                    Log.e("[imgUpSuccess]", "이미지 업로드 성공! res body: ${response.body()}")
+                    Log.e("[imgUpSuccess]", "이미지 업로드 성공! res body: ${response.body()}, entity: ${imgRESTEntity.toString()}")
                     imageId = imgRESTEntity.imageId
+                    imgId = imgRESTEntity.imageId
+                    Log.e("[TRUEimgID]", "$imageId")
                 }
             }
 
             override fun onFailure(call: Call<ImageRESTEntity>, t: Throwable) {
-                imageId = null
+                imgId = null
                 Log.e("[imgUpFail]", "이미지 업로드 실패! $t")
             }
         })
-        return imageId
+        return imgId
     }
 
     private fun createPost() {
@@ -471,6 +504,7 @@ class CreateArticleActivity : AppCompatActivity() {
 
         val myJson = if (imageId != null && latitude != null) {
             // full
+            Log.e("[죄다보냅니다!]", "a")
             Gson().toJson(CreatePostEntityFull(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
@@ -479,6 +513,7 @@ class CreateArticleActivity : AppCompatActivity() {
                 longitude
             ))
         } else if (imageId == null && latitude != null) {
+            Log.e("[위경도만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityLocation(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
@@ -486,12 +521,14 @@ class CreateArticleActivity : AppCompatActivity() {
                 longitude
             ))
         } else if (imageId != null && latitude == null) {
+            Log.e("[이미지만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityImage(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD",
                 imageId
             ))
         } else {
+            Log.e("[글만보냅니다!]", "a")
             Gson().toJson(CreatePostEntityMinimal(
                 binding.commWriteArticleContentEt.text.toString(),
                 "FOOD"

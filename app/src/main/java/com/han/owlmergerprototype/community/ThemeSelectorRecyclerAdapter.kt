@@ -25,9 +25,11 @@ import com.han.owlmergerprototype.data.ThemeEntity
 
 class ThemeSelectorRecyclerAdapter(
     private val themesList: MutableList<ThemeEntity>,
-    private val owner: Activity,
+    private var owner: Activity,
     private val which : Boolean //true면 메인, false 글작성
 ): RecyclerView.Adapter<ThemeSelectorRecyclerAdapter.ThemeHolder>() {
+    private var cOwner: CreateArticleActivity? = null
+
     public var pos = -1
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>
@@ -53,6 +55,11 @@ class ThemeSelectorRecyclerAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ThemeHolder, position: Int) {
+        if (owner::class.simpleName == "CreateArticleActivity") {
+            owner = owner as CreateArticleActivity
+        }
+
+
         val themeEntity = themesList[position]
         with (holder) {
             themeSelectorItemTv.text = themeEntity.themeText

@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         val str_date = t_dateFormat.format(t_date)
         Log.d("TEST", "onCreate: ${str_date}")
 
-        if(str_date.toInt()%11 ==0){
+        if(str_date.toInt()%71 ==0){
             super.setTheme(R.style.SplashActivityDay)
         }else{
             super.setTheme(R.style.SplashActivity)
@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        if(str_date.toInt()%11 ==0){
+        if(str_date.toInt()%71 ==0){
             Handler().postDelayed({
 //            startActivity(Intent(this, CommunityMainActivity::class.java))
 

@@ -264,13 +264,14 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         private val owner: Activity,
         private var commPostList: MutableList<PostEntity>
     ): RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
-
         //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
             val itemView = layoutInflater.inflate(R.layout.layout_recycler_item,null)
             val holder = ViewHolderClass(itemView)
+
             return holder
         }
+
         fun getCategoryNameInArticle(category: String):String{
             val cateInArt :String = "#$category"
             return cateInArt
@@ -563,7 +564,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
                     Log.e("[getPostSuccess]", postModel.toString())
-                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+                    postList = postModel.posts.slice(1..4) as MutableList<PostEntity>
+
+                    mAdapter.reloadDataWithRetrofitResponse(postList)
                     owner.runOnUiThread {
 //                        recyclerView.adapter = mAdapter
                         mAdapter.notifyDataSetChanged()
@@ -588,7 +591,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 val popularPostModel = response.body() as PopularPostModel
 
                 if (popularPostModel.posts.isNullOrEmpty()) return
-                postList = popularPostModel.posts
+                postList = popularPostModel.posts.slice(1..4) as MutableList<PostEntity>
 
                 mAdapter.reloadDataWithRetrofitResponse(postList)
                 activity!!.runOnUiThread {
