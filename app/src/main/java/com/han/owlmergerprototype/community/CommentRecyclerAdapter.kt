@@ -73,7 +73,6 @@ class CommentRecyclerAdapter (
                     DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
                     adapter = recommAdapter
 //                    notifyDataSetChanged()
-
                 }
             } else {
                 recommentSection.visibility = View.INVISIBLE

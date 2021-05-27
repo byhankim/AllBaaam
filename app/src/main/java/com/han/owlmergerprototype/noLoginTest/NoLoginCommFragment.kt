@@ -13,15 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.github.mmin18.widget.RealtimeBlurView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -326,6 +324,11 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 userName.text = postEntity.user.userName
                 datetime.text = DateTimeFormatManager.getTimeGapFromNow(postEntity.createdAt)
                 content.text = postEntity.contents
+
+                if (postEntity.images.isNotEmpty()) {
+                    Glide.with(owner).load(postEntity.images[0].url).into(glideIv)
+                    glideIv.visibility = View.VISIBLE
+                }
             }
             if(position==3){
                 holder.lastItemBlur.isVisible = true
@@ -548,6 +551,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
             val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)
+
+            // img
+            val glideIv: ImageView = itemView.findViewById(R.id.image_iv)
         }
     }
 

@@ -61,7 +61,9 @@
                 android:layout_below="@id/clicked_article_topic_layout"
                 android:layout_alignStart="@id/clicked_article_topic_layout"
                 android:layout_marginTop="@dimen/article_uname_margintop"
-                android:text="@string/hungry_bingbong"/>
+                android:text="@string/hungry_bingbong"
+                android:textStyle="bold"
+                android:textSize="@dimen/article_uname_textsize"/>
             <TextView
                 android:id="@+id/article_timestamp_tv"
                 android:layout_width="wrap_content"

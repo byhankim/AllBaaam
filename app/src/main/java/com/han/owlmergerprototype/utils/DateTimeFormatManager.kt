@@ -33,7 +33,7 @@ class DateTimeFormatManager {
                     ZoneId.systemDefault()).toInstant().toEpochMilli()
 
                 val dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                old = LocalDateTime.parse(datetime, dtf)
+                old = LocalDateTime.parse(datetime, dtf)//    "2020-05-05T09:09:09:050Z"
                     .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() + 32400000
             } else {
                 now = Date().time
