@@ -271,7 +271,9 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
         try {
 
             for (cmnt in cmnties?.maps ?: listOf()) {
-                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.post?.category}")
+                Log.d(TAG, "MapsMainfragment - showMaps() called / m_merged = ${cmnt.post?.category}")
+
+                Log.d(TAG, "MapsMainfragment - showMaps() called / cmnt.latitude = ${cmnt.latitude},cmnt.longitude = ${cmnt.longitude}")
 
                 if (cmnt.post?.category != null) {
 
@@ -290,6 +292,8 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
                         descriptor = m_merged_blue
                     }
 
+
+                    Log.d(TAG, "MapsMainFragment - showMaps() called / cmnt.latitude = ${cmnt.latitude},cmnt.longitude = ${cmnt.longitude}")
 
                     val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
                     val marker = MarkerOptions()
