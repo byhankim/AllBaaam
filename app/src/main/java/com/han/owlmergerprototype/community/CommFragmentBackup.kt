@@ -365,9 +365,9 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
                     }
                     5 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_2))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_1))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_1))
                     }
                     6 -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_games))
@@ -377,13 +377,13 @@ class CommFragmentBackup(var owner: Activity): Fragment() {
                     }
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
-                userName.text = when (postEntity.user.id) {
-                    1 -> "떡볶이가 좋은 빙봉"
-                    2 -> "배부른 하이에나"
-                    3 -> "잠들지 못하는 소크라테스"
-                    4 -> "집에 가고픈 야근가이"
-                    else -> "롤이 재밌는 콩순이"
-                }
+//                userName.text = when (postEntity.user.id) {
+//                    1 -> "떡볶이가 좋은 빙봉"
+//                    2 -> "배부른 하이에나"
+//                    3 -> "잠들지 못하는 소크라테스"
+//                    4 -> "집에 가고픈 야근가이"
+//                    else -> "롤이 재밌는 콩순이"
+//                }
                 datetime.text = postEntity.createdAt
                 content.text = postEntity.contents
             }

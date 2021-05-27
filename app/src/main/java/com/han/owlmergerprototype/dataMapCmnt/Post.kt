@@ -2,7 +2,7 @@ package com.han.owlmergerprototype.dataMapCmnt
 
 data class Post(
     val bookmark: MutableList<Any>,
-    val category: String,
+    val category: String = "",
     val comments: MutableList<Any>,
     val contents: String,
     val createdAt: String,

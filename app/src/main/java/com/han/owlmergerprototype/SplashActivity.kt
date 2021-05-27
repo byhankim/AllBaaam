@@ -2,6 +2,7 @@ package com.han.owlmergerprototype
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -13,23 +14,55 @@ import com.han.owlmergerprototype.data.Bookmark
 import com.han.owlmergerprototype.data.Comment
 import com.han.owlmergerprototype.data.Like
 import com.han.owlmergerprototype.data.Post
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 const val DUMMY_USER_ID = 1
 
 class SplashActivity : AppCompatActivity() {
     private val timeoutCount: Long = 1500
+    override fun setTheme(theme: Resources.Theme?) {
+
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val long_now = System.currentTimeMillis()
+        val t_date = Date(long_now)
+//        val t_dateFormat = SimpleDateFormat("HH:mm:ss E", Locale("ko", "KR"))
+        val t_dateFormat = SimpleDateFormat("mm", Locale("ko", "KR"))
+        // 현재 시간을 dateFormat 에 선언한 형태의 String 으로 변환
+        val str_date = t_dateFormat.format(t_date)
+        Log.d("TEST", "onCreate: ${str_date}")
+
+        if(str_date.toInt()%3 ==0){
+            super.setTheme(R.style.SplashActivityDay)
+        }else{
+            super.setTheme(R.style.SplashActivity)
+        }
+
         super.onCreate(savedInstanceState)
+
+        if(str_date.toInt()%2 ==0){
+            Handler().postDelayed({
+//            startActivity(Intent(this, CommunityMainActivity::class.java))
+
+                finish()
+            }, timeoutCount)
+        }else{
+            Handler().postDelayed({
+//            startActivity(Intent(this, CommunityMainActivity::class.java))
+                startActivity(Intent(this, NoLoginBottomNavActivity::class.java))
+                finish()
+            }, timeoutCount)
+        }
+
 
         createDummyData()
 
         // 1.5초 이후 메인 커뮤니티 화면으로 이동
-        Handler().postDelayed({
-//            startActivity(Intent(this, CommunityMainActivity::class.java))
-            startActivity(Intent(this, NoLoginBottomNavActivity::class.java))
-            finish()
-        }, timeoutCount)
+
     }
 
     private fun createDummyData(){

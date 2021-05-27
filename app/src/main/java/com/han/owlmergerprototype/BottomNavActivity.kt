@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -26,6 +27,7 @@ class BottomNavActivity : AppCompatActivity() {
     private lateinit var switch:SwitchCompat
     private lateinit var fragmentManager : FragmentManager
     private lateinit var inte: Intent
+    private lateinit var fakeTrack:TextView
 
 
     companion object{
@@ -38,6 +40,7 @@ class BottomNavActivity : AppCompatActivity() {
         setContentView(R.layout.bottom_nav_layout)
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)
+        fakeTrack = findViewById(R.id.fake_track)
        
 
         nav.menu.getItem(0).isCheckable = false
@@ -68,8 +71,11 @@ class BottomNavActivity : AppCompatActivity() {
             if (isChecked) {
                 Log.d(TAG, "BottomNavActivity - onCreate() MAP isChecked called")
 
+
                 commFragment = CommFragment.newInstance(this)
                 supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, commFragment).commit()
+                fakeTrack.background = getDrawable(R.drawable.comm_toggle_backgroud)
+
 
 //
 //                val intent = Intent(this@BottomNavActivity, MapsMainActivity::class.java)
@@ -83,9 +89,8 @@ class BottomNavActivity : AppCompatActivity() {
 
 
                 mapsMainFragment = MapsMainFragment.newInstance()
-                if(fragmentManager.backStackEntryCount !=0){
-                    fragmentManager.popBackStack()
-                }
+                
+                fakeTrack.background = getDrawable(R.drawable.map_toggle_backgroud)
                 fragmentManager.beginTransaction()
                     .add(R.id.fragments_frame,mapsMainFragment)
                     .addToBackStack(null)
@@ -130,22 +135,4 @@ class BottomNavActivity : AppCompatActivity() {
         }
         true
     }
-
-
-
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//        Log.d(TAG, "BottomActivity - onNavigationItemSelected() called")
-//
-//        when(item.itemId){
-//            R.id.alarm_btn -> {
-//                Log.d(TAG, "BottomActivity - 알람 클릭")
-//            }
-//
-//            R.id.mypage_btn -> {
-//                Log.d(TAG, "BottomActivity - 마페 클릭")
-//            }
-//        }
-//
-//        return true
-//    }
 }

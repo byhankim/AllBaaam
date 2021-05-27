@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/brand1"></item>
+    <item android:gravity="center">
+        <bitmap android:src="@drawable/final_big_owl">
+        </bitmap>
+    </item>
+    <item android:gravity="center">
+        <bitmap android:src="@drawable/all_baaam"></bitmap>
+
+    </item>
+</layer-list>

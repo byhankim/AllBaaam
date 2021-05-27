@@ -16,6 +16,8 @@
     <color name="white_12">#1Fffffff</color>
     <color name ="switch_off">#8496B3</color>
 
+    <color name= "day_splash_background">#CCF3FF</color>
+
     <!-- Owl Colors -->
     <color name="brand1">#874FE1</color>
     <color name="brand1_12">#1F874FE1</color>
