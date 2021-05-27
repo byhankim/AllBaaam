@@ -61,8 +61,8 @@ class CreateArticleActivity : AppCompatActivity() {
     private lateinit var mAdapter: ThemeSelectorRecyclerAdapter
 
     // category number
-    private var selectedCategory: Int = -1
-    private var prevSelectedCategory: Int = -1
+    var selectedCategory: Int = -1
+    var prevSelectedCategory: Int = -1
 
     // retrofit
     private var imageId: Int? = null
@@ -147,7 +147,7 @@ class CreateArticleActivity : AppCompatActivity() {
             testList.add(ThemeEntity(getString(R.string.comm_sports_overseas), R.drawable.ic_sport2, R.color.style1_3_20,R.color.style2_3, R.color.style1_3, 3, false))
             testList.add(ThemeEntity(getString(R.string.comm_latenight_food), R.drawable.ic_chicken2, R.color.style1_2_20,R.color.style2_2, R.color.style1_2, 4, false))
             testList.add(ThemeEntity(getString(R.string.comm_study_hard), R.drawable.ic_book2, R.color.style1_6_20,R.color.style2_6, R.color.style1_6, 5, false))
-            testList.add(ThemeEntity(getString(R.string.comm_games), R.drawable.ic_game2, R.color.style1_7_20,R.color.style2_7, R.color.style1_7, 5, false))
+            testList.add(ThemeEntity(getString(R.string.comm_games), R.drawable.ic_game2, R.color.style1_7_20,R.color.style2_7, R.color.style1_7, 6, false))
             mAdapter = ThemeSelectorRecyclerAdapter(testList, this@CreateArticleActivity,false) /*{
                 setOnClickListener { Toast.makeText(context, "theme selected!", Toast.LENGTH_SHORT).show() }
             }*/
@@ -501,6 +501,9 @@ class CreateArticleActivity : AppCompatActivity() {
     private fun createPost() {
         //getMapCommunity
         val createPostService = OwlRetrofitManager.OwlRestService.owlRestService
+        val cateNum = when (selectedCategory) {
+            
+        }
 
         val myJson = if (imageId != null && latitude != null) {
             // full

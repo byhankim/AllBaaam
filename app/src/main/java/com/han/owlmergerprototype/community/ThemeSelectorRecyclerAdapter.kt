@@ -31,6 +31,7 @@ class ThemeSelectorRecyclerAdapter(
     private var cOwner: CreateArticleActivity? = null
 
     public var pos = -1
+    var isCAA = false
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>
     private lateinit var iconsList: MutableList<Int>
@@ -57,6 +58,7 @@ class ThemeSelectorRecyclerAdapter(
     override fun onBindViewHolder(holder: ThemeHolder, position: Int) {
         if (owner::class.simpleName == "CreateArticleActivity") {
             owner = owner as CreateArticleActivity
+            isCAA = true
         }
 
 
@@ -74,10 +76,12 @@ class ThemeSelectorRecyclerAdapter(
                     themeEntity.toggleClicked = false
                     selectedPos = -1
                     pos = -1
+                    if (isCAA) (owner as CreateArticleActivity).selectedCategory = -1
                 } else {
                     themeEntity.toggleClicked = true
                     selectedPos = position
                     pos = position
+                    if (isCAA) (owner as CreateArticleActivity).selectedCategory = position
 
                     // ((INEFFECTIVE!!)) if newly clicked, reset all other toggle values
                     for (i in 0 until themesList.size) {
