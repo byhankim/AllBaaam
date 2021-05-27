@@ -117,7 +117,7 @@
     <dimen name="comment_content_re_margin_end">20dp</dimen>
     <dimen name="comment_re_section_margin_bottom">26dp</dimen>
     <dimen name="comment_delete_btn_size">22dp</dimen>
-    <dimen name="comment_section_margin_bottom">20dp</dimen>
+    <dimen name="comment_section_margin_bottom">12dp</dimen>
     <dimen name="comment_re_section_margin_top">16dp</dimen>
     <dimen name="notice_margin">40dp</dimen>
     <dimen name="notice_check_list_margin">40dp</dimen>

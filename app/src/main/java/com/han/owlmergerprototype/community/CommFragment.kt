@@ -775,6 +775,7 @@ private lateinit var floatBTN: FloatingActionButton
 
         recyclerView.adapter?.notifyDataSetChanged()
         Log.e("[CommFrag]", "dummy list size: ${dummyCommunityPostsList.size}...")*/
+//        getPosts(mCursorId)
     }
 
     // ===========================================================================

@@ -266,7 +266,6 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
                     }
                 })
         } catch (i: Exception) {
-
             Log.e("[retrofit 불러오는중 문제발생]", i.toString(), i)
         }
     }

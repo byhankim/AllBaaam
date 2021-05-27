@@ -23,6 +23,7 @@ class RecommentRecyclerAdapter(
         val likeBtn: TextView = itemView.findViewById(R.id.comment_re_fav_btn)
         val delBtn: TextView = itemView.findViewById(R.id.comment_re_delete_btn)
 
+        val bottomMarginBlock: TextView = itemView.findViewById(R.id.comment_re_section_margin_bottom_tv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommentHolder {
@@ -39,6 +40,9 @@ class RecommentRecyclerAdapter(
             delBtn.visibility = when (recommentEntity.userId) {
                 TestUser.userID -> View.VISIBLE
                 else -> View.GONE
+            }
+            if (position == reCommentsList.size-1) {
+                bottomMarginBlock.visibility = View.GONE
             }
         }
         holder.likeBtn.setOnClickListener {
