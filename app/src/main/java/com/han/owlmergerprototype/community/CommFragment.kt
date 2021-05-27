@@ -66,6 +66,7 @@ private lateinit var floatBTN: FloatingActionButton
     private var selectedCategoryPos: Int = -1
     private var sortByFlag = sortBy.LATEST
 
+
     // dummy post dataset
     private lateinit var dummyCommPostDatasets: MutableList<Post>
     private lateinit var autoLogin : SharedPreferences
@@ -213,7 +214,16 @@ private lateinit var floatBTN: FloatingActionButton
                             Handler().postDelayed({
                                 Toast.makeText(activity, "스크롤 끝에 도달했습니다", Toast.LENGTH_SHORT).show()
 
-                                getPosts(mCursorId)
+                                if(selectedCategoryPos != -1){
+                                    getPostsByCategory(selectedCategoryPos,mCursorId)
+                                }else{
+                                    getPosts(mCursorId)
+                                }
+
+
+
+
+
                             }, 250)
 
                             //
@@ -276,10 +286,27 @@ private lateinit var floatBTN: FloatingActionButton
 
             adapter = tAdapter
             selectedCategoryPos = tAdapter.pos
-            setOnClickListener {
-                Toast.makeText(activity, "selectedPos: $tAdapter.pos", Toast.LENGTH_SHORT).show()
-            }
+            tAdapter.setItemClickListener(object : ThemeSelectorRecyclerAdapter.ItemClickListener {
+
+
+                override fun onClick(view: View, position: Int) {
+                    Log.d(TAG, "onClick: ${position}")
+                    selectedCategoryPos = position
+                    mCursorId = null
+                    postList.clear()
+                    if(selectedCategoryPos==-1){
+                        getPosts(mCursorId)
+                    }else{
+                        getPostsByCategory(position,mCursorId)
+                    }
+                }
+
+            })
+
+
         }
+
+
 
         // FAB
         floatBTN = view1.findViewById(R.id.fab)
@@ -797,6 +824,56 @@ private lateinit var floatBTN: FloatingActionButton
                     // empty거나 null 이거나 이전에 받아온 모델하고 last post id가 같으면 처리 안함
                     if (postModel.posts.isNullOrEmpty() || mCursorId == postModel.posts.last().id)
                         return
+                    postList.addAll(postModel.posts)
+                    mCursorId = postModel.posts.last().id
+                    Log.e("[new_cursorId]", mCursorId.toString())
+
+                    mAdapter.reloadDataWithRetrofitResponse(postList)
+                    activity!!.runOnUiThread {
+//                        recyclerView.adapter = mAdapter
+                        mAdapter.notifyDataSetChanged() // 이거할때 runOnUiThread 써야됨!
+                    }
+
+
+
+                }
+            }
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                postModel = PostModel("error", mutableListOf(PostEntity()))
+            }
+        })
+    }
+
+    private fun getPostsByCategory(position: Int,cursorId: Int?) {
+        Log.e("[getPost]", "-.-cursorid: $cursorId")
+
+        val cate: String = when (position) {
+            0 -> "TIP"
+            1 -> "STOCK"
+            2 -> "STUDY"
+            3 -> "SPORTS"
+            4 -> "FOOD"
+            5 -> "GAME"
+            else -> "error"
+        }
+        // no progressbar!!
+
+        Log.d(TAG, "getPostsByCategory: ${cate}")
+
+        val call: Call<PostModel> = OwlRetrofitManager.OwlRestService.owlRestService.getPostsByCategory(cate,cursorId,TestUser.token)
+        // log?
+        Log.e("[retrofitCall]", call.request().toString())
+        call.enqueue(object: Callback<PostModel> {
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                if (response.isSuccessful) {
+                    postModel = response.body() as PostModel
+                    Log.e("[getPostResult]", postModel.posts.toString())
+
+                    // empty거나 null 이거나 이전에 받아온 모델하고 last post id가 같으면 처리 안함
+                    if (postModel.posts.isNullOrEmpty() || mCursorId == postModel.posts.last().id)
+                        return
+
                     postList.addAll(postModel.posts)
                     mCursorId = postModel.posts.last().id
                     Log.e("[new_cursorId]", mCursorId.toString())

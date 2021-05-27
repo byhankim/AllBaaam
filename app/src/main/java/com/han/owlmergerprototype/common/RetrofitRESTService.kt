@@ -26,8 +26,9 @@ interface RetrofitRESTService {
     // posts by category
     @GET("/posts")
     fun getPostsByCategory(
-        @Query("sort") sort_key: Int?,
-        @Query("cursor") cursor_key: Int?
+        @Query("sort") sort_key: String?,
+        @Query("cursor") cursor_key: Int?,
+        @Header("token") token: String?
     ): Call<PostModel>
 
     // sort by popularity

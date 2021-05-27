@@ -64,17 +64,20 @@ class ThemeSelectorRecyclerAdapter(
 //            themeSelectorCv.setCardBackgroundColor(ContextCompat.getColor(owner, R.color.error2_1))//themeEntity.themeColor))
 //            themeSelectorCv.setBackgroundColor(ContextCompat.getColor(owner, themeEntity.themeColor))
             holder.themeSelectorCv.setOnClickListener {
+
                 if (themeEntity.toggleClicked) {
                     themeEntity.toggleClicked = false
                     selectedPos = -1
                     pos = -1
+                    itemClickListner.onClick(it, selectedPos)
                 } else {
                     themeEntity.toggleClicked = true
                     selectedPos = position
                     pos = position
                     Log.d("TAG", "onBindViewHolder: ${position}")
+                    itemClickListner.onClick(it, selectedPos)
 
-                        itemClickListner.onClick(it, position)
+
 
 
                     // ((INEFFECTIVE!!)) if newly clicked, reset all other toggle values
@@ -84,6 +87,8 @@ class ThemeSelectorRecyclerAdapter(
                         }
                     }
                 }
+
+
                 notifyDataSetChanged()
             }
             if (/*selectedPos == position*/pos == position) {

@@ -1,6 +1,7 @@
 package com.han.owlmergerprototype.map
 
 import android.Manifest
+import android.app.Dialog
 import android.app.FragmentTransaction
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -172,42 +175,39 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
             // unwrapping
             //alertDialog(latitude, longitude)
 
-            AlertDialog.Builder(activity as BottomNavActivity)
-//                .setTitle(title)
-//                .setMessage("$title 와 함께하는 빡코딩! :)")
-                .setMessage("이 장소에 글을 등록하시겠습니까?")
-                .setPositiveButton("확인") { dialog, id ->
-                    Log.d(TAG, "MainActivity - 다이얼로그 확인 버튼 클릭했음")
+            val dialog = Dialog(context!!)
+            dialog.getWindow()!!.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND, WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+            dialog.setContentView(R.layout.dialog_create_post_in_map)
+            val okBTN: Button = dialog.findViewById(R.id.dialog_ok_btn)
+            okBTN.setOnClickListener {
+                mMap.addMarker(mOptions)
+
+                // 기존 Activity 새로고침
+//                    finish()
+//                    startActivity(intent)
+
+                // 글쓰기 Activity 연결
+                val intent = Intent(activity as BottomNavActivity, CreateArticleActivity::class.java)
+                intent.putExtra("latitude", "$latitude")
+                intent.putExtra("longitude", "$longitude")
+                Log.d(TAG, "MapsMainActivity - onMapReady() 위도: $latitude 경도: $longitude  called")
+
+//                    startActivity(intent)
+                (activity as BottomNavActivity).finish()
+                (activity as BottomNavActivity).startActivity(Intent(activity as BottomNavActivity, BottomNavActivity::class.java))
+
+                (activity as BottomNavActivity).startActivity(intent)
+            }
+            val cancelBTN: Button = dialog.findViewById(R.id.dialog_cancel_btn)
+            cancelBTN.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
 
                     // 마커(핀) 추가
-                    mMap.addMarker(mOptions)
 
-                    // 기존 Activity 새로고침
-//                    finish()
-//                    startActivity(intent)
 
-                    // 글쓰기 Activity 연결
-                    val intent = Intent(activity as BottomNavActivity, CreateArticleActivity::class.java)
-                    intent.putExtra("latitude", "$latitude")
-                    intent.putExtra("longitude", "$longitude")
-                    Log.d(TAG, "MapsMainActivity - onMapReady() 위도: $latitude 경도: $longitude  called")
 
-//                    startActivity(intent)
-                    (activity as BottomNavActivity).finish()
-                    (activity as BottomNavActivity).startActivity(Intent(activity as BottomNavActivity, BottomNavActivity::class.java))
-
-                    (activity as BottomNavActivity).startActivity(intent)
-
-                }
-                .setNegativeButton("취소")  { dialog, id ->
-                    Log.d(TAG, "MainActivity - 다이얼로그 취소 버튼 클릭했음")
-
-                    // 새로고침 --> 불필요
-//                    finish()
-//                    startActivity(intent)
-
-                }
-                .show()
 
             // fragment 같이 띄우는 코드 작성
             // 1fragment 띄우고 2카메라 위치 이동

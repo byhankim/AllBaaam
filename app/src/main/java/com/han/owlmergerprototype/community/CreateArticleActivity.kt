@@ -1,6 +1,7 @@
 package com.han.owlmergerprototype.community
 
 import android.Manifest
+import android.app.Dialog
 import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,6 +19,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -217,27 +220,7 @@ class CreateArticleActivity : AppCompatActivity() {
                 finish()
             }
             R.id.action_write_article -> {
-                // TO DO("Store them in SharedPreferences")
-                /*val sharedPrefName = getString(R.string.owl_shared_preferences_name)
-                val myShared = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
 
-                val sharedKey = getString(R.string.owl_shared_preferences_dummy_comm_posts)
-
-                val dummyCommPostsType = object: TypeToken<MutableList<Post>>() {}.type
-                val dummyDataSetFromSharedPreferences: MutableList<Post> = Gson().fromJson(myShared.getString(sharedKey, ""), dummyCommPostsType)
-                dummyDataSetFromSharedPreferences.add(Post(
-                    id = dummyDataSetFromSharedPreferences.size + 1,
-                    createdAt = DateTimeFormatManager.getCurrentDatetime(),
-                    contents = binding.commWriteArticleContentEt.text.toString(),
-                    category = R.string.comm_latenight_food,
-                    userID = TestUser.userID
-                ))
-
-                with (myShared.edit()) {
-                    putString(sharedKey, Gson().toJson(dummyDataSetFromSharedPreferences))
-                    commit()
-                }
-                */
 
                 Log.d(TAG, "selectedCategory: ${selectedCategory} ")
                 val cate: String = when (selectedCategory) {
@@ -247,19 +230,28 @@ class CreateArticleActivity : AppCompatActivity() {
                     3 -> "SPORTS"
                     4 -> "FOOD"
                     5 -> "GAME"
-                    else -> "TIP"
+                    else -> "error"
+                }
+                Log.d("nonono", "selectedCategory: ${selectedCategory} ")
+                if (cate != "error") {
+                    Log.d(TAG, "cate: ${cate} ")
+                    if (checkValidate()) {
+                        createPost(cate)
+                    }
+
+                    // Activity back stack flush
+                    val intent = Intent(this, BottomNavActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    finish()
+                } else {
+
+                    //Toast.makeText(this, "카테고리를 선택해주세요", Toast.LENGTH_SHORT).show()
+                   val dialog = OkDialog(this@CreateArticleActivity)
+                   dialog.show()
                 }
 
-                Log.d(TAG, "cate: ${cate} ")
-                if (checkValidate()) {
-                    createPost(cate)
-                }
 
-                // Activity back stack flush
-                val intent = Intent(this, BottomNavActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-                finish()
             }
         }
         return true

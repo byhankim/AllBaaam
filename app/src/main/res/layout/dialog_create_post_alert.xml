@@ -32,7 +32,7 @@
 
 
         <Button
-            android:id="@+id/logout_ok_btn"
+            android:id="@+id/alert_ok_btn"
             android:layout_width="50dp"
             android:layout_height="28dp"
             android:text="확인"

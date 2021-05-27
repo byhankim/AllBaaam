@@ -52,12 +52,14 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         val token = autoLogin.getString("token",null)
         val uname = autoLogin.getString("userName",null)
         val uid = autoLogin.getInt("userId",-1)
+        val uverify = autoLogin.getBoolean("verified",false)
         Log.d(NoLoginCommFragment.TAG,"onCreate() called : ${token}")
 
         if (token!=null&&uname!=null){
             TestUser.token = token
             TestUser.userName = uname
             TestUser.userID = uid
+            TestUser.verify = uverify
 
             inte = Intent(this, BottomNavActivity::class.java)
             startActivity(inte)
