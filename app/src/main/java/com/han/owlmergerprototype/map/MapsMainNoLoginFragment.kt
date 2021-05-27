@@ -11,8 +11,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -169,7 +171,7 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
             // LatLng: 위도 경도 쌍을 나타냄
             mOptions.position(LatLng(latitude, longitude))
                 .draggable(true)
-                .icon(getDescriptorFromDrawable(R.drawable.p_merged))
+                .icon(getDescriptorFromDrawable(R.drawable.p_merged_black))
 
             // 팝업 호출
             var name: String? = null
@@ -225,6 +227,17 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
     }
 
+//    fun CloseKeyboard()
+//    {
+//        var view = this@NoLoginBottomNaviActivity.currentFocus
+//
+//        if(view != null)
+//        {
+//            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+//        }
+//    }
+
     fun loadMap() {
         Log.d(TAG, "MapsMainActivity - loadLibrary() called")
         val retrofit = Retrofit.Builder()
@@ -262,7 +275,7 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
     fun showMaps(cmnties: MapCmnt?) {
         val latLngBounds = LatLngBounds.Builder()
 
-        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
+        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged_black)
 
         val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
         val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
@@ -273,7 +286,7 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
         val m_merged_skyblue = getDescriptorFromDrawable(R.drawable.p_merged_skyblue)
         val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
-        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
+//        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
 
 //        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
 //        val m_merged_red = getDescriptorFromDrawable(R.drawable.p_merged_red)

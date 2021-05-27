@@ -162,7 +162,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
             // LatLng: 위도 경도 쌍을 나타냄
             mOptions.position(LatLng(latitude, longitude))
                 .draggable(true)
-                .icon(getDescriptorFromDrawable(R.drawable.p_merged))
+                .icon(getDescriptorFromDrawable(R.drawable.p_merged_black))
 
             // 팝업 호출
             var name: String? = null
@@ -254,7 +254,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
     fun showMaps(cmnties: MapCmnt?) {
         val latLngBounds = LatLngBounds.Builder()
 
-        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
+        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged_black)
 
         val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
         val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
@@ -265,7 +265,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
 
         val m_merged_skyblue = getDescriptorFromDrawable(R.drawable.p_merged_skyblue)
         val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
-        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
+//        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
 
 
         try {
