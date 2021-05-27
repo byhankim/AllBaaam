@@ -1,7 +1,6 @@
 package com.han.owlmergerprototype.map
 
 import android.Manifest
-import android.app.FragmentTransaction
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -15,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,14 +24,13 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
-import com.han.owlmergerprototype.noLoginTest.NoLoginFragment
+import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
+import com.han.owlmergerprototype.dataMapCmnt.mMap
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class MapsMainFragment : Fragment(), OnMapReadyCallback {
 
@@ -146,7 +143,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
                                                         (activity as BottomNavActivity).finish()
                                                         (activity as BottomNavActivity).startActivity(Intent(activity as BottomNavActivity, BottomNavActivity::class.java))
                                                         (activity as BottomNavActivity).startActivity(intent)
-                                                        }
+                                                  }
 
             true
         }
@@ -165,6 +162,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
             // LatLng: 위도 경도 쌍을 나타냄
             mOptions.position(LatLng(latitude, longitude))
                 .draggable(true)
+                .icon(getDescriptorFromDrawable(R.drawable.p_merged))
 
             // 팝업 호출
             var name: String? = null
@@ -214,7 +212,119 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
         }
 
 
-        loadMapCmnt()
+//        loadMapCmnt()
+        loadMap()
+    }
+
+
+    fun loadMap() {
+        Log.d(TAG, "MapsMainActivity - loadLibrary() called")
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MapCmntApi.ADDRESS)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(MapCmntService::class.java)
+
+        try {
+            service
+                .getMapCmnt(MapCmntApi.token)
+                .enqueue(object : Callback<MapCmnt> {
+                    override fun onResponse(call: Call<MapCmnt>, response: Response<MapCmnt>) {
+                        showMaps(response.body())
+                        Log.e(
+                            TAG,"MapsMainNoLoginFragment - onResponse() called / response.body() = ${response.body()}"
+                        )
+                    }
+                    override fun onFailure(call: Call<MapCmnt>, t: Throwable) {
+                        Log.e(TAG, t.toString())
+//                        Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.post.category = ${cmnt.post.category}")
+
+                        t.printStackTrace()
+                    }
+                })
+
+        } catch (i: Exception) {
+
+            Log.e("[로그 retrofit loadMap]", i.toString(), i)
+        }
+
+    }
+
+    fun showMaps(cmnties: MapCmnt?) {
+        val latLngBounds = LatLngBounds.Builder()
+
+        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
+
+        val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
+        val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
+        val m_merged_orange = getDescriptorFromDrawable(R.drawable.p_merged_orange)
+        val m_merged_pink = getDescriptorFromDrawable(R.drawable.p_merged_pink)
+        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.p_merged_yellow)
+
+
+        val m_merged_skyblue = getDescriptorFromDrawable(R.drawable.p_merged_skyblue)
+        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
+        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
+
+
+        try {
+
+            for (cmnt in cmnties?.maps ?: listOf()) {
+                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.post?.category}")
+
+                if (cmnt.post?.category != null) {
+
+                    val m_merged: String = cmnt.post?.category.toString()
+                    if (m_merged == "TIP") {
+                        descriptor = m_merged_skyblue
+                    } else if (m_merged == "STOCK") {
+                        descriptor = m_merged_yellow
+                    } else if (m_merged == "STUDY") {
+                        descriptor = m_merged_purple
+                    } else if (m_merged == "SPORTS") {
+                        descriptor = m_merged_pink
+                    } else if (m_merged == "FOOD") {
+                        descriptor = m_merged_orange
+                    } else if (m_merged == "GAME") {
+                        descriptor = m_merged_blue
+                    }
+
+
+                    val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
+                    val marker = MarkerOptions()
+                        .snippet("${cmnt.post?.toString()}")
+                        .position(position)
+                        .icon(descriptor)
+
+                    val markerObject = mMap.addMarker(marker)
+                    markerObject.title = cmnt.post?.category
+                    markerObject.tag = cmnt
+
+                    mMap.addMarker(marker)
+
+                    // 마커들이 보이는 뷰로 지도좌표를 이동시키기 위한 작업
+                    latLngBounds.include(position)
+                }
+
+            }
+            val bounds = latLngBounds.build()
+            val padding = 0
+            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+            mMap.moveCamera(updatedCamera)
+
+            // 카메라의 위치 //== 기본값: 티아카데미 ==//--> 위치값 새로 설정? //
+            val TAcademy = LatLng(37.54547677189177, 126.95253576863207)
+            val cameraOption = CameraPosition.Builder()
+                .target(TAcademy)
+                .zoom(17f)
+                .build()
+            val camera = CameraUpdateFactory.newCameraPosition(cameraOption)
+            mMap.moveCamera(camera)
+        } catch (i: Exception) {
+            Log.e("로그 [list showMaps 문제발생]", i.toString(), i)
+        }
+
 
     }
 
@@ -234,14 +344,15 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
             scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 62, 108, false)
         }
 
-        if(drawableId == R.drawable.p_merged_red ||drawableId == R.drawable.p_merged_purple ) {
-            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 31, 84, false)
-        }
+//        if(drawableId == R.drawable.p_merged_red ||drawableId == R.drawable.p_merged_purple ) {
+//            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 31, 84, false)
+//        }
 
         return BitmapDescriptorFactory.fromBitmap(scaledBitmap)
 
     }
 
+/**
 
     fun loadMapCmnt() {
         Log.d(TAG, "MapsMainFragment - loadMapCmnt() called")
@@ -305,12 +416,11 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
 //            val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
                 val position = LatLng(cmnt.latitude, cmnt.longitude)
                 Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.latitude = ${cmnt.latitude}, cmnt.longitude = ${cmnt.longitude}")
-                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.post.category = ${cmnt.post.category}")
 
                 // NPE 에러 나는 지점
-                val m_merged: String = cmnt.post.category.toString()
+                val m_merged: String = cmnt.post?.category.toString()
 
-                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / m_merged = ${cmnt.post.category}")
+                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / m_merged = ${cmnt.post?.category}")
                 if (m_merged == "TIP") {
                     descriptor = m_merged_blue
                 } else if (m_merged == "STOCK") {
@@ -329,14 +439,14 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
 
                 val marker = MarkerOptions()
 //                .title(lib.LBRRY_NAME)
-                    .snippet("${cmnt.post.toString()}")
+                    .snippet("${cmnt.post?.toString()}")
                     .position(position)
                     .icon(descriptor)
 
                 Log.d(TAG, "MapsMainFragment - showCmnt() called  222/ tag = ${cmnt}")
 
                 val markerObject = mMap.addMarker(marker)
-                markerObject.title = cmnt.post.category
+                markerObject.title = cmnt.post?.category
                 markerObject.tag = cmnt
 
                 var tag = Gson().toJson(markerObject.tag)
@@ -353,6 +463,7 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
         }
 
     }
+*/
 
 
     override fun onStart() {

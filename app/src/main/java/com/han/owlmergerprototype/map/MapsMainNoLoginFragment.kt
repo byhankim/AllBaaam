@@ -1,7 +1,6 @@
 package com.han.owlmergerprototype.map
 
 import android.Manifest
-import android.app.FragmentTransaction
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,27 +13,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
+import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
+import com.han.owlmergerprototype.dataMapCmnt.mMap
+import com.han.owlmergerprototype.dataMapLibrary.Library
 import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
-import com.han.owlmergerprototype.noLoginTest.NoLoginFragment
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.concurrent.thread
 
 class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
@@ -87,16 +90,11 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
         // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.fragment_maps_main, container, false)
         mView = rootView.findViewById(R.id.mv_contactUs_gMap) as MapView
-        Log.e("[mView]", "mView empty? ${mView.isEmpty()}")
         mView.onCreate(savedInstanceState)
-        Log.e("[mViewCreated]", "mView empty? ${mView.isEmpty()}")
         mView.getMapAsync(this)
-        Log.e("[mViewAsync]", "mView empty? ${mView.isEmpty()}")
-
-
+//        Log.e("[mViewAsync]", "mView empty? ${mView.isEmpty()}")
 
         return rootView
-
 //        return view
     }
 
@@ -220,9 +218,140 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
         }
 
 
-        loadMapCmnt()
+//        loadMapCmnt()
+        loadMap()
+//        loadLibrary()
+        // JSON 데이터 분석
 
     }
+
+    fun loadMap() {
+        Log.d(TAG, "MapsMainActivity - loadLibrary() called")
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MapCmntApi.ADDRESS)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(MapCmntService::class.java)
+
+        try {
+            service
+                .getMapCmnt(MapCmntApi.token)
+                .enqueue(object : Callback<MapCmnt> {
+                    override fun onResponse(call: Call<MapCmnt>, response: Response<MapCmnt>) {
+                        showMaps(response.body())
+                        Log.e(
+                            TAG,"MapsMainNoLoginFragment - onResponse() called / response.body() = ${response.body()}"
+                        )
+                    }
+                    override fun onFailure(call: Call<MapCmnt>, t: Throwable) {
+                        Log.e(TAG, t.toString())
+//                        Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.post.category = ${cmnt.post.category}")
+
+                        t.printStackTrace()
+                    }
+                })
+
+        } catch (i: Exception) {
+
+            Log.e("[로그 retrofit loadMap]", i.toString(), i)
+        }
+
+    }
+
+    fun showMaps(cmnties: MapCmnt?) {
+        val latLngBounds = LatLngBounds.Builder()
+
+        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
+
+        val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
+        val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
+        val m_merged_orange = getDescriptorFromDrawable(R.drawable.p_merged_orange)
+        val m_merged_pink = getDescriptorFromDrawable(R.drawable.p_merged_pink)
+        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.p_merged_yellow)
+
+
+        val m_merged_skyblue = getDescriptorFromDrawable(R.drawable.p_merged_skyblue)
+        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
+        val m_merged_black = getDescriptorFromDrawable(R.drawable.p_merged_black)
+
+//        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
+//        val m_merged_red = getDescriptorFromDrawable(R.drawable.p_merged_red)
+//
+
+
+        try {
+            for (cmnt in cmnties?.maps ?: listOf()) {
+                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.post?.category}")
+
+                if (cmnt.post?.category != null) {
+
+                    Log.d(TAG, "MapsMainNoLoginFragment - != null = ${cmnt.post?.category}")
+                    val m_merged: String = cmnt.post?.category.toString()
+                    if (m_merged == "TIP") {
+                        descriptor = m_merged_skyblue
+                    } else if (m_merged == "STOCK") {
+                        descriptor = m_merged_yellow
+                    } else if (m_merged == "STUDY") {
+                        descriptor = m_merged_purple
+                    } else if (m_merged == "SPORTS") {
+                        descriptor = m_merged_pink
+                    } else if (m_merged == "FOOD") {
+                        descriptor = m_merged_orange
+                    } else if (m_merged == "GAME") {
+                        descriptor = m_merged_blue
+                    }
+
+                    val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
+                    val marker = MarkerOptions()
+                        .snippet("${cmnt.post?.toString()}")
+                        .position(position)
+                        .icon(descriptor)
+
+                    val markerObject = mMap.addMarker(marker)
+                    markerObject.title = cmnt.post?.category
+                    markerObject.tag = cmnt
+
+                    mMap.addMarker(marker)
+
+                    // 마커들이 보이는 뷰로 지도좌표를 이동시키기 위한 작업
+                    latLngBounds.include(position)
+                }
+
+            }
+            val bounds = latLngBounds.build()
+            val padding = 0
+            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+            mMap.moveCamera(updatedCamera)
+
+
+            // 카메라의 위치 //== 기본값: 티아카데미 ==//--> 위치값 새로 설정? //
+            val TAcademy = LatLng(37.54547677189177, 126.95253576863207)
+            val cameraOption = CameraPosition.Builder()
+                .target(TAcademy)
+                .zoom(17f)
+                .build()
+            val camera = CameraUpdateFactory.newCameraPosition(cameraOption)
+            mMap.moveCamera(camera)
+
+
+        } catch (i: Exception) {
+            Log.e("로그 [list showMaps 문제발생]", i.toString(), i)
+        }
+
+    }
+
+    fun goActivity(v: View) {
+
+        val intent = Intent(activity as NoLoginBottomNavActivity, ArticleActivity::class.java)
+//            this.startActivity(intent)
+
+        // 새로고침 후 글 불러오기 시작
+//        (activity as NoLoginBottomNavActivity).finish()
+//        (activity as NoLoginBottomNavActivity).startActivity(Intent(activity as NoLoginBottomNavActivity, NoLoginBottomNavActivity::class.java))
+        (activity as NoLoginBottomNavActivity).startActivity(intent)
+    }
+
 
     fun getDescriptorFromDrawable(drawableId: Int) : BitmapDescriptor {
         var bitMapDrawable: BitmapDrawable
@@ -240,127 +369,49 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
             scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 62, 108, false)
         }
 
-
-        if(drawableId == R.drawable.p_merged_red ||drawableId == R.drawable.p_merged_purple ) {
-            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 31, 84, false)
-        }
+//        if(drawableId == R.drawable.p_merged_red ||drawableId == R.drawable.p_merged_purple ) {
+//            scaledBitmap = Bitmap.createScaledBitmap(bitMapDrawable.bitmap, 31, 84, false)
+//        }
         return BitmapDescriptorFactory.fromBitmap(scaledBitmap)
 
     }
 
 
-    fun loadMapCmnt() {
-        Log.d(TAG, "MapsMainFragment - loadMapCmnt() called")
+    fun loadLibrary() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(SeoulOpenApi.DOMAIN)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        try {
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl(MapCmntApi.ADDRESS)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            val service = retrofit.create(MapCmntService::class.java)
-            service
-                .getMapCmnt(MapCmntApi.token)
-                .enqueue(object : Callback<MapCmnt> {
-                    override fun onResponse(call: Call<MapCmnt>, response: Response<MapCmnt>) {
-                        showCmnt(response.body())
-                    }
-
-                    override fun onFailure(call: Call<MapCmnt>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-                })
-        } catch (i: Exception) {
-
-            Log.e("[retrofit 불러오는중 문제발생]", i.toString(), i)
-        }
-    }
-
-    fun showCmnt(cmnties: MapCmnt?) {
-
-        Log.d(TAG, "MapsMainFragment - showCmnt() called")
-
-//        var descriptor = getDescriptorFromDrawable(R.drawable.marker)
-//        val m_merged_blue = getDescriptorFromDrawable(R.drawable.m_merged_blue)
-//        val m_merged_green = getDescriptorFromDrawable(R.drawable.m_merged_green)
-//        val m_merged_orange = getDescriptorFromDrawable(R.drawable.m_merged_orange)
-//        val m_merged_pink = getDescriptorFromDrawable(R.drawable.m_merged_pink)
-//        val m_merged_purple = getDescriptorFromDrawable(R.drawable.m_merged_purple)
-//        val m_merged_red = getDescriptorFromDrawable(R.drawable.m_merged_red)
-//        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.m_merged_yellow)
-
-        var descriptor = getDescriptorFromDrawable(R.drawable.p_merged)
-
-        val m_merged_blue = getDescriptorFromDrawable(R.drawable.p_merged_blue)
-        val m_merged_green = getDescriptorFromDrawable(R.drawable.p_merged_green)
-        val m_merged_orange = getDescriptorFromDrawable(R.drawable.p_merged_orange)
-        val m_merged_pink = getDescriptorFromDrawable(R.drawable.p_merged_pink)
-        val m_merged_purple = getDescriptorFromDrawable(R.drawable.p_merged_purple)
-        val m_merged_red = getDescriptorFromDrawable(R.drawable.p_merged_red)
-        val m_merged_yellow = getDescriptorFromDrawable(R.drawable.p_merged_yellow)
-
-        Log.d(TAG, "MapsMainFragment - showCmnt() called 2222")
-
-        val latLngBounds = LatLngBounds.Builder()
-
-        try {
-
-            for (cmnt in cmnties?.maps ?: listOf()) {
-                Log.d(TAG, "MapsMainFragment - showCmnt() called / cmnt.latitude = ${cmnt.latitude}, cmnt.longitude = ${cmnt.longitude}")
-//            val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
-                val position = LatLng(cmnt.latitude, cmnt.longitude)
-                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.latitude = ${cmnt.latitude}, cmnt.longitude = ${cmnt.longitude}")
-                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / cmnt.post.category = ${cmnt.post.category}")
-
-                // NPE 에러 나는 지점
-                val m_merged: String = cmnt.post.category.toString()
-
-                Log.d(TAG, "MapsMainFragment - showCmnt() called2222 / m_merged = ${cmnt.post.category}")
-                if (m_merged == "TIP") {
-                    descriptor = m_merged_blue
-                } else if (m_merged == "STOCK") {
-                    descriptor = m_merged_green
-                } else if (m_merged == "SPORTS") {
-                    descriptor = m_merged_orange
-                } else if (m_merged == "FOOD") {
-                    descriptor = m_merged_pink
-                } else if (m_merged == "STUDY") {
-                    descriptor = m_merged_purple
-                } else if (m_merged == "GAME") {
-                    descriptor = m_merged_red
-                }
-
-                Log.d(TAG, "MapsMainFragment - showCmnt() called / tag = ${cmnt}")
-
-                val marker = MarkerOptions()
-//                .title(lib.LBRRY_NAME)
-                    .snippet("${cmnt.post.toString()}")
-                    .position(position)
-                    .icon(descriptor)
-
-                Log.d(TAG, "MapsMainFragment - showCmnt() called  222/ tag = ${cmnt}")
-
-                val markerObject = mMap.addMarker(marker)
-                markerObject.title = cmnt.post.category
-                markerObject.tag = cmnt
-
-                var tag = Gson().toJson(markerObject.tag)
-                Log.d(TAG, "MapsMainActivity - showCmnt() called / tag = ${cmnt}")
-                Log.d(TAG, "MapsMainActivity - showCmnt() called / markerObject.title = ${markerObject.title}")
-
-                mMap.addMarker((marker))
-                latLngBounds.include(position)
+        val service = retrofit.create(SeoulOpenService::class.java)
+        service.getLibrary(SeoulOpenApi.API_KEY).enqueue(object : Callback<Library> {
+            override fun onResponse(call: Call<Library>, response: Response<Library>) {
+                showLibraries(response.body())
+                Log.e(TAG, "MapsMainNoLoginFragment - Library onResponse() called / (response.body() = ${response.body()}")
             }
 
-
-        } catch (i: Exception) {
-            Log.e("[list 불러오는중 문제발생]", i.toString(), i)
-        }
-
+            override fun onFailure(call: Call<Library>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
     }
 
+    fun showLibraries(libraries: Library?) {
+        val latLngBounds = LatLngBounds.Builder()
 
+        for (lib in libraries?.SeoulPublicLibraryInfo?.row ?: listOf()) {
+            val position = LatLng(lib.XCNTS.toDouble(), lib.YDNTS.toDouble())
+            val marker = MarkerOptions().position(position)
+            mMap.addMarker(marker)
+
+            // 마커들이 보이는 뷰로 지도좌표를 이동시키기 위한 작업
+            latLngBounds.include(position)
+        }
+        val bounds = latLngBounds.build()
+        val padding = 0
+        val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+        mMap.moveCamera(updatedCamera)
+    }
     override fun onStart() {
         super.onStart()
         mView.onStart()

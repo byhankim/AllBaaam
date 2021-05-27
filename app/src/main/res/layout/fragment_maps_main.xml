@@ -51,6 +51,7 @@
             android:layout_toRightOf="@+id/map_serach_tv"
             android:layout_alignTop="@+id/map_serach_tv"
             android:layout_marginLeft="15dp"
+            android:onClick="goActivity"
             />
 
         <!--View

@@ -76,7 +76,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         //nav.setOnNavigationItemSelectedListener(this)
         nav.setOnNavigationItemSelectedListener(onBottomNavigationSelectedListener)
 
-        noLoginCommFragment = NoLoginCommFragment.newInstance(this)
+//        noLoginCommFragment = NoLoginCommFragment.newInstance(this)
 //        supportFragmentManager.beginTransaction().add(R.id.fragments_frame, noLoginCommFragment).commit()
 
 //        mapsMainFragment = MapsMainFragment.newInstance()
@@ -112,6 +112,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
                 } else {
                     Log.d(TAG, "NoLoginBottonNavActivity - onCreate() /else /called")
+                    //mapfragment 시도 else : com
                     mapsMainNoLoginFragment = MapsMainNoLoginFragment.newInstance()
                     if(fragmentManager.backStackEntryCount !=0){
                         fragmentManager.popBackStack()
@@ -120,6 +121,10 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
                         .add(R.id.fragments_frame,mapsMainNoLoginFragment)
                         .addToBackStack(null)
                         .commit()
+
+                    // 원래 커뮤니티 바로노출
+                    noLoginCommFragment = NoLoginCommFragment.newInstance(this)
+                    supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, noLoginCommFragment).commit()
 
                 }
         }

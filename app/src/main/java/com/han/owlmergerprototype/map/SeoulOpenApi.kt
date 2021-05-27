@@ -14,6 +14,6 @@ object SeoulOpenApi {
 
 interface SeoulOpenService {
 
-    @GET("/{key}/JSON/SeoulPublicLibraryInfo/1/5/")
+    @GET("/{key}/JSON/SeoulPublicLibraryInfo/1/50/")
     fun getLibrary(@Path("key") key: String) : Call<Library>
 }

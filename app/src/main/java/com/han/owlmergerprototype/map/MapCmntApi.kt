@@ -1,12 +1,13 @@
 package com.han.owlmergerprototype.map
 
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
+import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 
 object MapCmntApi {
-    const val ADDRESS = "https://415713cca8d6.ngrok.io/"
+    const val ADDRESS = "https://c723a00cfd15.ngrok.io/"
     const val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYyMTU2Mjc0N30._kpcxNJa6zDk40EfKKwlAaGf0kJs6vNdeFHAd4qdIXc"
 }
 

@@ -36,6 +36,7 @@ import kotlin.collections.ArrayList
 import com.han.owlmergerprototype.data.Post
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.map.MapsMainActivity
+import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -103,11 +104,11 @@ class CreateArticleActivity : AppCompatActivity() {
             latlng_text.text = "위도 : $latitude, 경도 : $longitude"
         } else {
             latlng_img.setOnClickListener {
-                val intent = Intent(this, MapsMainActivity::class.java)
+                val intent = Intent(this, NoLoginBottomNavActivity::class.java)
                 startActivity(intent)
             }
             latlng_text.setOnClickListener {
-                val intent = Intent(this, MapsMainActivity::class.java)
+                val intent = Intent(this, NoLoginBottomNavActivity::class.java)
                 startActivity(intent)
             }
 
