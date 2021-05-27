@@ -34,6 +34,8 @@ class CommentRecyclerAdapter (
         val recommentSection: RelativeLayout = itemView.findViewById(R.id.recomment_section_rl)
         val recommentRv: RecyclerView = itemView.findViewById(R.id.recomment_rv)
 
+        val bottomMarginBlock: TextView = itemView.findViewById(R.id.comment_section_margin_bottom_tv)
+
         lateinit var recommAdapter: RecommentRecyclerAdapter
 
         fun bindListener(item: CommentRESTEntity) {
@@ -78,6 +80,9 @@ class CommentRecyclerAdapter (
                 Log.e("[recomms3]", "NOT VISIBLE")
             }
 
+            if (position == commentsList.size - 1) {
+                bottomMarginBlock.visibility = View.GONE
+            }
         }
         holder.likeBtn.setOnClickListener {
             Toast.makeText(owner, "좋아요는 안눌렀어~", Toast.LENGTH_SHORT).show()

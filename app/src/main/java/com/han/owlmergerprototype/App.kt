@@ -16,7 +16,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        setAllActivitySettings() // 수직모드!
+//        setAllActivitySettings() // 수직모드!
         KakaoSdk.init(this, "c99b7c499a9d8e3ba072e874edbcd52e")
     }
 
