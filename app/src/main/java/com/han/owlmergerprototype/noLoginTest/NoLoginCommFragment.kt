@@ -13,15 +13,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.github.mmin18.widget.RealtimeBlurView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
@@ -37,6 +35,7 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
@@ -265,13 +264,14 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         private val owner: Activity,
         private var commPostList: MutableList<PostEntity>
     ): RecyclerView.Adapter<RecyclerAdapter.ViewHolderClass>(){
-
         //항목 구성을 위해 사용할 viewholder 객체가 필요할때 호출되는 메서드
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
             val itemView = layoutInflater.inflate(R.layout.layout_recycler_item,null)
             val holder = ViewHolderClass(itemView)
+
             return holder
         }
+
         fun getCategoryNameInArticle(category: String):String{
             val cateInArt :String = "#$category"
             return cateInArt
@@ -323,8 +323,13 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = postEntity.user.userName
-                datetime.text = postEntity.createdAt
+                datetime.text = DateTimeFormatManager.getTimeGapFromNow(postEntity.createdAt)
                 content.text = postEntity.contents
+
+                if (postEntity.images.isNotEmpty()) {
+                    Glide.with(owner).load(postEntity.images[0].url).centerCrop().into(glideIv)
+                    glideIv.visibility = View.VISIBLE
+                }
             }
             if(position==3){
                 holder.lastItemBlur.isVisible = true
@@ -583,6 +588,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
             val lastItemBlur: RealtimeBlurView = itemView.findViewById(R.id.article_blur)
             val loginView:RelativeLayout = itemView.findViewById(R.id.login_view)
             val loginBTN:Button = itemView.findViewById(R.id.comm_login_btn)
+
+            // img
+            val glideIv: ImageView = itemView.findViewById(R.id.image_iv)
         }
     }
 
@@ -600,7 +608,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 if (response.isSuccessful) {
                     postModel = response.body() as PostModel
                     Log.e("[getPostSuccess]", postModel.toString())
-                    mAdapter.reloadDataWithRetrofitResponse(postModel.posts)
+                    postList = postModel.posts.slice(1..4) as MutableList<PostEntity>
+
+                    mAdapter.reloadDataWithRetrofitResponse(postList)
                     owner.runOnUiThread {
 //                        recyclerView.adapter = mAdapter
                         mAdapter.notifyDataSetChanged()
@@ -625,7 +635,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 val popularPostModel = response.body() as PopularPostModel
 
                 if (popularPostModel.posts.isNullOrEmpty()) return
-                postList = popularPostModel.posts
+                postList = popularPostModel.posts.slice(1..4) as MutableList<PostEntity>
 
                 mAdapter.reloadDataWithRetrofitResponse(postList)
                 activity!!.runOnUiThread {

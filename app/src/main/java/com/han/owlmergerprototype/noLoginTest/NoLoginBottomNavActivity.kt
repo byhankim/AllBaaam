@@ -61,8 +61,11 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
             TestUser.userID = uid
             TestUser.verify = uverify
 
+            Log.e("[noLogBottom1]", "")
             inte = Intent(this, BottomNavActivity::class.java)
+            Log.e("[noLogBottom2]", "")
             startActivity(inte)
+            Log.e("[noLogBottom3]", "")
             finish()
         }
 
@@ -70,6 +73,7 @@ class NoLoginBottomNavActivity : AppCompatActivity() {
         nav = findViewById(R.id.bottom_nav)
         switch = findViewById(R.id.bottom_switch)
         fragmentManager = supportFragmentManager
+        fakeTrack = findViewById(R.id.fake_track) // uninitialized b4 usage
 
 
         nav.menu.getItem(0).isCheckable = false

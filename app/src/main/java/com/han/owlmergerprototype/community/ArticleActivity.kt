@@ -68,7 +68,7 @@ class ArticleActivity : AppCompatActivity(){
 
         // RETROFIT REST NETWORKING
 //        intent.get
-
+        DateTimeFormatManager.fromNow("2021-05-27T01:08:33.395Z=Z")
 
 
         // shared pref
@@ -91,6 +91,20 @@ class ArticleActivity : AppCompatActivity(){
         binding = ArticleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.articleToolbar)
+
+        // Image
+        /*
+        RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round);
+
+
+
+        Glide.with(this).load(image_url).apply(options).into(imageView);
+         */
+//        binding.articleContentTv.setC
+//        Glide.with(this).load(image_url).apply(options).into(imageView)
 
         // Comments RV
         cmtAdapter = CommentRecyclerAdapter(commentsList, this) { }
@@ -149,7 +163,7 @@ class ArticleActivity : AppCompatActivity(){
         else -> binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
     }
 
-        binding.articleTimestampTv.text = selectedPost.createdAt
+        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(selectedPost.createdAt)
         binding.articleUname.text = selectedPost.user.userName
        // binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
         binding.articleCommentCountTv.text = changeCommentTxt(selectedPost.id).toString()
@@ -215,6 +229,18 @@ class ArticleActivity : AppCompatActivity(){
 
     }
 
+
+    // Image
+    /*
+    RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round);
+
+
+
+ Glide.with(this).load(image_url).apply(options).into(imageView);
+     */
 
 
     // click listener

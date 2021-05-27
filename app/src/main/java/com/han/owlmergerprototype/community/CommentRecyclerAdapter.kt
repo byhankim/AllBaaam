@@ -52,7 +52,7 @@ class CommentRecyclerAdapter (
         val commentEntity = commentsList[position]
         with (holder) {
             userName.text = commentEntity.user.userName
-            timePassed.text = commentEntity.createdAt
+            timePassed.text = DateTimeFormatManager.getTimeGapFromNow(commentEntity.createdAt)
             content.text = commentEntity.contents
             delBtn.visibility = when (commentEntity.userId) {
                 TestUser.userID -> View.VISIBLE
@@ -73,7 +73,6 @@ class CommentRecyclerAdapter (
                     DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
                     adapter = recommAdapter
 //                    notifyDataSetChanged()
-
                 }
             } else {
                 recommentSection.visibility = View.INVISIBLE

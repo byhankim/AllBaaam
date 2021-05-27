@@ -10,6 +10,7 @@ import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.CommentRESTEntity
 import com.han.owlmergerprototype.data.RecommentRESTEntity
 import com.han.owlmergerprototype.data.TestUser
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 
 class RecommentRecyclerAdapter(
     private var reCommentsList: MutableList<RecommentRESTEntity>,
@@ -35,7 +36,7 @@ class RecommentRecyclerAdapter(
         val recommentEntity = reCommentsList[position]
         with (holder) {
             userName.text = recommentEntity.user.userName
-            timePassed.text = recommentEntity.createdAt
+            timePassed.text = DateTimeFormatManager.getTimeGapFromNow(recommentEntity.createdAt)
             content.text = recommentEntity.contents
             delBtn.visibility = when (recommentEntity.userId) {
                 TestUser.userID -> View.VISIBLE

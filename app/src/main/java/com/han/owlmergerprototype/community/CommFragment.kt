@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -44,6 +45,7 @@ import com.han.owlmergerprototype.map.MapsMainActivity
 import com.han.owlmergerprototype.mypage.boardActivity.NoticeActivity
 import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
+import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
 import retrofit2.Call
 import retrofit2.Callback
@@ -549,6 +551,9 @@ private lateinit var floatBTN: FloatingActionButton
             val content: TextView = itemView.findViewById(R.id.content_tv)
             val datetime: TextView = itemView.findViewById(R.id.comm_post_date_created_tv)
 
+            // image
+            val glideIv: ImageView = itemView.findViewById(R.id.image_iv)
+
             val likeCount:TextView = itemView.findViewById(R.id.article_favorite_num_btn)
             val commentCount: TextView = itemView.findViewById(R.id.article_comment_num_btn)
             val isLike:ToggleButton = itemView.findViewById(R.id.article_favorite_btn)
@@ -663,11 +668,17 @@ private lateinit var floatBTN: FloatingActionButton
                     else -> category.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
                 }
                 userName.text = postEntity.user.userName
-                datetime.text = postEntity.createdAt
+                datetime.text = DateTimeFormatManager.getTimeGapFromNow(postEntity.createdAt)
                 content.text = postEntity.contents
 
                 likeCount.text = postEntity.like.size.toString()
                 commentCount.text = postEntity.comments.size.toString()
+
+                if (postEntity.images.isNotEmpty()) {
+                    Glide.with(owner).load(postEntity.images[0].url).centerCrop().into(glideIv)
+                    glideIv.visibility = View.VISIBLE
+                } else {
+                }
 
 
                 ////////////is-bookmark is-like

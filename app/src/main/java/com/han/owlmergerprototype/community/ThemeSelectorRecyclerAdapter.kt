@@ -26,10 +26,13 @@ import com.han.owlmergerprototype.data.ThemeEntity
 
 class ThemeSelectorRecyclerAdapter(
     private val themesList: MutableList<ThemeEntity>,
-    private val owner: Activity,
+    private var owner: Activity,
     private val which : Boolean //true면 메인, false 글작성
 ): RecyclerView.Adapter<ThemeSelectorRecyclerAdapter.ThemeHolder>() {
+    private var cOwner: CreateArticleActivity? = null
+
     public var pos = -1
+    var isCAA = false
     private var selectedPos = -1
     private lateinit var bgColorList: MutableList<Int>
     private lateinit var iconsList: MutableList<Int>
@@ -54,6 +57,12 @@ class ThemeSelectorRecyclerAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ThemeHolder, position: Int) {
+        if (owner::class.simpleName == "CreateArticleActivity") {
+            owner = owner as CreateArticleActivity
+            isCAA = true
+        }
+
+
         val themeEntity = themesList[position]
         with (holder) {
             themeSelectorItemTv.text = themeEntity.themeText
@@ -70,15 +79,14 @@ class ThemeSelectorRecyclerAdapter(
                     selectedPos = -1
                     pos = -1
                     itemClickListner.onClick(it, selectedPos)
+//                    if (isCAA) (owner as CreateArticleActivity).selectedCategory = -1
                 } else {
                     themeEntity.toggleClicked = true
                     selectedPos = position
                     pos = position
                     Log.d("TAG", "onBindViewHolder: ${position}")
                     itemClickListner.onClick(it, selectedPos)
-
-
-
+//                    if (isCAA) (owner as CreateArticleActivity).selectedCategory = position
 
                     // ((INEFFECTIVE!!)) if newly clicked, reset all other toggle values
                     for (i in 0 until themesList.size) {
