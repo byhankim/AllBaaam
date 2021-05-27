@@ -70,12 +70,13 @@
     </androidx.appcompat.widget.SwitchCompat>
 
     <TextView
+        android:id="@+id/fake_track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-1dp"
-        android:background="@drawable/toggle"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/map_toggle_backgroud"
         android:elevation="8dp" />
 
 

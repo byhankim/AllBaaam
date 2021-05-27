@@ -623,9 +623,9 @@ private lateinit var floatBTN: FloatingActionButton
                     }
                     "FOOD" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-                        category.setTextColor(owner.resources.getColor(R.color.style1_2, null))
+                        category.setTextColor(owner.resources.getColor(R.color.style1_1, null))
                         drawable = categoryColor.background as GradientDrawable
-                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_2, null))
+                        drawable.setStroke(2,owner.resources.getColor(R.color.style1_1, null))
                     }
                     "GAME" -> {
                         category.text =getCategoryNameInArticle(getString(R.string.comm_games))

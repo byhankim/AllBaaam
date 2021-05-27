@@ -48,8 +48,7 @@
             android:name=".community.ArticleActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/Theme.SplashActivity">
+            android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
