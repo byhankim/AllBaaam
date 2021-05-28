@@ -49,6 +49,7 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
     private lateinit var themeSelectorRv: RecyclerView
 
 
+
     // rest post dataset :(
     private lateinit var postModel: PostModel
     private lateinit var postList: MutableList<PostEntity>

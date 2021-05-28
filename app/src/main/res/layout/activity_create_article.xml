@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".community.CreateArticleActivity"
-    android:background="@drawable/bfbfbf">
+    android:background="#121212">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/comm_main_toolbar"
         android:layout_width="match_parent"
