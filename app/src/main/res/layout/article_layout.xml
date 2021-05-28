@@ -98,6 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/article_content_tv"
+                        android:layout_marginTop="@dimen/article_glide_image_iv_margintop"
                         android:scaleType="fitXY"
                         android:adjustViewBounds="true"
                         android:visibility="invisible"
