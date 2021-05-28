@@ -73,9 +73,9 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG,"MapFragment - onCreateView() called")
 
@@ -132,7 +132,7 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
             //mapCmntObject.
             val intent = Intent(activity as NoLoginBottomNavActivity, ArticleActivity::class.java).apply {
-                val selectedPost = Gson().toJson(mapCmntObject.postDoobaeEvent)
+                val selectedPost = Gson().toJson(mapCmntObject.post)
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost = ${selectedPost}")
                 putExtra("selectedPost", selectedPost)
                 Log.d(TAG, "MapsMainActivity - onMapReady() called / selectedPost2222 = ${selectedPost}")
@@ -285,12 +285,12 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
         try {
             for (cmnt in cmnties?.maps ?: listOf()) {
-                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.postDoobaeEvent?.category}")
+                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.post?.category}")
 
-                if (cmnt.postDoobaeEvent?.category != null) {
+                if (cmnt.post?.category != null) {
 
-                    Log.d(TAG, "MapsMainNoLoginFragment - != null = ${cmnt.postDoobaeEvent?.category}")
-                    val m_merged: String = cmnt.postDoobaeEvent?.category.toString()
+                    Log.d(TAG, "MapsMainNoLoginFragment - != null = ${cmnt.post?.category}")
+                    val m_merged: String = cmnt.post?.category.toString()
                     if (m_merged == "TIP") {
                         descriptor = m_merged_skyblue
                     } else if (m_merged == "STOCK") {
@@ -305,14 +305,15 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
                         descriptor = m_merged_blue
                     }
 
+                    Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / cmnt.latitude = ${cmnt.latitude},cmnt.longitude = ${cmnt.longitude}")
                     val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
                     val marker = MarkerOptions()
-                        .snippet("${cmnt.postDoobaeEvent?.toString()}")
+                        .snippet("${cmnt.post?.toString()}")
                         .position(position)
                         .icon(descriptor)
 
                     val markerObject = mMap.addMarker(marker)
-                    markerObject.title = cmnt.postDoobaeEvent?.category
+                    markerObject.title = cmnt.post?.category
                     markerObject.tag = cmnt
 
                     mMap.addMarker(marker)
@@ -322,11 +323,12 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
                 }
 
             }
-            val bounds = latLngBounds.build()
-            val padding = 0
-            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.moveCamera(updatedCamera)
-
+//
+//            val bounds = latLngBounds.build()
+//            val padding = 0
+//            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+//            mMap.moveCamera(updatedCamera)
+//
 
             // 카메라의 위치 //== 기본값: 티아카데미 ==//--> 위치값 새로 설정? //
             val TAcademy = LatLng(37.54547677189177, 126.95253576863207)

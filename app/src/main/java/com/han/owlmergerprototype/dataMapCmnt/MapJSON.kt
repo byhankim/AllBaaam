@@ -1,5 +1,4 @@
 package com.han.owlmergerprototype.dataMapCmnt
-
 data class MapCmnt(
     val maps: List<Map>,
     val ok: Boolean
@@ -9,7 +8,7 @@ data class Map(
     val createdAt: String,
     val latitude: Double,
     val longitude: Double,
-    val postDoobaeEvent: PostDoobaeEvent?=null,
+    val post: Post?=null,
     val postId: Int
 )
 data class Post(
@@ -37,7 +36,6 @@ data class Comment(
     val postId: Int,
     val isParent: Boolean
 )
-
 data class Like(
     val id: Int,
     val createdAt: String,
@@ -46,7 +44,6 @@ data class Like(
     val postId: Int,
     val commentId: Int
 )
-
 data class Bookmark(
     val id: Int,
     val createdAt: String,

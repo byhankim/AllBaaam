@@ -1,7 +1,6 @@
 package com.han.owlmergerprototype.map
 
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

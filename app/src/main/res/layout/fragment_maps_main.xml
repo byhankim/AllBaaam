@@ -28,8 +28,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_toLeftOf="@+id/map_key"
-
-        android:background="@drawable/rounded_corner_white_transparent"
+        android:background="@drawable/rounded_corner_gray"
         android:gravity="center_vertical"
         android:hint="올빼미 상수역점"
         android:padding="20dp"
@@ -49,22 +48,128 @@
         android:layout_alignEnd="@+id/map_serach_tv"
         android:background="@drawable/ic_baseline_search_24" />
 
+    <TextView
+        android:id="@+id/map_key"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_light"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:clickable="false"
+        tools:ignore="OnClick" />
+
+    <carbon.widget.HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="90dp"
+        android:scrollbars="none"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:textColor="@color/style1_5"
+                android:background="@drawable/rounded_corner_honey_tip"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="20dp"
+                android:drawableRight="@drawable/ic_idea2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_honey_tip" />
+            <TextView
+                android:textColor="@color/style2_4"
+                android:background="@drawable/rounded_corner_stocks_overseas"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="7dp"
+                android:drawableRight="@drawable/ic_graph2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_stocks_overseas" />
+            <TextView
+                android:textColor="@color/style1_6"
+                android:background="@drawable/rounded_corner_study_hard"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="7dp"
+                android:drawableRight="@drawable/ic_book2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_study_hard" />
+            <TextView
+                android:textColor="@color/style1_3"
+                android:background="@drawable/rounded_corner_sports_overseas"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="7dp"
+                android:drawableRight="@drawable/ic_sport2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_sports_overseas" />
+            <TextView
+                android:textColor="@color/style1_1"
+                android:background="@drawable/rounded_corner_food"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="7dp"
+                android:drawableRight="@drawable/ic_chicken2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_food" />
+            <TextView
+                android:textColor="@color/style1_7"
+                android:background="@drawable/rounded_corner_games"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_marginRight="20dp"
+                android:drawableRight="@drawable/ic_game2"
+                android:drawablePadding="10dp"
+                android:text="@string/comm_games" />
+            <!--Button
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/
 
 
+            <TextView
+                android:textColor="@color/style1_5"
+                android:background="@drawable/rounded_corner_white_transparent"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="꿀팁" />
+
+                -->
 
 
-           <TextView
-               android:id="@+id/map_key"
-               android:layout_width="70dp"
-               android:layout_height="70dp"
-               android:layout_marginTop="20dp"
-               android:background="@drawable/ic_light"
-               android:layout_alignParentEnd="true"
-               android:layout_marginRight="15dp"
-               android:layout_marginLeft="10dp"
-               android:clickable="false"
-               tools:ignore="OnClick" />
+        </LinearLayout>
 
+    </carbon.widget.HorizontalScrollView>
 
         <!--View
             android:id="@+id/map_key_icon"

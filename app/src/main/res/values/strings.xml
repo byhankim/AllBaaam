@@ -1,7 +1,7 @@
 <resources>
     <string name="base_url">https://c723a00cfd15.ngrok.io/</string>
 
-    <string name="app_name">올뺌쓰V0514</string>
+    <string name="app_name">AllBaam</string>
     <string name="owl_honey_tip">올빼미 꿀팁</string>
     <string name="comm_honey_tip">꿀팁</string>
     <string name="comm_stocks_overseas">해외주식</string>
