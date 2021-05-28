@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/article_favorite_btn"
                 android:layout_marginStart="8dp"
-                android:text="123"
+                android:text=""
                 android:layout_alignBaseline="@id/article_favorite_btn"
                 android:backgroundTint="@color/gray1" />
 
@@ -180,7 +180,7 @@
                 android:layout_toRightOf="@+id/article_comment_btn"
                 android:layout_marginStart="8dp"
                 android:layout_alignBaseline="@id/article_favorite_btn"
-                android:text="123"
+                android:text=""
                 android:backgroundTint="@color/gray1" />
 
             <TextView

@@ -120,10 +120,15 @@ class AlarmFragment : Fragment() {
                 "COMMENT" -> "[댓글알림]"
                 else -> "[그냥알림]"
             }
-            if(articleList[position].postSaebaeEvent.contents==null){
+            holder.alarmContextTV.text = when(articleList[position].type){
+                "LIKE" -> context!!.getString(R.string.someone_give_me_heart)
+                "COMMENT" -> context!!.getString(R.string.someone_give_me_comment)
+                else -> "[그냥알림]"
+            }
+            if(articleList[position].post?.contents==null){
                 holder.alarmTitleTV.text = null
             }else{
-                holder.alarmTitleTV.text =articleList[position].postSaebaeEvent.contents
+                holder.alarmTitleTV.text =articleList[position].post?.contents
             }
 
         }
@@ -139,6 +144,7 @@ class AlarmFragment : Fragment() {
             val alarmTimeTV: TextView = itemView.findViewById(R.id.alarm_time_textView)
             val alarmCategoryTV: TextView = itemView.findViewById(R.id.alarm_category_tv)
             val alarmTitleTV: TextView = itemView.findViewById(R.id.alarm_title_textView)
+            val alarmContextTV:TextView = itemView.findViewById(R.id.alarm_context_textView)
         }
 
     }

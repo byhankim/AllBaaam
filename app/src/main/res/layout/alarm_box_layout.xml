@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="누군가 댓글을 달았어요! 얼른 확인해보세요:)"
+            android:text="@string/someone_give_me_comment"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="12dp"
             android:textSize="14sp"

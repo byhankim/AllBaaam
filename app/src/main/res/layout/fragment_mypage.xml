@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:text="로그인 부탁"
                     android:textSize="20sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/brand1"
+                    android:textStyle="bold"
                     android:layout_centerInParent="true"
                     android:layout_above="@+id/mypage_owl_birth"
                     android:layout_marginBottom="20dp"></TextView>

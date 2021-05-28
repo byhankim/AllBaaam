@@ -118,4 +118,7 @@
 
     <string name="delete_cancel_btn">더 사용할래요</string>
     <string name="delete_sure_btn">네. 탈퇴할게요</string>
+
+    <string name="someone_give_me_comment">누군가 댓글을 달았어요! 얼른 확인해보세요:)</string>
+    <string name="someone_give_me_heart">누군가 공감을 했어요! 얼른 확인해보세요:)</string>
 </resources>

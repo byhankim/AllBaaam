@@ -460,8 +460,12 @@ private lateinit var floatBTN: FloatingActionButton
                         count: Int
                     ) {
                         if (authET.length() >= 4) {
+                            lateinit var drawable : GradientDrawable
                             authBTN.isClickable = true
                             comBtnLayout.isVisible = true
+                            drawable = authBTN.background as GradientDrawable
+                            drawable.setStroke(2,this@CommFragment.resources.getColor(R.color.brand1, null))
+                            authBTN.setTextColor(this@CommFragment.resources.getColor(R.color.brand3))
                             authBTN.setOnClickListener(View.OnClickListener {
                                 if (agree2CB.isChecked && agree1CB.isChecked) {
                                     TestUser.verify = true
