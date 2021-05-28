@@ -24,8 +24,6 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMap
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -312,10 +310,6 @@ class MapsMainFragment : Fragment(), OnMapReadyCallback {
                 }
 
             }
-            val bounds = latLngBounds.build()
-            val padding = 0
-            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.moveCamera(updatedCamera)
 
             // 카메라의 위치 //== 기본값: 티아카데미 ==//--> 위치값 새로 설정? //
             val TAcademy = LatLng(37.54547677189177, 126.95253576863207)

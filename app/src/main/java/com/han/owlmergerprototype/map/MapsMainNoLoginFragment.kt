@@ -11,10 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -25,21 +23,13 @@ import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
 import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMap
 import com.han.owlmergerprototype.dataMapLibrary.Library
 import com.han.owlmergerprototype.noLoginTest.NoLoginBottomNavActivity
-import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-import kotlin.concurrent.thread
 
 class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
 
@@ -296,8 +286,6 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
         try {
             for (cmnt in cmnties?.maps ?: listOf()) {
                 Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / m_merged = ${cmnt.post?.category}")
-                Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / cmnt.latitude = ${cmnt.latitude},cmnt.longitude = ${cmnt.longitude}")
-
 
                 if (cmnt.post?.category != null) {
 
@@ -317,7 +305,6 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
                         descriptor = m_merged_blue
                     }
 
-
                     Log.d(TAG, "MapsMainNoLoginFragment - showMaps() called / cmnt.latitude = ${cmnt.latitude},cmnt.longitude = ${cmnt.longitude}")
                     val position = LatLng(cmnt.latitude.toDouble(), cmnt.longitude.toDouble())
                     val marker = MarkerOptions()
@@ -336,12 +323,12 @@ class MapsMainNoLoginFragment : Fragment(), OnMapReadyCallback {
                 }
 
             }
-
-            val bounds = latLngBounds.build()
-            val padding = 0
-            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.moveCamera(updatedCamera)
-
+//
+//            val bounds = latLngBounds.build()
+//            val padding = 0
+//            val updatedCamera = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+//            mMap.moveCamera(updatedCamera)
+//
 
             // 카메라의 위치 //== 기본값: 티아카데미 ==//--> 위치값 새로 설정? //
             val TAcademy = LatLng(37.54547677189177, 126.95253576863207)

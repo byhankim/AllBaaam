@@ -27,9 +27,8 @@ import com.google.gson.Gson
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.community.CreateArticleActivity
+import com.han.owlmergerprototype.dataMapCmnt.Map
 import com.han.owlmergerprototype.dataMapCmnt.MapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMapCmnt
-import com.han.owlmergerprototype.dataMapCmnt.mMap
 import com.han.owlmergerprototype.dataMapLibrary.Library
 import retrofit2.Call
 import retrofit2.Callback
@@ -167,7 +166,7 @@ class MapsMainActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             Log.e(TAG, "MapsMainActivity - onMapReady() called / isNullOrEmpty 333")
-            val mapCmntObject = marker.tag as mMap
+            val mapCmntObject = marker.tag as Map
 
             //mapCmntObject.
 //            val intent = Intent(this, CreateArticleActivity::class.java)
