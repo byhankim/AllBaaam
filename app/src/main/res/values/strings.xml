@@ -28,8 +28,8 @@
     <string name="article_content_tv">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔…</string>
     <string name="comment_section_hoonsoo_str">커뮤니티 가이드 준수를 통해 따듯한 올빼미 환경을 조성해주세요!</string>
     <string name="create_article_title_tv_str">글 작성하기</string>
-    <string name="comment_sort_by_time_btn_text">등록순</string>
-    <string name="comment_sort_by_popularity_btn_text">공감순</string>
+    <string name="comment_sort_by_time_btn_text">최신순</string>
+    <string name="comment_sort_by_popularity_btn_text">인기순</string>
 
     <string name="cmt_timepassed">3년 전</string>
     <string name="random_cmt">마구 근처에 늦게까지 영업하는 맛있는 떡볶이집 좀 알려주세요! 배고픔…</string>

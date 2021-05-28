@@ -3,6 +3,10 @@ package com.han.owlmergerprototype.common
 import com.han.owlmergerprototype.R
 import com.han.owlmergerprototype.data.ThemeEntity
 
+enum class sortBy {
+    LATEST, POPULARITY
+}
+
 class Constants {
 
     public fun getCategoryList(): MutableList<ThemeEntity> {
