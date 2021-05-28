@@ -84,6 +84,7 @@
                     android:layout_height="@dimen/comm_image_tv_height"
                     android:layout_below="@id/content_tv"
                     android:layout_alignStart="@id/category_in_article_layout"
+                    android:layout_marginTop="@dimen/article_image_margintop"
                     android:scaleType="fitXY"
                     android:visibility="gone"/>
 

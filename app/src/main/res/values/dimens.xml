@@ -14,7 +14,7 @@
     <dimen name="comm_write_article_img_icon_size">24dp</dimen>
     <dimen name="comm_write_article_title_et_height">24dp</dimen>
     <dimen name="article_profile_size">60dp</dimen>
-    <dimen name="article_padding_lr">20dp</dimen>
+    <dimen name="article_padding_lr">15dp</dimen>
     <dimen name="article_cate_tv_height">16dp</dimen>
     <dimen name="article_cate_tv_width">48dp</dimen>
     <dimen name="article_cate_ms">16dp</dimen>
@@ -30,10 +30,11 @@
     <dimen name="comment_section_sort_indicating_circle_size">10dp</dimen>
     <dimen name="comment_section_padding_horizontal">8dp</dimen>
     <dimen name="comment_sort_btn_text_size">12sp</dimen>
-    <dimen name="comment_sort_indicating_circle_martintop">3dp</dimen>
-    <dimen name="comment_sort_btn_marginstart">34dp</dimen>
-    <dimen name="comment_sort_pop_btn_marginstart">84dp</dimen>
-    <dimen name="comment_sort_indicating_circle_marginstart">16dp</dimen>
+    <dimen name="comment_sort_indicating_circle_martintop">5dp</dimen>
+    <dimen name="comment_sort_btn_marginstart">3dp</dimen>
+    <dimen name="comment_sort_pop_btn_marginstart">3dp</dimen>
+    <dimen name="comment_sort_by_time_indicating_circle_margin_start">13dp</dimen>
+    <dimen name="comment_sort_by_pop_indicating_circle_marginstart">75dp</dimen>
     <dimen name="comment_rv_margintop">18dp</dimen>
     <dimen name="comments_rv_marginend">34dp</dimen>
     <dimen name="comment_item_depth_margin">50dp</dimen>
@@ -126,4 +127,10 @@
     <dimen name="comm_item_content_margin_end">60dp</dimen>
     <dimen name="article_uname_textsize">16sp</dimen>
     <dimen name="comm_image_tv_height">120dp</dimen>
+    <dimen name="article_content_tv_paddingend">30dp</dimen>
+    <dimen name="comment_sort_by_time_indicating_circle_marginstart">22dp</dimen>
+    <dimen name="comment_sort_by_popular_indicating_circle_marginstart">72dp</dimen>
+    <dimen name="comment_Section_sort_circle_margintop">3dp</dimen>
+    <dimen name="article_image_margintop">13dp</dimen>
+    <dimen name="article_glide_image_iv_margintop">13dp</dimen>
 </resources>

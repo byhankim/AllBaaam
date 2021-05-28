@@ -24,6 +24,7 @@ class CommentRecyclerAdapter (
     private val owner: ArticleActivity,
     private val itemListener: (CommentRESTEntity) -> Unit
 ): RecyclerView.Adapter<CommentRecyclerAdapter.CommentHolder>() {
+    var selectedCmtId: Int? = null
     inner class CommentHolder(itemView: View, itemListenr: (CommentRESTEntity) -> Unit): RecyclerView.ViewHolder(itemView){
         val userName: TextView = itemView.findViewById(R.id.comment_username)
         val timePassed: TextView = itemView.findViewById(R.id.comment_time_passed)
@@ -37,6 +38,7 @@ class CommentRecyclerAdapter (
         val bottomMarginBlock: TextView = itemView.findViewById(R.id.comment_section_margin_bottom_tv)
 
         lateinit var recommAdapter: RecommentRecyclerAdapter
+
 
         fun bindListener(item: CommentRESTEntity) {
             itemView.setOnClickListener { itemListener(item) }
@@ -87,7 +89,25 @@ class CommentRecyclerAdapter (
             Toast.makeText(owner, "좋아요는 안눌렀어~", Toast.LENGTH_SHORT).show()
         }
         holder.replyBtn.setOnClickListener {
-            Toast.makeText(owner, "답글은 여기서 답시다", Toast.LENGTH_SHORT).show()
+            selectedCmtId = if (selectedCmtId != commentEntity.id) {
+                Toast.makeText(owner, "한번 더 눌러 대댓글 달기를 취소합니다", Toast.LENGTH_SHORT).show()
+                commentEntity.id
+            } else {
+                null
+            }
+            Log.e("selectedcmtid", "$selectedCmtId -> replyBtn 눌렀는뎅...?")
+            /*
+            with (binding.replyAddBtn) {
+            setOnClickListener {
+                if (binding.replyContentEt.text.toString().isEmpty()) {
+                    requestFocus()
+                    Toast.makeText(this@ArticleActivity, "댓글을 달려면 내용을 작성해주세요!", Toast.LENGTH_SHORT).show()
+                } else {
+                    addComment(binding.replyContentEt.text.toString(), selectedPost.id, null)
+                }
+            }
+        }
+             */
         }
         if (holder.delBtn.visibility == View.VISIBLE) {
             holder.delBtn.setOnClickListener {
@@ -101,5 +121,19 @@ class CommentRecyclerAdapter (
     fun refreshCommentsDataSet(newCommentList: MutableList<CommentRESTEntity>) {
         commentsList = newCommentList
         //notifyDataSetChanged()
+    }
+
+    // reply to comment
+
+    interface ItemClickListener {
+        fun onClick(view: View, position: Int)
+    }
+
+    //클릭리스너 선언
+    private lateinit var itemClickListner: ItemClickListener
+
+    //클릭리스너 등록 매소드
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListner = itemClickListener
     }
 }

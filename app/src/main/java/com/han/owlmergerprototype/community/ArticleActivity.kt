@@ -16,8 +16,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.han.owlmergerprototype.R
+import com.han.owlmergerprototype.common.sortBy
 import com.han.owlmergerprototype.common.token
 import com.han.owlmergerprototype.data.TestUser
 import com.han.owlmergerprototype.data.*
@@ -28,14 +30,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class ArticleActivity : AppCompatActivity(){
 
     private lateinit var binding: ArticleLayoutBinding
     private lateinit var selectedPost: PostEntity
+    private var selectedCmtId: Int? = null
 
     // comments
     private lateinit var commentsList: MutableList<CommentRESTEntity>
     private lateinit var cmtAdapter: CommentRecyclerAdapter
+    private var sortByFlag = sortBy.LATEST
 
     // icon toggle
     var isBookMarked = false
@@ -82,14 +87,21 @@ class ArticleActivity : AppCompatActivity(){
         setContentView(binding.root)
         setSupportActionBar(binding.articleToolbar)
 
-        // Image
+        // Image - Glide
+        if (selectedPost.images.isNotEmpty()) {
+            Glide.with(this).load(selectedPost.images[0].url)
+                .into(binding.articleGlideImageIv)
+            binding.articleGlideImageIv.visibility = View.VISIBLE
+        } else {
+            binding.articleGlideImageIv.visibility = View.GONE
+        }
+
+
         /*
         RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_round)
                     .error(R.mipmap.ic_launcher_round);
-
-
 
         Glide.with(this).load(image_url).apply(options).into(imageView);
          */
@@ -98,6 +110,33 @@ class ArticleActivity : AppCompatActivity(){
 
         // Comments RV
         cmtAdapter = CommentRecyclerAdapter(commentsList, this) { }
+
+        /*
+
+            mAdapter.setItemClickListener(object : ThemeSelectorRecyclerAdapter.ItemClickListener {
+                override fun onClick(view: View, position: Int) {
+                    Log.d(TAG, "onClick: ${position}")
+                    selectedCategory = position
+                }
+            })
+         */
+        cmtAdapter.setItemClickListener(object:CommentRecyclerAdapter.ItemClickListener {
+            override fun onClick(view: View, commentId: Int) {
+                selectedCmtId = cmtAdapter.selectedCmtId
+                /*if (view.id == R.id.comment_reply_btn) {
+                    selectedCmtId = if (commentsList[commentId].id != selectedCmtId) {
+                        commentsList[commentId].id
+                    } else {
+                        null
+                    }
+
+
+                    val text = if (selectedCmtId == null) "댓글달기" else "대댓달기"
+                    Toast.makeText(this@ArticleActivity, text, Toast.LENGTH_SHORT).show()
+                    Log.e("[reReply]", "selectedCmtId: $selectedCmtId")
+                }*/
+            }
+        })
 
         with (binding.commentsRv) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -119,47 +158,47 @@ class ArticleActivity : AppCompatActivity(){
             binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_5, null))
             drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
             drawable.setStroke(2,this.resources.getColor(R.color.style1_5, null))
+            }
+            "STOCK" -> {
+                binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
+                binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_4, null))
+                drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+                drawable.setStroke(2,this.resources.getColor(R.color.style1_4, null))
+            }
+            "STUDY" -> {
+                binding.tvBadge.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
+                binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_6, null))
+                drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+                drawable.setStroke(2,this.resources.getColor(R.color.style1_6, null))
+            }
+            "SPORTS" -> {
+                binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
+                binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_3, null))
+                drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+                drawable.setStroke(2,this.resources.getColor(R.color.style1_3, null))
+            }
+            "FOOD" -> {
+                binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
+                binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_2, null))
+                drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+                drawable.setStroke(2,this.resources.getColor(R.color.style1_2, null))
+            }
+            "GAME" -> {
+                binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_games))
+                binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_7, null))
+                drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
+                drawable.setStroke(2,this.resources.getColor(R.color.style1_7, null))
+            }
+            else -> binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
         }
-        "STOCK" -> {
-            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_stocks_overseas))
-            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_4, null))
-            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
-            drawable.setStroke(2,this.resources.getColor(R.color.style1_4, null))
-        }
-        "STUDY" -> {
-            binding.tvBadge.text = getCategoryNameInArticle(getString(R.string.comm_study_hard))
-            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_6, null))
-            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
-            drawable.setStroke(2,this.resources.getColor(R.color.style1_6, null))
-        }
-        "SPORTS" -> {
-            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_sports_overseas))
-            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_3, null))
-            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
-            drawable.setStroke(2,this.resources.getColor(R.color.style1_3, null))
-        }
-        "FOOD" -> {
-            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_latenight_food))
-            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_2, null))
-            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
-            drawable.setStroke(2,this.resources.getColor(R.color.style1_2, null))
-        }
-        "GAME" -> {
-            binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_games))
-            binding.tvBadge.setTextColor(this.resources.getColor(R.color.style1_7, null))
-            drawable = binding.clickedArticleTopicLayout.background as GradientDrawable
-            drawable.setStroke(2,this.resources.getColor(R.color.style1_7, null))
-        }
-        else -> binding.tvBadge.text =getCategoryNameInArticle(getString(R.string.comm_theme_not_found))
-    }
 
         binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(selectedPost.createdAt)
         binding.articleUname.text = selectedPost.user.userName
-       // binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
+        // binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
         binding.articleCommentCountTv.text = changeCommentTxt(selectedPost.id).toString()
         binding.articleContentTv.text = selectedPost.contents
-       // binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
-       binding.articleFavoriteCountTv.text = changeLikeTxt(selectedPost.id).toString()
+        // binding.articleFavoriteCountTv.text = selectedPost.like.size.toString()
+        binding.articleFavoriteCountTv.text = changeLikeTxt(selectedPost.id).toString()
         val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.getIsBookmark(TestUser.token,selectedPost.id)
 
         Log.e("[retrofitCall]", call.request().toString())
@@ -197,65 +236,71 @@ class ArticleActivity : AppCompatActivity(){
             }
         })
 
-    binding.articleBookmarkBtn.setOnClickListener {
-        val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.postBookmark(TestUser.token,selectedPost.id)
+        binding.articleBookmarkBtn.setOnClickListener {
+            val call: Call<IsBookmark> = OwlRetrofitManager.OwlRestService.owlRestService.postBookmark(TestUser.token,selectedPost.id)
 
-        Log.e("[retrofitCall]", call.request().toString())
-        call.enqueue(object: Callback<IsBookmark> {
-            override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
-                val isbm = response.body()
-                if (response.isSuccessful) {
-                    Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isBookmark}")
+            Log.e("[retrofitCall]", call.request().toString())
+            call.enqueue(object: Callback<IsBookmark> {
+                override fun onResponse(call: Call<IsBookmark>, response: Response<IsBookmark>) {
+                    val isbm = response.body()
+                    if (response.isSuccessful) {
+                        Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isBookmark}")
 
-                } else{
-                    Log.d(CommFragment.TAG, "onResponse:")
+                    } else{
+                        Log.d(CommFragment.TAG, "onResponse:")
+                    }
+
                 }
-
-            }
-            override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
-                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
-            }
-        })
-
-    }
-
-
-    // Image
-    /*
-    RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round);
-
-
-
- Glide.with(this).load(image_url).apply(options).into(imageView);
-     */
-
-
-    // click listener
-    binding.articleFavoriteBtn.setOnClickListener {
-        val call: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.postLike(TestUser.token,selectedPost.id)
-
-        Log.e("[retrofitCall]", call.request().toString())
-        call.enqueue(object: Callback<IsLike> {
-            override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
-
-                val isbm = response.body()
-                if (response.isSuccessful) {
-                    changeLikeTxt(selectedPost.id)
-                    Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isLike}")
-
-                } else{
-                    Log.d(CommFragment.TAG, "onResponse:")
+                override fun onFailure(call: Call<IsBookmark>, t: Throwable) {
+                    Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
                 }
+            })
+        }
 
-            }
-            override fun onFailure(call: Call<IsLike>, t: Throwable) {
-                Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
-            }
-        })
-    }
+        // Image
+        /*
+        RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.mipmap.ic_launcher_round)
+                        .error(R.mipmap.ic_launcher_round);
+
+        Glide.with(this).load(image_url).apply(options).into(imageView);
+         */
+         // cmt
+         binding.commentSortByTimeBtn.setOnClickListener {
+              if (sortByFlag == sortBy.POPULARITY) {
+                  binding.commentSectionSortByTimeIndicatingCircle.visibility = View.VISIBLE
+                  binding.commentSectionSortByPopularIndicatingCircle.visibility = View.INVISIBLE
+              } else {
+                  binding.commentSectionSortByTimeIndicatingCircle.visibility = View.INVISIBLE
+                  binding.commentSectionSortByPopularIndicatingCircle.visibility = View.VISIBLE
+              }
+         }
+
+
+        // click listener
+        binding.articleFavoriteBtn.setOnClickListener {
+            val call: Call<IsLike> = OwlRetrofitManager.OwlRestService.owlRestService.postLike(TestUser.token,selectedPost.id)
+
+            Log.e("[retrofitCall]", call.request().toString())
+            call.enqueue(object: Callback<IsLike> {
+                override fun onResponse(call: Call<IsLike>, response: Response<IsLike>) {
+
+                    val isbm = response.body()
+                    if (response.isSuccessful) {
+                        changeLikeTxt(selectedPost.id)
+                        Log.e(CommFragment.TAG,"[retrofitResult]: ${isbm?.isLike}")
+
+                    } else{
+                        Log.d(CommFragment.TAG, "onResponse:")
+                    }
+
+                }
+                override fun onFailure(call: Call<IsLike>, t: Throwable) {
+                    Log.e("[getPostsFailure]", "F A I L ${t.toString()}")
+                }
+            })
+        }
 //        binding.articleCommentCountTv.text = selectedPost.comments.size.toString()
         // time gap in text
 //        binding.articleTimestampTv.text = DateTimeFormatManager.getTimeGapFromNow(myPost.createdAt)
@@ -284,7 +329,13 @@ class ArticleActivity : AppCompatActivity(){
                     requestFocus()
                     Toast.makeText(this@ArticleActivity, "댓글을 달려면 내용을 작성해주세요!", Toast.LENGTH_SHORT).show()
                 } else {
-                    addComment(binding.replyContentEt.text.toString(), selectedPost.id, null)
+                    selectedCmtId = cmtAdapter.selectedCmtId
+                    Log.e("[ArticleActivityCmtId]", "댓글달기 - Cmt Id: $selectedCmtId")
+                    addComment(binding.replyContentEt.text.toString(), selectedPost.id, selectedCmtId)
+
+                    // btn select reset
+                    selectedCmtId = null
+                    cmtAdapter.selectedCmtId = null
                 }
             }
         }
@@ -330,9 +381,8 @@ class ArticleActivity : AppCompatActivity(){
             }
         }*/
 
-
-
     }
+
     fun getCategoryNameInArticle(category: String):String{
         val cateInArt :String = "#$category"
         return cateInArt

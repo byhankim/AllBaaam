@@ -27,25 +27,19 @@ import com.google.gson.reflect.TypeToken
 import com.han.owlmergerprototype.BottomNavActivity
 import com.han.owlmergerprototype.LoginActivity
 import com.han.owlmergerprototype.R
-import com.han.owlmergerprototype.common.ADDRESS
-import com.han.owlmergerprototype.common.RetrofitRESTService
-import com.han.owlmergerprototype.common.token
-import com.han.owlmergerprototype.common.token2
+import com.han.owlmergerprototype.common.*
 import com.han.owlmergerprototype.community.ArticleActivity
 import com.han.owlmergerprototype.data.*
 import com.han.owlmergerprototype.rest.UserInfo
 import com.han.owlmergerprototype.retrofit.OwlRetrofitManager
 import com.han.owlmergerprototype.utils.DateTimeFormatManager
 import com.han.owlmergerprototype.utils.SpaceDecoration
+import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-enum class sortBy {
-    LATEST, POPULARITY
-}
 
 @Suppress("DEPRECATION")
 class NoLoginCommFragment(var owner: Activity): Fragment() {
@@ -233,12 +227,17 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
         // ---------------------------------------------------------------------
         //  인기순 받아오기
         // ---------------------------------------------------------------------
+        val popularCircle = view1.findViewById<CircleImageView>(R.id.comment_section_sort_by_popular_indicating_circle)
+        val timeCircle = view1.findViewById<CircleImageView>(R.id.comment_section_sort_by_time_indicating_circle)
         val popularSortBtn = view1.findViewById<TextView>(R.id.comm_sort_by_popularity_btn)//comment_sort_by_popularity_btn
         popularSortBtn.setOnClickListener {
             if (sortByFlag != sortBy.POPULARITY) {
                 postList.clear()
                 getPostsByPopularity()
                 sortByFlag = sortBy.POPULARITY
+
+                popularCircle.visibility = View.INVISIBLE
+                timeCircle.visibility = View.VISIBLE
             }
         }
 
@@ -252,6 +251,9 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 postList.clear()
                 getPosts(null)
                 sortByFlag = sortBy.LATEST
+
+                popularCircle.visibility = View.VISIBLE
+                timeCircle.visibility = View.INVISIBLE
             }
         }
 
@@ -329,6 +331,8 @@ class NoLoginCommFragment(var owner: Activity): Fragment() {
                 if (postEntity.images.isNotEmpty()) {
                     Glide.with(owner).load(postEntity.images[0].url).centerCrop().into(glideIv)
                     glideIv.visibility = View.VISIBLE
+                } else {
+                    glideIv.visibility = View.GONE
                 }
             }
             if(position==3){
